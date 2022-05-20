@@ -1,0 +1,13 @@
+{
+  "name": "app-dct",
+  "version": "1.0.0",
+  "scripts": {
+    "server": "cd server && nodemon index.js",
+    "serverinstall": "cd server && npm install",
+    "client": "cd client && ng serve --open",
+    "clientinstall": "cd client && npm install",
+    "start": "npm run client | npm run server",
+    "install": "npm run clientinstall | npm run serverinstall"
+  },
+  "private": true
+}
