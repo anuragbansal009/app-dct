@@ -1,0 +1,44 @@
+<div class="position-absolute top-50 start-50 translate-middle">
+    <h1 class="display-3 text-center heading">Admin Registration</h1>
+
+    <div *ngIf="!post" novalidate>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form">
+
+            <mat-form-field appearance="outline" class="form-element">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name">
+                <mat-error *ngIf="!name.valid && name.touched">
+                    {{ titleAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-element">
+                <mat-label>Email</mat-label>
+                <input matInput placeholder="Email Address" formControlName="email">
+                <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
+                    {{ getErrorEmail() }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-element">
+                <mat-label>Password</mat-label>
+                <input matInput placeholder="Password" formControlName="password" [type]="hide ? 'password' : 'text'">
+                <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+                    <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint>Choose a password of at least eight characters, one uppercase letter and one number
+                </mat-hint>
+                <mat-error *ngIf="!formGroup.controls['password'].valid && formGroup.controls['password'].touched">
+                    {{ getErrorPassword() }}
+                </mat-error>
+            </mat-form-field>
+
+            <div class="form-element">
+                <button mat-raised-button color="primary" type="submit" class="button"
+                    [disabled]="!formGroup.valid">Register</button>
+            </div>
+
+        </form>
+    </div>
+</div>
