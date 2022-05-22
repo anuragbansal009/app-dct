@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 const Doctor = require('../models/Doctor');
 const jwt = require('jsonwebtoken');
-var fetchuser = require('../middleware/fetchuser');
 require('dotenv').config()
 
 router.post('/doctor', [
@@ -49,7 +48,6 @@ router.post('/doctor', [
             location: location
 
         })
-
         const data = {
             doctor: {
                 id: doctor.id
@@ -57,8 +55,7 @@ router.post('/doctor', [
         }
 
         var token = jwt.sign(data, process.env.JWT_SECRET);
-        res.json({ token })
-
+        res.json({ token, doctor })
 
     }
     catch (err) {
@@ -68,7 +65,7 @@ router.post('/doctor', [
 
 })
 
-router.post('/login', fetchuser, async (req, res) => {
+router.post('/login', async (req, res) => {
 
     let success = false;
 
@@ -90,12 +87,41 @@ router.post('/login', fetchuser, async (req, res) => {
             return res.status(400).json({ success, errors: 'please try again' });
         }
 
-        res.json({ doctor });
+        const data = {
+            doctor: {
+                id: doctor.id
+            }
+        }
+
+        var token = jwt.sign(data, process.env.JWT_SECRET);
+        res.json({ token, doctor })
 
     } catch (err) {
         console.log(err.message);
         res.status(500).send("Error occured");
     }
 });
+
+
+// get all admin
+
+router.get('/getdoctor', async (req, res) => {
+    doctorName = []
+    try {
+
+        const alldoctors = await Doctor.find();
+
+        alldoctors.forEach((doctor, i) => {
+
+            doctorName[i] = doctor.username
+
+        })
+        res.json(doctorName);
+
+    } catch (error) {
+        res.status(500).send('Erro occured')
+    }
+})
+
 
 module.exports = router
