@@ -103,7 +103,7 @@ router.post('/login', async (req, res) => {
 });
 
 
-// get all admin
+// get all doctor
 
 router.get('/getdoctor', async (req, res) => {
     doctorName = []
