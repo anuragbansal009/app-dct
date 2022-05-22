@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
-var fetchuser = require('../middleware/fetchuser');
 require('dotenv').config()
 
 router.post('/admin', [
@@ -59,15 +58,6 @@ router.post('/admin', [
 
         })
 
-        const data = {
-            admin: {
-                id: admin.id
-            }
-        }
-
-        var token = jwt.sign(data, process.env.JWT_SECRET);
-        res.json({ token })
-
     }
     catch (err) {
         console.log(err.message);
@@ -76,7 +66,7 @@ router.post('/admin', [
 
 })
 
-router.post('/admin/login', fetchuser, async (req, res) => {
+router.post('/admin/login', async (req, res) => {
 
     let success = false;
 
@@ -97,12 +87,38 @@ router.post('/admin/login', fetchuser, async (req, res) => {
             return res.status(400).json({ success, errors: 'please try again' });
         }
 
-        res.json({ admin });
+        const data = {
+            admin: {
+                id: admin.id
+            }
+        }
+
+        var token = jwt.sign(data, process.env.JWT_SECRET);
+        res.json({ token, admin })
 
     } catch (err) {
-        console.log(err.message);
         res.status(500).send("Error occured");
     }
 });
+
+// get all admin
+
+router.get('/getall', async (req, res)=>{
+    adminName = []
+    try {
+
+        const alladmins = await Admin.find();
+
+        alladmins.forEach((admin,i)=>{
+
+            adminName[i] = admin.name
+            
+        })
+        res.json(adminName);
+        
+    } catch (error) {
+        res.status(500).send('Erro occured')
+    }
+})
 
 module.exports = router
