@@ -5,6 +5,8 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminRegistrationModule} from './admin-registration/admin-registration.module';
+import { DoctorRegistrationModule } from './doctor-registration/doctor-registration.module';
+import { MaterialModule } from 'src/material.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +16,9 @@ import { AdminRegistrationModule} from './admin-registration/admin-registration.
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    AdminRegistrationModule
+    MaterialModule,
+    AdminRegistrationModule,
+    DoctorRegistrationModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -10,18 +10,18 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 
 @Component({
-  selector: 'app-admin-registration',
-  templateUrl: './admin-registration.component.html',
-  styleUrls: ['./admin-registration.component.css'],
+  selector: 'app-doctor-registration',
+  templateUrl: './doctor-registration.component.html',
+  styleUrls: ['./doctor-registration.component.css']
 })
-export class AdminRegistrationComponent implements OnInit {
+export class DoctorRegistrationComponent implements OnInit {
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
   showSuccess: boolean = false;
   showError: boolean = false;
   errorString: string = 'Error! Please Try Again';
-  adminRegistrationAPI = environment.adminRegistrationAPI;
+  doctorRegistrationAPI = environment.doctorRegistrationAPI;
 
   hide = true;
 
@@ -32,23 +32,13 @@ export class AdminRegistrationComponent implements OnInit {
   }
 
   createForm() {
-    let emailregex: RegExp =
-      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     this.formGroup = this.formBuilder.group({
-      email: [
-        null,
-        [Validators.required, Validators.pattern(emailregex)],
-        this.checkInUseEmail,
-      ],
+      username: [null, Validators.required, this.checkInUseUsername,],
       name: [null, Validators.required],
       password: [null, [Validators.required, this.checkPassword]],
-      allocateid: [null, Validators.required],
-      occupation: [null, Validators.required],
-      status: [null, Validators.required],
-      account_type: [null, Validators.required],
-      credits: [null, Validators.required],
-      did: [null, Validators.required],
-      pid: [null, Validators.required],
+      hospital_name: [null, Validators.required],
+      designation: [null, Validators.required],
+      location: [null, Validators.required]
     });
   }
 
@@ -64,8 +54,8 @@ export class AdminRegistrationComponent implements OnInit {
       : null;
   }
 
-  checkInUseEmail(control: any) {
-    let db = ['tony@gmail.com'];
+  checkInUseUsername(control: any) {
+    let db = ['anuragbansal'];
     return new Observable((observer: any) => {
       setTimeout(() => {
         let result =
@@ -76,13 +66,11 @@ export class AdminRegistrationComponent implements OnInit {
     });
   }
 
-  getErrorEmail() {
-    return this.formGroup.get('email').hasError('required')
+  getErrorUsername() {
+    return this.formGroup.get('username').hasError('required')
       ? 'Field is required'
-      : this.formGroup.get('email').hasError('pattern')
-        ? 'Not a valid Email Address'
-        : this.formGroup.get('email').hasError('alreadyInUse')
-          ? 'This Email Address is already in use'
+        : this.formGroup.get('username').hasError('alreadyInUse')
+          ? 'This Username Address is already in use'
           : '';
   }
 
@@ -97,7 +85,7 @@ export class AdminRegistrationComponent implements OnInit {
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
-    this.http.post(this.adminRegistrationAPI, post).subscribe({
+    this.http.post(this.doctorRegistrationAPI, post).subscribe({
       next: res => {
           console.log('User Created')
           this.showSuccess = true;
