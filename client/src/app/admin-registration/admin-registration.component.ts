@@ -22,6 +22,7 @@ export class AdminRegistrationComponent implements OnInit {
   showError: boolean = false;
   errorString: string = 'Error! Please Try Again';
   adminRegistrationAPI = environment.adminRegistrationAPI;
+  token: any;
 
   hide = true;
 
@@ -99,6 +100,9 @@ export class AdminRegistrationComponent implements OnInit {
     this.showError = false;
     this.http.post(this.adminRegistrationAPI, post).subscribe({
       next: res => {
+          this.token = res;
+          this.token = this.token.token;
+          localStorage.setItem('token', this.token);
           console.log('User Created')
           this.showSuccess = true;
       },
