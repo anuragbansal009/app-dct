@@ -3,7 +3,11 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  title: 'App-DCT | Local',
+  apiURL: 'http://localhost:5000/api',
+  adminRegistrationAPI: 'http://localhost:5000/api/admin',
+  doctorRegistrationAPI: 'http://localhost:5000/api/doctor',
 };
 
 /*

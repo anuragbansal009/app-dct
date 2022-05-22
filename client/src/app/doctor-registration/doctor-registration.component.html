@@ -1,5 +1,5 @@
 <div>
-    <h1 class="display-3 text-center heading">Admin Registration</h1>
+    <h1 class="display-3 text-center heading">Doctor Registration</h1>
 
     <div *ngIf="!post" novalidate>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
@@ -13,10 +13,10 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Email Address" formControlName="email">
-                <mat-error *ngIf="!formGroup.controls['email'].valid && formGroup.controls['email'].touched">
-                    {{ getErrorEmail() }}
+                <mat-label>Username</mat-label>
+                <input matInput placeholder="Username" formControlName="username">
+                <mat-error *ngIf="!formGroup.controls['username'].valid && formGroup.controls['username'].touched">
+                    {{ getErrorUsername() }}
                 </mat-error>
             </mat-form-field>
 
@@ -35,57 +35,25 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Allocate ID</mat-label>
-                <input matInput placeholder="Allocate ID" formControlName="allocateid">
-                <mat-error *ngIf="formGroup.controls['allocateid'].touched">
+                <mat-label>Hospital Name</mat-label>
+                <input matInput placeholder="Hospital Name" formControlName="hospital_name">
+                <mat-error *ngIf="formGroup.controls['hospital_name'].touched">
                     {{ titleAlert }}
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Occupation</mat-label>
-                <input matInput placeholder="Occupation" formControlName="occupation">
-                <mat-error *ngIf="formGroup.controls['occupation'].touched">
+                <mat-label>Designation</mat-label>
+                <input matInput placeholder="Designation" formControlName="designation">
+                <mat-error *ngIf="formGroup.controls['designation'].touched">
                     {{ titleAlert }}
                 </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Status</mat-label>
-                <input matInput placeholder="Status" formControlName="status">
-                <mat-error *ngIf="formGroup.controls['status'].touched">
-                    {{ titleAlert }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Account type</mat-label>
-                <input matInput placeholder="Account Type" formControlName="account_type">
-                <mat-error *ngIf="formGroup.controls['account_type'].touched">
-                    {{ titleAlert }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Credits</mat-label>
-                <input matInput placeholder="Credits" formControlName="credits">
-                <mat-error *ngIf="formGroup.controls['credits'].touched">
-                    {{ titleAlert }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-element">
-                <mat-label>DID</mat-label>
-                <input matInput placeholder="DID" formControlName="did">
-                <mat-error *ngIf="formGroup.controls['did'].touched">
-                    {{ titleAlert }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-element">
-                <mat-label>PID</mat-label>
-                <input matInput placeholder="PID" formControlName="pid">
-                <mat-error *ngIf="formGroup.controls['pid'].touched">
+                <mat-label>Location</mat-label>
+                <input matInput placeholder="Location" formControlName="location">
+                <mat-error *ngIf="formGroup.controls['location'].touched">
                     {{ titleAlert }}
                 </mat-error>
             </mat-form-field>

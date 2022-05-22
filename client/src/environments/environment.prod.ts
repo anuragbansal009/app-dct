@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  title: 'Front Desk App',
+  apiURL: 'https://---url---.com'
 };
