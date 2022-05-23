@@ -4,7 +4,23 @@ const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 const Doctor = require('../models/Doctor');
 const jwt = require('jsonwebtoken');
+const nodemailer = require("nodemailer");
 require('dotenv').config()
+
+
+var transporter = nodemailer.createTransport({
+
+    service: 'gmail',
+    auth: {
+        user: 'gurveer0091@gmail.com',
+        pass: 'Gurveer123@'
+    },
+
+    tls: {
+        rejectUnauthorized: false
+    }
+
+})
 
 router.post('/doctor', [
 
@@ -123,5 +139,29 @@ router.get('/getdoctor', async (req, res) => {
     }
 })
 
+router.post('/forgot', async (req, res) => {
+
+    try {
+
+        const { username, newpassword, confirmpassword } = req.body;
+
+        const user = await Doctor.find({ username: username })
+
+        if (newpassword == confirmpassword) {
+            
+            user[0].password = newpassword
+
+            await user[0].save()
+
+        }
+
+
+        res.send('Updated successfully')
+
+    } catch (error) {
+        res.status(500).send('Erro occured')
+    }
+
+})
 
 module.exports = router

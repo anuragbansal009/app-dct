@@ -48,19 +48,13 @@ export class AdminLoginComponent implements OnInit {
   } 
 
   onSubmit(post: any) {
-    this.token = localStorage.getItem('token');
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-      'token': this.token
-    });
 
-    const requestOptions = { headers: headers };
-
-    this.http.post('http://localhost:5000/api/admin/login', post, requestOptions).subscribe({
+    this.http.post('http://localhost:5000/api/admin/login', post).subscribe({
       next: res => {
         this.user = res
         localStorage.setItem("currentUser", JSON.stringify(this.user));
-        console.log("Login Scuccessful");
+        console.log("Login Successful");
+        window.location.replace("http://localhost:4200/doctorregistration");
       },
       error: error => {
         this.showError = true

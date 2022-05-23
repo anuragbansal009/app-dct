@@ -8,19 +8,25 @@ import { AdminRegistrationModule} from './admin-registration/admin-registration.
 import { DoctorRegistrationModule } from './doctor-registration/doctor-registration.module';
 import { MaterialModule } from 'src/material.module';
 import { AdminLoginModule } from './admin-login/admin-login.module';
+import { HomepageModule } from './homepage/homepage.module';
+import { DoctorLoginModule } from './doctor-login/doctor-login.module';
+import { ForgotModule } from './forgot/forgot.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ForgotModule,
     BrowserAnimationsModule,
     MaterialModule,
     AdminRegistrationModule,
     DoctorRegistrationModule,
-    AdminLoginModule
+    AdminLoginModule,
+    HomepageModule,
+    DoctorLoginModule
   ],
   providers: [],
   bootstrap: [AppComponent]

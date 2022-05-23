@@ -1,5 +1,32 @@
 <div>
-    <h1 class="display-3 text-center heading">Doctor Registration</h1>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">Front Desk</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+    
+                <ul class="navbar-nav">
+    
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/doctorregistration">Create Account</a>
+                    </li>
+    
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="/doctorlist">Doctor List</a>
+                    </li>
+
+                    <li (click)="logout()" class="nav-item">
+                        <a class="nav-link active" aria-current="page">Logout</a>
+                    </li>
+    
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <h1 class="display-3 text-center heading my-3">Create Account</h1>
 
     <div *ngIf="!post" novalidate>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
