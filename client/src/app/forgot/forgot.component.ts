@@ -6,14 +6,13 @@ import {
   Validators
 } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from './../../environments/environment';
 
 @Component({
-  selector: 'app-admin-login',
-  templateUrl: './admin-login.component.html',
-  styleUrls: ['./admin-login.component.css']
+  selector: 'app-forgot',
+  templateUrl: './forgot.component.html',
+  styleUrls: ['./forgot.component.css']
 })
-export class AdminLoginComponent implements OnInit {
+export class ForgotComponent implements OnInit {
 
   formGroup: any = FormGroup;
   hide = true;
@@ -30,18 +29,19 @@ export class AdminLoginComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      name: [null, Validators.required],
-      password: [null, [Validators.required]]
+      username: [null, Validators.required],
+      newpassword: [null, [Validators.required]],
+      confirmpassword: [null, [Validators.required]]
     });
   }
 
   onSubmit(post: any) {
 
-    this.http.post('http://localhost:5000/api/admin/login', post).subscribe({
+    this.http.post('http://localhost:5000/api/forgot', post).subscribe({
       next: res => {
         this.user = res
-        localStorage.setItem("currentUser", JSON.stringify(this.user));
-        window.location.replace("http://localhost:4200/doctorregistration");
+        console.log(res)
+        window.location.replace("http://localhost:4200/doctorlogin");
       },
       error: error => {
         this.showError = true
@@ -56,3 +56,4 @@ export class AdminLoginComponent implements OnInit {
   }
 
 }
+

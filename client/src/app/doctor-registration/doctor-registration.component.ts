@@ -74,6 +74,11 @@ export class DoctorRegistrationComponent implements OnInit {
           : '';
   }
 
+  logout() {
+    localStorage.removeItem("currentUser")
+    window.location.replace("http://localhost:4200/adminlogin");
+  }
+
   getErrorPassword() {
     return this.formGroup.get('password').hasError('required')
       ? 'Field is required (at least eight characters, one uppercase letter and one number)'

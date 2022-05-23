@@ -1,21 +1,30 @@
-
 <div>
     <mat-card>
         <mat-card-title>
-            <h1 class="display-3 text-center heading">Admin Login</h1>
+            <h1 class="display-3 text-center heading">Reset Password</h1>
         </mat-card-title>
         <mat-card-content>
             <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
                 <p>
                     <mat-form-field>
-                        <input type="text" matInput placeholder="Username" formControlName="name">
+                        <input type="text" matInput placeholder="Username" formControlName="username">
                     </mat-form-field>
                 </p>
 
                 <p>
                     <mat-form-field>
-                        <input matInput placeholder="Password" formControlName="password"
+                        <input matInput placeholder="New Password" formControlName="newpassword"
                             [type]="hide ? 'password' : 'text'">
+                        <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                            [attr.aria-pressed]="hide">
+                            <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                        </button>
+                    </mat-form-field>
+                </p>
+
+                <p>
+                    <mat-form-field>
+                        <input matInput placeholder="Confirm Password" formControlName="confirmpassword" [type]="hide ? 'password' : 'text'">
                         <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                             [attr.aria-pressed]="hide">
                             <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -29,7 +38,7 @@
 
                 <div class="form-element button">
                     <button mat-raised-button color="primary" type="submit" class="button"
-                        [disabled]="!formGroup.valid">Login</button>
+                        [disabled]="!formGroup.valid">Reset</button>
                 </div>
 
             </form>
@@ -38,12 +47,9 @@
 
     <section class="mx-auto">
         <div class="button-row mx-auto">
-            <button mat-raised-button class="my-3" color="primary" onclick="location.href='/adminregistration'">Admin Account</button>
-            <button mat-raised-button class="mx-3 my-3" color="primary" onclick="location.href='/adminregistration'">Forgot
-                Password</button>
+            <button mat-raised-button class="my-3" color="primary" onclick="location.href='/doctorlogin'">Login</button>
         </div>
 
     </section>
 
 </div>
-

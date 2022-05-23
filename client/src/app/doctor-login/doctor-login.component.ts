@@ -9,11 +9,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 
 @Component({
-  selector: 'app-admin-login',
-  templateUrl: './admin-login.component.html',
-  styleUrls: ['./admin-login.component.css']
+  selector: 'app-doctor-login',
+  templateUrl: './doctor-login.component.html',
+  styleUrls: ['./doctor-login.component.css']
 })
-export class AdminLoginComponent implements OnInit {
+export class DoctorLoginComponent implements OnInit {
 
   formGroup: any = FormGroup;
   hide = true;
@@ -30,18 +30,17 @@ export class AdminLoginComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      name: [null, Validators.required],
+      username: [null, Validators.required],
       password: [null, [Validators.required]]
     });
   }
 
   onSubmit(post: any) {
 
-    this.http.post('http://localhost:5000/api/admin/login', post).subscribe({
+    this.http.post('http://localhost:5000/api/login', post).subscribe({
       next: res => {
         this.user = res
-        localStorage.setItem("currentUser", JSON.stringify(this.user));
-        window.location.replace("http://localhost:4200/doctorregistration");
+        localStorage.setItem("currentDoctor", JSON.stringify(this.user));
       },
       error: error => {
         this.showError = true
