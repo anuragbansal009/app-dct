@@ -18,6 +18,7 @@ export class ForgotComponent implements OnInit {
   hide = true;
   user: any;
   showError: boolean = false;
+  showsuccess: boolean = false;
   errorMessage: any;
   token: any;
 
@@ -38,9 +39,9 @@ export class ForgotComponent implements OnInit {
   onSubmit(post: any) {
 
     this.http.post('http://localhost:5000/api/forgot', post).subscribe({
+      
       next: res => {
         this.user = res
-        console.log(res)
         window.location.replace("http://localhost:4200/doctorlogin");
       },
       error: error => {
