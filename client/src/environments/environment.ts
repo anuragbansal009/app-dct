@@ -8,7 +8,11 @@ export const environment = {
   apiURL: 'http://localhost:5000/api',
   adminRegistrationAPI: 'http://localhost:5000/api/admin',
   doctorRegistrationAPI: 'http://localhost:5000/api/doctor',
+  recaptcha: {
+    siteKey: '6LedJA0gAAAAAE6fp6wk4abtBtQUHKUzBOflU4ZB',
+  },
 };
+
 
 /*
  * For easier debugging in development mode, you can import the following file

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
+import { RecaptchaComponent,RecaptchaErrorParameters } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-admin-login',
@@ -21,6 +22,8 @@ export class AdminLoginComponent implements OnInit {
   showError: boolean = false;
   errorMessage: any;
   token: any;
+  @ViewChild('captchaElem') captchaElem: RecaptchaComponent | any;
+  recComp: RecaptchaComponent|any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
@@ -31,9 +34,18 @@ export class AdminLoginComponent implements OnInit {
   createForm() {
     this.formGroup = this.formBuilder.group({
       name: [null, Validators.required],
-      password: [null, [Validators.required]]
+      password: [null, [Validators.required]],
+      // recaptcha: [null, Validators.required]
     });
   }
+
+  public getToken(captchaResponse: string): void {
+    console.log('Resolved captcha with response:', captchaResponse);
+  }
+
+  public onError(errorDetails: RecaptchaErrorParameters): void {
+    console.log('Recaptcha error encountered; details:', errorDetails);
+  } 
 
   onSubmit(post: any) {
 
@@ -41,7 +53,11 @@ export class AdminLoginComponent implements OnInit {
       next: res => {
         this.user = res
         localStorage.setItem("currentUser", JSON.stringify(this.user));
+<<<<<<< HEAD
         window.location.replace("http://localhost:4200/doctorregistration");
+=======
+        console.log("Login Scuccessful");
+>>>>>>> f9df899 (Added Recaptcha)
       },
       error: error => {
         this.showError = true

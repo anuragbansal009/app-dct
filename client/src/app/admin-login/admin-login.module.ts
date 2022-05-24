@@ -6,6 +6,8 @@ import {AdminLoginComponent} from './admin-login.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import {MaterialModule} from '../../material.module';
+import { RecaptchaModule } from 'ng-recaptcha';
+import { environment } from '../../environments/environment';
 
 @NgModule({
   declarations: [AdminLoginComponent],
@@ -16,7 +18,8 @@ import {MaterialModule} from '../../material.module';
     HttpClientModule,
     ReactiveFormsModule,
     MatNativeDateModule,
-    MaterialModule
+    MaterialModule,
+    RecaptchaModule,
   ],
   exports: [AdminLoginComponent],
   providers: [],
