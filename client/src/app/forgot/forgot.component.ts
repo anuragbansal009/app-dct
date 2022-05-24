@@ -6,6 +6,7 @@ import {
   Validators
 } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-forgot',
@@ -38,11 +39,11 @@ export class ForgotComponent implements OnInit {
 
   onSubmit(post: any) {
 
-    this.http.post('http://localhost:5000/api/forgot', post).subscribe({
+    this.http.post(environment.forgot, post).subscribe({
       
       next: res => {
         this.user = res
-        window.location.replace("http://localhost:4200/doctorlogin");
+        window.location.replace(environment.doctorLogin);
       },
       error: error => {
         this.showError = true

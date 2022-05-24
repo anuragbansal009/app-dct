@@ -11,12 +11,12 @@ import { AdminLoginModule } from './admin-login/admin-login.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { DoctorLoginModule } from './doctor-login/doctor-login.module';
 import { ForgotModule } from './forgot/forgot.module';
-import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
+// import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AdminForgotComponent,
+    // AdminForgotComponent,
   ],
   imports: [
     BrowserModule,

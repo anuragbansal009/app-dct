@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
-import { RecaptchaComponent,RecaptchaErrorParameters } from 'ng-recaptcha';
+import { RecaptchaComponent,RecaptchaErrorParameters, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-admin-login',
@@ -16,13 +16,14 @@ import { RecaptchaComponent,RecaptchaErrorParameters } from 'ng-recaptcha';
 })
 export class AdminLoginComponent implements OnInit {
 
+  recaptchaPublicKey: string = environment.recaptcha.siteKey;
   formGroup: any = FormGroup;
   hide = true;
   user: any;
   showError: boolean = false;
   errorMessage: any;
   token: any;
-  @ViewChild('captchaElem') captchaElem: RecaptchaComponent | any;
+  @ViewChild('captchaRef') captchaRef: RecaptchaComponent | any;
   recComp: RecaptchaComponent|any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
@@ -39,29 +40,25 @@ export class AdminLoginComponent implements OnInit {
     });
   }
 
-  public getToken(captchaResponse: string): void {
-    console.log('Resolved captcha with response:', captchaResponse);
-  }
+  executeReCaptcha() {
+    this.captchaRef.execute();
+}
 
-  public onError(errorDetails: RecaptchaErrorParameters): void {
-    console.log('Recaptcha error encountered; details:', errorDetails);
-  } 
+getReCaptchaResponse(response: string) {
+    this.formGroup.patchValue({
+        'g-recaptcha-response': response
+    });
+    // Submit your form
+}
 
   onSubmit(post: any) {
 
-    this.http.post('http://localhost:5000/api/admin/login', post).subscribe({
+    this.http.post(environment.adminLogin, post).subscribe({
       next: res => {
         this.user = res
         localStorage.setItem("currentUser", JSON.stringify(this.user));
-<<<<<<< HEAD
         console.log("Login Successful");
-=======
-<<<<<<< HEAD
->>>>>>> develop
-        window.location.replace("http://localhost:4200/doctorregistration");
-=======
-        console.log("Login Scuccessful");
->>>>>>> f9df899 (Added Recaptcha)
+        window.location.replace(environment.doctorRegistration);
       },
       error: error => {
         this.showError = true

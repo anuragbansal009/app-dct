@@ -1,12 +1,19 @@
-section {
-  display: table;
-}
-
-.button-row {
-  display: table-cell;
-  margin: 8px 8px 8px 0;
-}
-
-button {
-  margin: 10px;
-}
+.example-spacer {
+    flex: 1 1 auto;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+  
+  .example-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .example-sidenav {
+    padding: 20px;
+  }

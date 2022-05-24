@@ -76,7 +76,7 @@ export class DoctorRegistrationComponent implements OnInit {
 
   logout() {
     localStorage.removeItem("currentUser")
-    window.location.replace("http://localhost:4200/adminlogin");
+    window.location.replace(environment.adminLogin);
   }
 
   getErrorPassword() {

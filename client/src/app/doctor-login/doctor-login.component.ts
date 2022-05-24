@@ -37,7 +37,7 @@ export class DoctorLoginComponent implements OnInit {
 
   onSubmit(post: any) {
 
-    this.http.post('http://localhost:5000/api/login', post).subscribe({
+    this.http.post(environment.login, post).subscribe({
       next: res => {
         this.user = res
         localStorage.setItem("currentDoctor", JSON.stringify(this.user));
