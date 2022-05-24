@@ -53,8 +53,15 @@ export class AdminLoginComponent implements OnInit {
       next: res => {
         this.user = res
         localStorage.setItem("currentUser", JSON.stringify(this.user));
+<<<<<<< HEAD
         console.log("Login Successful");
+=======
+<<<<<<< HEAD
+>>>>>>> develop
         window.location.replace("http://localhost:4200/doctorregistration");
+=======
+        console.log("Login Scuccessful");
+>>>>>>> f9df899 (Added Recaptcha)
       },
       error: error => {
         this.showError = true
