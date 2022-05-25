@@ -7,7 +7,7 @@ import {
 } from '@angular/forms';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
-import { RecaptchaComponent,RecaptchaErrorParameters, RecaptchaFormsModule } from 'ng-recaptcha';
+import { RecaptchaComponent, RecaptchaErrorParameters, RecaptchaFormsModule } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-admin-login',
@@ -24,7 +24,7 @@ export class AdminLoginComponent implements OnInit {
   errorMessage: any;
   token: any;
   @ViewChild('captchaRef') captchaRef: RecaptchaComponent | any;
-  recComp: RecaptchaComponent|any;
+  recComp: RecaptchaComponent | any;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
@@ -42,14 +42,14 @@ export class AdminLoginComponent implements OnInit {
 
   executeReCaptcha() {
     this.captchaRef.execute();
-}
+  }
 
-getReCaptchaResponse(response: string) {
+  getReCaptchaResponse(response: string) {
     this.formGroup.patchValue({
-        'g-recaptcha-response': response
+      'g-recaptcha-response': response
     });
     // Submit your form
-}
+  }
 
   onSubmit(post: any) {
 

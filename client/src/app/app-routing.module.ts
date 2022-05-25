@@ -6,6 +6,7 @@ import { AdminLoginComponent } from './admin-login/admin-login.component';
 import { HomepageComponent } from './homepage/homepage.component';
 import { DoctorLoginComponent } from './doctor-login/doctor-login.component';
 import { ForgotComponent } from './forgot/forgot.component'
+import { DoctorHomepageComponent } from './doctor-homepage/doctor-homepage.component';
 
 const routes: Routes = [
   { path: 'adminregistration', component: AdminRegistrationComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: '', component: HomepageComponent },
   { path: 'doctorlogin', component: DoctorLoginComponent },
   { path: 'forgot', component: ForgotComponent },
+  { path: 'doctorhomepage', component: DoctorHomepageComponent },
 
 ];
 

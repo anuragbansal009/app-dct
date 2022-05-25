@@ -1,41 +1,41 @@
 <!-- <div class="container-fluid mx-auto"> -->
-  <!-- <app-admin-registration></app-admin-registration> -->
-  <!-- <app-doctor-registration></app-doctor-registration> -->
-  <mat-drawer-container class="example-container" autosize>
-    <mat-toolbar color="primary">
-        <button mat-icon-button class="example-icon" aria-label="Sidebar" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-            <mat-icon>menu</mat-icon>
-        </button>
-        <span><a href="localhost:4200">Front Desk App - DCT</a></span>
-        <span class="example-spacer"></span>
-        <!-- <a href="/doctorlogin"> -->
-        <button mat-icon-button class="example-icon" aria-label="Login" onclick="location.href='/doctorlogin'">
-            <mat-icon>login</mat-icon>
-        </button>
-        <!-- </a> -->
-    </mat-toolbar>
-    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-      <div class="offcanvas-header">
-        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+<!-- <app-admin-registration></app-admin-registration> -->
+<!-- <app-doctor-registration></app-doctor-registration> -->
+<mat-drawer-container class="example-container" autosize>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Sidebar" data-bs-toggle="offcanvas"
+      data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span><a href="localhost:4200">Front Desk App - DCT</a></span>
+    <span class="example-spacer"></span>
+    <!-- <a href="/doctorlogin"> -->
+    <button mat-icon-button class="example-icon" aria-label="Login" onclick="location.href='/doctorlogin'">
+      <mat-icon>login</mat-icon>
+    </button>
+    <!-- </a> -->
+  </mat-toolbar>
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Sidebar</h5>
+      <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div>
+        Sample text
       </div>
-      <div class="offcanvas-body">
-        <div>
-          Some text as placeholder. In real life you can have the elements you have chosen. Like, text, images, lists, etc.
-        </div>
-        <div class="dropdown mt-3">
-          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-            Dropdown button
-          </button>
-          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
-          </ul>
-        </div>
+      <div class="dropdown mt-3">
+        <mat-form-field appearance="fill">
+          <mat-label>Dropdown Select</mat-label>
+          <mat-select>
+            <mat-option value="one">First option</mat-option>
+            <mat-option value="two">Second option</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
     </div>
-  </mat-drawer-container>
+  </div>
+</mat-drawer-container>
 <!-- </div> -->
 
 

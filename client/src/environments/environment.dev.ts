@@ -9,6 +9,7 @@ export const environment = {
   login: 'http://localhost:5000/api/login',
   forgot: 'http://localhost:5000/api/forgot',
   doctorLogin: 'http://localhost:4200/doctorlogin',
+  doctorHomepage: 'http://localhost:4200/doctorhomepage',
   recaptcha: {
     siteKey: '6LdfWRYgAAAAAO64AMfigSwfKz5-5uxZrNGiBVBK',
   },

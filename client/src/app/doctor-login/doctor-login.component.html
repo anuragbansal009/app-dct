@@ -23,6 +23,15 @@
                     </mat-form-field>
                 </p>
 
+                <div class="row mt-3">
+                    <div class="col-sm-12 mb-2">
+                        <re-captcha 
+                        #captchaRef siteKey="{{ recaptchaPublicKey }}"
+                        (resolved)="getReCaptchaResponse($event)" size="invisible">
+                        </re-captcha>
+                    </div>
+                </div>
+
                 <div class="alert alert-danger" role="alert" *ngIf="showError">
                     {{ errorMessage }}
                 </div>

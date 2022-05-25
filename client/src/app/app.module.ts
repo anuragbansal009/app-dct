@@ -11,6 +11,7 @@ import { AdminLoginModule } from './admin-login/admin-login.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { DoctorLoginModule } from './doctor-login/doctor-login.module';
 import { ForgotModule } from './forgot/forgot.module';
+import { DoctorHomepageModule } from './doctor-homepage/doctor-homepage.module';
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
 
 @NgModule({
@@ -28,7 +29,8 @@ import { ForgotModule } from './forgot/forgot.module';
     DoctorRegistrationModule,
     AdminLoginModule,
     HomepageModule,
-    DoctorLoginModule
+    DoctorLoginModule,
+    DoctorHomepageModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

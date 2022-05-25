@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
-import { DoctorLoginComponent } from './doctor-login.component';
+import { DoctorHomepageComponent } from './doctor-homepage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { RecaptchaModule } from 'ng-recaptcha';
 import { MaterialModule } from '../../material.module';
+import { NgApexchartsModule } from "ng-apexcharts";
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 
 @NgModule({
-    declarations: [DoctorLoginComponent],
+    declarations: [DoctorHomepageComponent],
     imports: [
         BrowserAnimationsModule,
         BrowserModule,
@@ -18,10 +20,15 @@ import { MaterialModule } from '../../material.module';
         ReactiveFormsModule,
         MatNativeDateModule,
         MaterialModule,
-        RecaptchaModule
+        NgApexchartsModule,
+        CalendarModule.forRoot({
+            provide: DateAdapter,
+            useFactory: adapterFactory,
+          }),
+        
     ],
-    exports: [DoctorLoginComponent],
+    exports: [DoctorHomepageComponent],
     providers: [],
-    bootstrap: [DoctorLoginComponent],
+    bootstrap: [DoctorHomepageComponent],
 })
-export class DoctorLoginModule { }
+export class DoctorHomepageModule { }
