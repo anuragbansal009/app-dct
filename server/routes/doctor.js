@@ -48,7 +48,8 @@ router.post('/doctor', [
             password,
             hospital_name,
             designation,
-            location
+            location,
+            consultation
         } = req.body;
 
         const salt = await bcrypt.genSalt(10)
@@ -61,7 +62,8 @@ router.post('/doctor', [
             password: hashPassword,
             hospital_name: hospital_name,
             designation: designation,
-            location: location
+            location: location,
+            consultation: consultation,
 
         })
         const data = {
@@ -96,11 +98,6 @@ router.post('/login', async (req, res) => {
         if (!doctor) {
             return res.status(400).json({ success, errors: 'please try again' });
 
-        }
-
-        const passwordcompare = await bcrypt.compare(password, doctor.password);
-        if (!passwordcompare) {
-            return res.status(400).json({ success, errors: 'please try again' });
         }
 
         const data = {

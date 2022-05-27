@@ -12,6 +12,7 @@ import {
   ApexGrid,
   ApexTheme
 } from "ng-apexcharts";
+import { environment } from './../../environments/environment';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -155,6 +156,11 @@ export class DoctorHomepageComponent implements OnInit {
       }
       this.viewDate = date;
     }
+  }
+
+  handleclick()
+  {
+    window.location.replace(environment.patientRegistration);
   }
 
   eventTimesChanged({

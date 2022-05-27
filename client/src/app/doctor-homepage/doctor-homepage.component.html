@@ -35,29 +35,45 @@
                     <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-icon class="bills-icon float-start">receipt_long</mat-icon>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="3" [rowspan]="1">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
                         <mat-card-title>Bills</mat-card-title>
                     </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="2">
-                        <div class="example-button-container">
-                            <button mat-fab color="primary" aria-label="Example icon button with a home icon">
-                                <mat-icon>add</mat-icon>
-                            </button>
-                        </div>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="3" [rowspan]="2">
+                    <mat-grid-tile [colspan]="4" [rowspan]="2">
                         <button mat-raised-button color="warn" class="m-3">Billing</button>
                         <button mat-raised-button color="warn" class="m-3">Bill Summary</button>
                     </mat-grid-tile>
                 </mat-grid-list>
             </mat-card>
         </mat-grid-tile>
+
         <mat-grid-tile [colspan]="4" [rowspan]="1">
-            <mat-card class="m-2">2</mat-card>
+            <mat-card class="m-2">
+              <mat-grid-list cols="4" rowHeight="50px">
+
+                  <mat-grid-list cols="4" rowHeight="50px">
+                    <mat-grid-tile [colspan]="1" [rowspan]="1">
+                      <mat-icon class="bills-icon float-start">receipt_long</mat-icon>
+                    </mat-grid-tile>
+                    <mat-grid-tile [colspan]="2" [rowspan]="1">
+                      <mat-card-title>Patient Registeration</mat-card-title>
+                    </mat-grid-tile>
+                
+                  </mat-grid-list>
+                <mat-grid-tile [colspan]="4" [rowspan]="4">
+                  <div class="example-button-container">
+                    <button (click)="handleclick()" mat-fab color="primary" aria-label="Example icon button with a home icon">
+                      <mat-icon>add</mat-icon>
+                    </button>
+                  </div>
+                </mat-grid-tile>
+              </mat-grid-list>
+            </mat-card>
         </mat-grid-tile>
+
         <mat-grid-tile [colspan]="4" [rowspan]="1">
             <mat-card class="m-2">3</mat-card>
         </mat-grid-tile>
+        
         <mat-grid-tile [colspan]="6" [rowspan]="2">
             <mat-card class="m-2">4</mat-card>
         </mat-grid-tile>

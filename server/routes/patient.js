@@ -18,9 +18,6 @@ router.post('/patient/create', [
     try {
 
         let patient = await Patient.findOne({ name: req.body.name });
-        if (patient) {
-            return res.status(400).json({ error: "user with this username alrady exists" })
-        }
 
         const {
             name,
@@ -30,6 +27,10 @@ router.post('/patient/create', [
             mobile,
             email,
             bloodgroup,
+            opd_number,
+            city,
+            pin,
+            doctor_name,
         } = req.body;
 
         patient = await Patient.create({
@@ -41,6 +42,10 @@ router.post('/patient/create', [
             mobile: mobile,
             email: email,
             bloodgroup: bloodgroup,
+            opd_number: opd_number,
+            city: city,
+            pin: pin,
+            doctor_name: doctor_name,
 
         })
 

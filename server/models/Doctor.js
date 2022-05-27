@@ -26,6 +26,10 @@ const DoctorSchema = new Schema({
     location: {
         type: String,
         required: true,
+    },
+    consultation: {
+        type: String,
+        required: true,
     }
 
 

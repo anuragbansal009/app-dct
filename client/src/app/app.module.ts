@@ -12,6 +12,7 @@ import { HomepageModule } from './homepage/homepage.module';
 import { DoctorLoginModule } from './doctor-login/doctor-login.module';
 import { ForgotModule } from './forgot/forgot.module';
 import { DoctorHomepageModule } from './doctor-homepage/doctor-homepage.module';
+import { PatientRegistrationModule } from './patient-registration/patient-registration.module';
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
 
 @NgModule({
@@ -27,6 +28,7 @@ import { DoctorHomepageModule } from './doctor-homepage/doctor-homepage.module';
     MaterialModule,
     AdminRegistrationModule,
     DoctorRegistrationModule,
+    PatientRegistrationModule,
     AdminLoginModule,
     HomepageModule,
     DoctorLoginModule,

@@ -18,3 +18,4 @@ app.listen(port, () => {
 app.use('/api', require('./routes/admin'))
 app.use('/api', require('./routes/doctor'))
 app.use('/api', require('./routes/patient'))
+app.use('/api', require('./routes/bill'))

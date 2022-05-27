@@ -6,6 +6,8 @@ export const environment = {
   doctorRegistrationAPI: 'http://localhost:5000/api/doctor',
   adminLogin: 'http://localhost:5000/api/admin/login',
   doctorRegistration: 'http://localhost:4200/doctorregistration',
+  patientRegistrationAPI: 'http://localhost:5000/api/patient/create',
+  patientRegistration: 'http://localhost:4200/patientregistration',
   login: 'http://localhost:5000/api/login',
   forgot: 'http://localhost:5000/api/forgot',
   doctorLogin: 'http://localhost:4200/doctorlogin',
