@@ -1,6 +1,4 @@
-* {
-  color: #212529
-}
+
 
 mat-card {
   height: 95%;
@@ -49,4 +47,38 @@ pre {
   padding: 15px;
 }
 
+.patientButton {
+  width: 120%;
+  height: 75px;
+  margin-top: 40px !important;
+  font-size: 20px;
+}
 
+.billingButton {
+  width: 120%;
+  height: 75px;
+  margin-top: 40px !important;
+  font-size: 20px;
+}
+
+.vitalsBig {
+  margin-top: 20px !important;
+  font-size: 80px;
+  color: white;
+  font-weight: 900;
+}
+
+.vitalsArrow {
+  font-size: 100px;
+  color: green;
+  margin-top: 120px;
+}
+
+table {
+  width: 100%;
+  margin-top: 70px;
+}
+
+mat-progress-bar {
+  margin-top: 8px;
+}

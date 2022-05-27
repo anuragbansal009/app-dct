@@ -28,176 +28,206 @@
     </div>
 </div> -->
 <div class="container-fluid">
-    <mat-grid-list cols="12" rowHeight="200px" class="m-4">
-        <mat-grid-tile [colspan]="4" [rowspan]="1">
-            <mat-card class="m-2">
-                <mat-grid-list cols="4" rowHeight="50px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-icon class="bills-icon float-start">receipt_long</mat-icon>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-card-title>Bills</mat-card-title>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="4" [rowspan]="2">
-                        <button mat-raised-button color="warn" class="m-3">Billing</button>
-                        <button mat-raised-button color="warn" class="m-3">Bill Summary</button>
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </mat-card>
-        </mat-grid-tile>
+  <mat-grid-list cols="12" rowHeight="200px" class="m-4">
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <mat-card class="m-2">
+        <mat-grid-list cols="4" rowHeight="50px">
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-icon class="bills-icon float-start">receipt_long</mat-icon>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-card-title>Bills</mat-card-title>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="4" [rowspan]="2">
+            <button mat-raised-button color="warn" class="m-3 billingButton">Billing</button>
+            <button mat-raised-button color="warn" class="m-3 billingButton">Bill Summary</button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+    </mat-grid-tile>
 
-        <mat-grid-tile [colspan]="4" [rowspan]="1">
-            <mat-card class="m-2">
-              <mat-grid-list cols="4" rowHeight="50px">
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <mat-card class="m-2">
+        <mat-grid-list cols="4" rowHeight="50px">
 
-                  <mat-grid-list cols="4" rowHeight="50px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                      <mat-icon class="bills-icon float-start">receipt_long</mat-icon>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="2" [rowspan]="1">
-                      <mat-card-title>Patient Registeration</mat-card-title>
-                    </mat-grid-tile>
-                
-                  </mat-grid-list>
-                <mat-grid-tile [colspan]="4" [rowspan]="4">
-                  <div class="example-button-container">
-                    <button (click)="handleclick()" mat-fab color="primary" aria-label="Example icon button with a home icon">
+          <mat-grid-list cols="4" rowHeight="50px">
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+              <mat-icon class="bills-icon float-start">receipt_long</mat-icon>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+              <mat-card-title>Patient Registeration</mat-card-title>
+            </mat-grid-tile>
+
+          </mat-grid-list>
+          <mat-grid-tile [colspan]="4" [rowspan]="4">
+            <!-- <div class="example-button-container"> -->
+            <button (click)="handleclick()" mat-raised-button color="warn" class="m-3 patientButton">Add
+              Patient</button>
+            <!-- <button (click)="handleclick()" mat-fab color="primary" aria-label="Example icon button with a home icon">
                       <mat-icon>add</mat-icon>
-                    </button>
-                  </div>
-                </mat-grid-tile>
-              </mat-grid-list>
-            </mat-card>
-        </mat-grid-tile>
+                    </button> -->
+            <!-- </div> -->
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+    </mat-grid-tile>
 
-        <mat-grid-tile [colspan]="4" [rowspan]="1">
-            <mat-card class="m-2">3</mat-card>
-        </mat-grid-tile>
-        
-        <mat-grid-tile [colspan]="6" [rowspan]="2">
-            <mat-card class="m-2">4</mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="6" [rowspan]="2">
-            <mat-card class="m-2">
-                <mat-grid-list cols="4" rowHeight="50px">
-                    <mat-grid-tile [colspan]="1" [rowspan]="1">
-                        <mat-icon class="bills-icon float-start">monitor_heart</mat-icon>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="3" [rowspan]="1">
-                        <mat-card-title>Vitals</mat-card-title>
-                    </mat-grid-tile>
-                    <mat-grid-tile [colspan]="4" [rowspan]="7">
-                        <div id="chart-line">
-                        <apx-chart #vitalsChart [series]="chartOptions1.series" [chart]="chartOptions1.chart" [xaxis]="chartOptions1.xaxis"
-                        [dataLabels]="chartOptions1.dataLabels" [stroke]="chartOptions1.stroke" [title]="chartOptions1.title" [xaxis]="chartOptions1.xaxis" [grid]="chartOptions1.grid" [theme]="chartOptions1.theme"></apx-chart>
-                        </div>
-                    </mat-grid-tile>
-                </mat-grid-list>
-            </mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="8" [rowspan]="1">
-            <mat-card class="m-2">6</mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="4" [rowspan]="1">
-            <mat-card class="m-2">7</mat-card>
-        </mat-grid-tile>
-        <mat-grid-tile [colspan]="12" [rowspan]="4">
-            <mat-card class="m-2">
-                <div class="row text-center">
-                    <div class="col-md-4">
-                      <div class="btn-group">
-                        <div
-                          class="btn btn-primary"
-                          mwlCalendarPreviousView
-                          [view]="view"
-                          [(viewDate)]="viewDate"
-                          (viewDateChange)="closeOpenMonthViewDay()"
-                        >
-                          Previous
-                        </div>
-                        <div
-                          class="btn btn-outline-secondary"
-                          mwlCalendarToday
-                          [(viewDate)]="viewDate"
-                        >
-                          Today
-                        </div>
-                        <div
-                          class="btn btn-primary"
-                          mwlCalendarNextView
-                          [view]="view"
-                          [(viewDate)]="viewDate"
-                          (viewDateChange)="closeOpenMonthViewDay()"
-                        >
-                          Next
-                        </div>
-                      </div>
-                    </div>
-                    <div class="col-md-4">
-                      <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-                    </div>
-                    <div class="col-md-4">
-                      <div class="btn-group">
-                        <div
-                          class="btn btn-primary"
-                          (click)="setView(CalendarView.Month)"
-                          [class.active]="view === CalendarView.Month"
-                        >
-                          Month
-                        </div>
-                        <div
-                          class="btn btn-primary"
-                          (click)="setView(CalendarView.Week)"
-                          [class.active]="view === CalendarView.Week"
-                        >
-                          Week
-                        </div>
-                        <div
-                          class="btn btn-primary"
-                          (click)="setView(CalendarView.Day)"
-                          [class.active]="view === CalendarView.Day"
-                        >
-                          Day
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <br />
-                  <div [ngSwitch]="view">
-                    <mwl-calendar-month-view
-                      *ngSwitchCase="CalendarView.Month"
-                      [viewDate]="viewDate"
-                      [events]="events"
-                      [refresh]="refresh"
-                      [activeDayIsOpen]="activeDayIsOpen"
-                      (dayClicked)="dayClicked($event.day)"
-                      (eventClicked)="handleEvent('Clicked', $event.event)"
-                      (eventTimesChanged)="eventTimesChanged($event)"
-                    >
-                    </mwl-calendar-month-view>
-                    <mwl-calendar-week-view
-                      *ngSwitchCase="CalendarView.Week"
-                      [viewDate]="viewDate"
-                      [events]="events"
-                      [refresh]="refresh"
-                      (eventClicked)="handleEvent('Clicked', $event.event)"
-                      (eventTimesChanged)="eventTimesChanged($event)"
-                    >
-                    </mwl-calendar-week-view>
-                    <mwl-calendar-day-view
-                      *ngSwitchCase="CalendarView.Day"
-                      [viewDate]="viewDate"
-                      [events]="events"
-                      [refresh]="refresh"
-                      (eventClicked)="handleEvent('Clicked', $event.event)"
-                      (eventTimesChanged)="eventTimesChanged($event)"
-                    >
-                    </mwl-calendar-day-view>
-                  </div>
-                  
-                  <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
-                  
-                  <!-- <br /><br /><br />
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <mat-card class="m-2">
+        <mat-grid-list cols="4" rowHeight="50px">
+          <mat-grid-list cols="4" rowHeight="50px">
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+              <mat-icon class="bills-icon float-start">bloodtype</mat-icon>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+              <mat-card-title>Blood Pressure</mat-card-title>
+            </mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-tile [colspan]="1" [rowspan]="4">
+            <mat-icon class="vitalsArrow">arrow_drop_up</mat-icon>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="3" [rowspan]="4">
+            <div class="vitalsBig">120/80</div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="6" [rowspan]="2">
+      <mat-card class="m-2">
+        <mat-grid-list cols="4" rowHeight="50px">
+          <mat-grid-list cols="4" rowHeight="50px">
+            <mat-grid-tile [colspan]="1" [rowspan]="1">
+              <mat-icon class="bills-icon float-start">medication</mat-icon>
+            </mat-grid-tile>
+            <mat-grid-tile [colspan]="2" [rowspan]="1">
+              <mat-card-title>Medicines</mat-card-title>
+            </mat-grid-tile>
+          </mat-grid-list>
+          <mat-grid-tile [colspan]="4" [rowspan]="7">
+            <table class="table table-dark">
+              <thead>
+                <tr>
+                  <th scope="col">Medicine</th>
+                  <th scope="col" style="width:70%">Quantity</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Medicine 1</th>
+                  <td><mat-progress-bar mode="determinate" value="90"></mat-progress-bar>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">Medicine 2</th>
+                  <td><mat-progress-bar mode="determinate" value="30"></mat-progress-bar></td>
+                </tr>
+                <tr>
+                  <th scope="row">Medicine 3</th>
+                  <td><mat-progress-bar mode="determinate" value="70"></mat-progress-bar></td>
+                </tr>
+                <tr>
+                  <th scope="row">Medicine 4</th>
+                  <td><mat-progress-bar mode="determinate" value="50"></mat-progress-bar></td>
+                </tr>
+                <tr>
+                  <th scope="row">Medicine 5</th>
+                  <td><mat-progress-bar mode="determinate" value="10"></mat-progress-bar></td>
+                </tr>
+                <tr>
+                  <th scope="row">Medicine 6</th>
+                  <td><mat-progress-bar mode="determinate" value="100"></mat-progress-bar></td>
+                </tr>
+              </tbody>
+            </table>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="6" [rowspan]="2">
+      <mat-card class="m-2">
+        <mat-grid-list cols="4" rowHeight="50px">
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <mat-icon class="bills-icon float-start">monitor_heart</mat-icon>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <mat-card-title>Graph</mat-card-title>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="4" [rowspan]="7">
+            <div id="chart-line">
+              <apx-chart #vitalsChart [series]="chartOptions1.series" [chart]="chartOptions1.chart"
+                [xaxis]="chartOptions1.xaxis" [dataLabels]="chartOptions1.dataLabels" [stroke]="chartOptions1.stroke"
+                [title]="chartOptions1.title" [xaxis]="chartOptions1.xaxis" [grid]="chartOptions1.grid"
+                [theme]="chartOptions1.theme"></apx-chart>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </mat-card>
+    </mat-grid-tile>
+    <!-- <mat-grid-tile [colspan]="8" [rowspan]="1">
+      <mat-card class="m-2">6</mat-card>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="4" [rowspan]="1">
+      <mat-card class="m-2">7</mat-card>
+    </mat-grid-tile> -->
+    <mat-grid-tile [colspan]="12" [rowspan]="4">
+      <mat-card class="m-2">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()">
+                Previous
+              </div>
+              <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                Today
+              </div>
+              <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                (viewDateChange)="closeOpenMonthViewDay()">
+                Next
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+          </div>
+          <div class="col-md-4">
+            <div class="btn-group">
+              <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
+                [class.active]="view === CalendarView.Month">
+                Month
+              </div>
+              <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
+                [class.active]="view === CalendarView.Week">
+                Week
+              </div>
+              <div class="btn btn-primary" (click)="setView(CalendarView.Day)"
+                [class.active]="view === CalendarView.Day">
+                Day
+              </div>
+            </div>
+          </div>
+        </div>
+        <br />
+        <div [ngSwitch]="view">
+          <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+            [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)">
+          </mwl-calendar-day-view>
+        </div>
+
+        <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+
+        <!-- <br /><br /><br />
                   
                   <h3>
                     Edit events
@@ -303,8 +333,8 @@
                       </button>
                     </div>
                   </ng-template> -->
-                  
-              </mat-card>
-        </mat-grid-tile>
-    </mat-grid-list>
+
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>
