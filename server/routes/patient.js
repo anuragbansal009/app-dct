@@ -2,10 +2,22 @@ const express = require('express');
 const router = express.Router();
 const { body, validationResult } = require('express-validator');
 const Patient = require('../models/Patient');
+const Doctor = require('../models/Doctor');
+const MongoClient = require('mongodb').MongoClient;
+const mongoURI = "mongodb://localhost:27017/hospital?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
+var database 
+
+
+MongoClient.connect(mongoURI,{useNewUrlParser:true}, (err, res)=>{
+    if(err) throw err;
+    database = res.db('hospital')
+})
 
 router.post('/patient/create', [
 
     body('name', 'Enter a valid user name').isLength({ min: 4 }),
+    body('mobile', 'Enter a valid Mobile Number').isLength(10),
+    body('email', 'Enter a valid Email').isEmail(),
 
 ], async (req, res) => {
 
@@ -19,6 +31,8 @@ router.post('/patient/create', [
 
         let patient = await Patient.findOne({ name: req.body.name });
 
+        let doctor = await Doctor.findOne({ username: req.body.doctor_name });
+
         const {
             name,
             gender,
@@ -27,11 +41,15 @@ router.post('/patient/create', [
             mobile,
             email,
             bloodgroup,
-            opd_number,
             city,
             pin,
             doctor_name,
         } = req.body;
+
+        lastPatient = await database.collection('patients').findOne({}, {sort:{_id:-1}});
+
+        position = lastPatient.position + 1
+        allocateid = doctor.allocateid.concat(String(position))
 
         patient = await Patient.create({
 
@@ -42,10 +60,11 @@ router.post('/patient/create', [
             mobile: mobile,
             email: email,
             bloodgroup: bloodgroup,
-            opd_number: opd_number,
             city: city,
             pin: pin,
             doctor_name: doctor_name,
+            allocateid: allocateid,
+            position: position
 
         })
 
@@ -53,10 +72,23 @@ router.post('/patient/create', [
 
     }
     catch (err) {
-        console.log(err.message);
         res.status(500).send("Error occured");
     }
 
+})
+
+router.get('/patient/get', async (req, res) => {
+    try {
+
+        const patients = await Patient.find()
+
+        res.send(patients)
+        
+    } catch (error) {
+
+        res.status(500).send("Error occured");
+        
+    }
 })
 
 

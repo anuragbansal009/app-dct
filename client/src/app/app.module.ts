@@ -13,6 +13,8 @@ import { DoctorLoginModule } from './doctor-login/doctor-login.module';
 import { ForgotModule } from './forgot/forgot.module';
 import { DoctorHomepageModule } from './doctor-homepage/doctor-homepage.module';
 import { PatientRegistrationModule } from './patient-registration/patient-registration.module';
+import { PatientListModule } from './patient-list/patient-list.module';
+
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
 
 @NgModule({
@@ -31,6 +33,7 @@ import { PatientRegistrationModule } from './patient-registration/patient-regist
     PatientRegistrationModule,
     AdminLoginModule,
     HomepageModule,
+    PatientListModule,
     DoctorLoginModule,
     DoctorHomepageModule,
   ],

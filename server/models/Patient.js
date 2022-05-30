@@ -31,12 +31,16 @@ const PatientSchema = new Schema({
         type: String,
         required: true
     },
-    opd_number: {
-        type: String,
-        
-    },
     city: {
         type: String,
+        required: true
+    },
+    allocateid: {
+        type: String,
+        required: true
+    },
+    position:{
+        type: Number,
         required: true
     },
     pin: {

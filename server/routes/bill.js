@@ -13,11 +13,11 @@ router.post('/patient/bill',async (req, res) => {
 
         const {
             name,
-            charges,
+            allocateid,
             
         } = req.body;
 
-        let patient = await Patient.findOne({ name: name });
+        let patient = await Patient.findOne({ allocateid: allocateid });
 
         console.log(patient.doctor_name);
 
@@ -31,8 +31,10 @@ router.post('/patient/bill',async (req, res) => {
 
                     name: name,
                     doctor_name: patient.doctor_name,
-                    charges: charges,
-                    consultation: doctor.consultation
+                    consultation: doctor.consultation,
+                    mobile: patient.mobile,
+                    email: patient.email,
+                    allocateid: allocateid
         
                 })
                 patient.paid = true

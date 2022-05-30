@@ -27,6 +27,10 @@ const DoctorSchema = new Schema({
         type: String,
         required: true,
     },
+    allocateid: {
+        type: String,
+        required: true
+    },
     consultation: {
         type: String,
         required: true,

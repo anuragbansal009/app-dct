@@ -12,15 +12,22 @@ const BillSchema = new Schema({
         type: String,
         required: true
     },
-    charges: {
-        type: String,
-        required: true,
-    },
     consultation: {
         type: String,
         required: true,
     },
-    
+    mobile: {
+        type: Number,
+        required: true
+    },
+    email: {
+        type: String,
+        required: true
+    },
+    allocateid: {
+        type: String,
+        required: true
+    },
     date: {
         type: String,
         default: Date.now,

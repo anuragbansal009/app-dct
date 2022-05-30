@@ -8,6 +8,7 @@ import { DoctorLoginComponent } from './doctor-login/doctor-login.component';
 import { ForgotComponent } from './forgot/forgot.component'
 import { DoctorHomepageComponent } from './doctor-homepage/doctor-homepage.component';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
+import { PatientListComponent } from './patient-list/patient-list.component';
 
 const routes: Routes = [
   { path: 'adminregistration', component: AdminRegistrationComponent },
@@ -18,6 +19,7 @@ const routes: Routes = [
   { path: 'forgot', component: ForgotComponent },
   { path: 'doctorhomepage', component: DoctorHomepageComponent },
   { path: 'patientregistration', component: PatientRegistrationComponent },
+  { path: 'patientlist', component: PatientListComponent },
 
 ];
 
