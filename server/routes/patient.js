@@ -52,6 +52,7 @@ router.post('/patient/create', [
         allocateid = doctor.allocateid.concat(String(position))
 
         patient = await Patient.create({
+
             name: name,
             gender: gender,
             dob: dob,
@@ -64,13 +65,13 @@ router.post('/patient/create', [
             doctor_name: doctor_name,
             allocateid: allocateid,
             position: position
+
         })
 
         res.json(patient)
 
     }
     catch (err) {
-        console.log(err);
         res.status(500).send("Error occured");
     }
 
@@ -81,7 +82,7 @@ router.get('/patient/get', async (req, res) => {
 
         const patients = await Patient.find()
 
-        res.json(patients)
+        res.send(patients)
         
     } catch (error) {
 
@@ -90,6 +91,21 @@ router.get('/patient/get', async (req, res) => {
     }
 })
 
+router.post('/patient/getid', async (req, res) => {
+    try {
+
+        const id = req.body
+
+        const patient = await Patient.find({_id: id })
+
+        res.json(patient)
+        
+    } catch (error) {
+
+        res.status(500).send("Error occured");
+        
+    }
+})
 
 module.exports = router
 

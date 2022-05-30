@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { HttpClient } from '@angular/common/http';
 import {MatTable} from '@angular/material/table'
+import { Router } from '@angular/router';
 
 export interface PeriodicElement {
   name: string;
@@ -40,10 +41,10 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
 
-  displayedColumns: string[] = ['position', 'name', 'mobile', 'email'];
+  displayedColumns: string[] = ['position', 'name', 'mobile', 'email', 'Update'];
   dataSource = ELEMENT_DATA;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,private router: Router) { }
 
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild('table', { static: true,read:MatTable }) table: any
@@ -78,6 +79,9 @@ export class PatientListComponent implements AfterViewInit {
       this.tableCreate = true;
     })
     
+  }
+  updateEmployee(id: number){
+    this.router.navigate(['update-patient', id]);
   }
   
 
