@@ -1,0 +1,44 @@
+[
+    {
+        "firstName": "John",
+        "lastName": "Doe",
+        "studentEmail": "johndoe@example.com",
+        "course": "9876543210",
+        "yearOfStudy": "13:00"
+    },
+    {
+        "firstName": "Test2",
+        "lastName": "Test2",
+        "studentEmail": "test@example.com",
+        "course": "9876543211",
+        "yearOfStudy": "14:00"
+    },
+    {
+        "firstName": "Test2",
+        "lastName": "Test2",
+        "studentEmail": "test@example.com",
+        "course": "9876543212",
+        "yearOfStudy": "14:00"
+    },
+    {
+        "firstName": "Test3",
+        "lastName": "Test3",
+        "studentEmail": "test3@example.com",
+        "course": "9876543213",
+        "yearOfStudy": "15:00"
+    },
+    {
+        "firstName": "Test4",
+        "lastName": "Test4",
+        "studentEmail": "test4@example.com",
+        "course": "9876543214",
+        "yearOfStudy": "16:00"
+    },
+    {
+        "firstName": "Test5",
+        "lastName": "Tes52",
+        "studentEmail": "test5@example.com",
+        "course": "9876543215",
+        "yearOfStudy": "17:00"
+    }
+]

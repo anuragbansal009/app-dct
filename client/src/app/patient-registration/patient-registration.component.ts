@@ -33,14 +33,14 @@ export class PatientRegistrationComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      name: [null, Validators.required, this.checkInUseUsername,],
+      name: [null, Validators.required],
       gender: [null, Validators.required],
       dob: [null, Validators.required],
       age: [null, Validators.required],
       mobile: [null, Validators.required],
       email: [null, Validators.required],
       bloodgroup: [null, Validators.required],
-      opd_number: [null, Validators.required],
+      // allocate_id: [null, Validators.required],
       city: [null, Validators.required],
       pin: [null, Validators.required],
       doctor_name: [null, Validators.required],

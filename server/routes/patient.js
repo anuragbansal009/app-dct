@@ -52,7 +52,6 @@ router.post('/patient/create', [
         allocateid = doctor.allocateid.concat(String(position))
 
         patient = await Patient.create({
-
             name: name,
             gender: gender,
             dob: dob,
@@ -65,13 +64,13 @@ router.post('/patient/create', [
             doctor_name: doctor_name,
             allocateid: allocateid,
             position: position
-
         })
 
         res.json(patient)
 
     }
     catch (err) {
+        console.log(err);
         res.status(500).send("Error occured");
     }
 
@@ -82,7 +81,7 @@ router.get('/patient/get', async (req, res) => {
 
         const patients = await Patient.find()
 
-        res.send(patients)
+        res.json(patients)
         
     } catch (error) {
 
