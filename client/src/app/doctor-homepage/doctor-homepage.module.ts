@@ -9,7 +9,7 @@ import { MaterialModule } from '../../material.module';
 import { NgApexchartsModule } from "ng-apexcharts";
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-
+import { CardModule } from '@coreui/angular';
 @NgModule({
     declarations: [DoctorHomepageComponent],
     imports: [
@@ -25,6 +25,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
             provide: DateAdapter,
             useFactory: adapterFactory,
           }),
+          CardModule
         
     ],
     exports: [DoctorHomepageComponent],

@@ -41,7 +41,7 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
 
-  displayedColumns: string[] = ['position', 'name', 'mobile', 'email', 'Update'];
+  displayedColumns: string[] = ['position', 'name', 'mobile', 'email', 'update'];
   dataSource = ELEMENT_DATA;
 
   constructor(private http: HttpClient,private router: Router) { }

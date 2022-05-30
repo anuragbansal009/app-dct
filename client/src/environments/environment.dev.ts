@@ -15,4 +15,5 @@ export const environment = {
   recaptcha: {
     siteKey: '6LdfWRYgAAAAAO64AMfigSwfKz5-5uxZrNGiBVBK',
   },
+  patientlist: 'http://localhost:4200/patientlist',
 };

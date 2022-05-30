@@ -163,6 +163,11 @@ export class DoctorHomepageComponent implements OnInit {
     window.location.replace(environment.patientRegistration);
   }
 
+  handlePatientList()
+  {
+    window.location.replace(environment.patientlist);
+  }
+
   eventTimesChanged({
     event,
     newStart,
