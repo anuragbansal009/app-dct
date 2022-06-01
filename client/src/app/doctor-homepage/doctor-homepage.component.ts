@@ -239,7 +239,7 @@ export class DoctorHomepageComponent implements OnInit {
         }
       ],
       theme: {
-        mode: "dark",
+        mode: "light",
         palette: "palette1"
       },
       chart: {

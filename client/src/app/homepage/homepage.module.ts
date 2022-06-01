@@ -5,8 +5,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { HomepageComponent } from './homepage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
-import { MaterialModule } from '../../material.module';
-
+import { MaterialModule } from 'src/material.module';
+import { CoreUIModule } from 'src/coreui.module';
 @NgModule({
     declarations: [HomepageComponent],
     imports: [
@@ -16,7 +16,8 @@ import { MaterialModule } from '../../material.module';
         HttpClientModule,
         ReactiveFormsModule,
         MatNativeDateModule,
-        MaterialModule
+        MaterialModule,
+        CoreUIModule
     ],
     exports: [HomepageComponent],
     providers: [],
