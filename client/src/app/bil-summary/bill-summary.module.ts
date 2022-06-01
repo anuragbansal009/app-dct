@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
-import { PatientListComponent } from './patient-list.component';
+import { BilSummaryComponent } from './bil-summary.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../../material.module';
@@ -12,7 +12,7 @@ import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
 
 @NgModule({
-    declarations: [PatientListComponent],
+    declarations: [BilSummaryComponent],
     imports: [
         BrowserAnimationsModule,
         BrowserModule,
@@ -26,8 +26,8 @@ import {MatDialogModule} from '@angular/material/dialog';
         MatPaginatorModule,
         MatDialogModule
     ],
-    exports: [PatientListComponent],
+    exports: [BilSummaryComponent],
     providers: [],
-    bootstrap: [PatientListComponent],
+    bootstrap: [BilSummaryComponent],
 })
-export class PatientListModule { }
+export class BilSummaryModule { }

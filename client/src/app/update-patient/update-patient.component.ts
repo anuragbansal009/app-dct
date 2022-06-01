@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient } from '@angular/common/http';
+import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -8,7 +8,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { Observable } from 'rxjs-compat/Observable';
+import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
+
 
 @Component({
   selector: 'app-update-patient',
@@ -28,20 +30,31 @@ export class UpdatePatientComponent implements OnInit {
   id:any
   patient:any
 
-  createForm() {
-    this.formGroup = this.formBuilder.group({
-      name: [null, Validators.required, this.checkInUseUsername,],
-      gender: [null, Validators.required],
-      dob: [null, Validators.required],
-      age: [null, Validators.required],
-      mobile: [null, Validators.required],
-      email: [null, Validators.required],
-      bloodgroup: [null, Validators.required],
-      city: [null, Validators.required],
-      pin: [null, Validators.required],
-      doctor_name: [null, Validators.required],
-    });
-  }
+  inputname: any
+  inputemail: any
+  inputmobile: any
+  inputgender: any
+  inputdob: any
+  inputage: any
+  inputbloodgroup: any
+  inputcity: any
+  inputpin: any
+  inputdoctor: any
+
+  // createForm() {
+  //   this.formGroup = this.formBuilder.group({
+  //     name: [this.inputname, Validators.required, this.checkInUseUsername,],
+  //     gender: [this.inputgender, Validators.required],
+  //     dob: [this.inputdob, Validators.required],
+  //     age: [this.inputage, Validators.required],
+  //     mobile: [this.inputmobile, Validators.required],
+  //     email: [this.inputemail, Validators.required],
+  //     bloodgroup: [this.inputbloodgroup, Validators.required],
+  //     city: [this.inputcity, Validators.required],
+  //     pin: [this.inputpin, Validators.required],
+  //     doctor_name: [this.inputdoctor, Validators.required],
+  //   });
+  // }
 
   get name() {
     return this.formGroup.get('name') as FormControl;
@@ -50,15 +63,48 @@ export class UpdatePatientComponent implements OnInit {
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private router: Router) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    
     this.id = this.route.snapshot.params['id'];
 
-    this.http.post('http://localhost:5000/api/patient/getid', {_id: this.id}).subscribe((response)=>{
-      this.patient = response
-      console.log(this.patient)
+    this.http.post('http://localhost:5000/api/patient/getid', {_id: this.id}).subscribe((res)=>{
+    this.patient = res
+
+    console.log(this.patient)
+    
+    this.inputname = this.patient[0].name
+    this.inputemail = this.patient[0].email
+    this.inputmobile = this.patient[0].mobile
+    this.inputgender = this.patient[0].gender
+    this.inputdob = this.patient[0].dob
+    this.inputage = this.patient[0].age
+    this.inputbloodgroup = this.patient[0].bloodgroup
+    this.inputcity = this.patient[0].city
+    this.inputpin = this.patient[0].pin
+    this.inputdoctor = this.patient[0].doctor_name
+
+    this.formGroup = this.formBuilder.group({
+      name: [this.inputname, Validators.required, this.checkInUseUsername,],
+      gender: [this.inputgender, Validators.required],
+      dob: [this.inputdob, Validators.required],
+      age: [this.inputage, Validators.required],
+      mobile: [this.inputmobile, Validators.required],
+      email: [this.inputemail, Validators.required],
+      bloodgroup: [this.inputbloodgroup, Validators.required],
+      city: [this.inputcity, Validators.required],
+      pin: [this.inputpin, Validators.required],
+      doctor_name: [this.inputdoctor, Validators.required],
+    });
+
+
     })
+
+    // this.createForm();
+
+    console.log(this.id)
   }
 
   checkPassword(control: any) {
@@ -102,7 +148,7 @@ export class UpdatePatientComponent implements OnInit {
     this.showError = false;
     this.http.post(this.patientRegistrationAPI, post).subscribe({
       next: res => {
-        console.log('Patient Created')
+        console.log('Patient Updated')
         this.showSuccess = true;
         window.location.replace(environment.doctorHomepage)
       },
@@ -123,6 +169,12 @@ export class UpdatePatientComponent implements OnInit {
       }
 
     })
+  }
+
+  handleEvent()
+  {
+    
+    this.router.navigate(['patientlist']);
   }
 
 

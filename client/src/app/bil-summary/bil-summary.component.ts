@@ -7,7 +7,6 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog } from '@angular/material/dialog';
 
-
 export interface PeriodicElement {
   name: string;
   age: number;
@@ -27,11 +26,11 @@ export interface PeriodicElement {
 const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
-  selector: 'app-patient-list',
-  templateUrl: './patient-list.component.html',
-  styleUrls: ['./patient-list.component.css']
+  selector: 'app-bil-summary',
+  templateUrl: './bil-summary.component.html',
+  styleUrls: ['./bil-summary.component.css']
 })
-export class PatientListComponent implements AfterViewInit {
+export class BilSummaryComponent implements AfterViewInit {
 
 
 
@@ -44,7 +43,7 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
 
-  displayedColumns: string[] = ['position', 'name', 'age','gender', 'email','doctor', 'update', 'bill'];
+  displayedColumns: string[] = ['allocateid','name', 'email', 'doctor','consultation'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient,private router: Router, public dialog: MatDialog) { }
@@ -61,7 +60,7 @@ export class PatientListComponent implements AfterViewInit {
 
   getallpatients()
   {
-    this.http.get('http://localhost:5000/api/patient/get').subscribe((res) => {
+    this.http.get('http://localhost:5000/api/patient/billsummary').subscribe((res) => {
 
       this.list = res
       console.log(this.list)
@@ -82,15 +81,6 @@ export class PatientListComponent implements AfterViewInit {
     }
   }
 
-  updateEmployee(id: number){
-    this.router.navigate(['update-patient', id]);
-  }
-
-  handleBill(id:number)
-  { 
-    this.router.navigate(['bill', id]);
-  }
-
   handleclick()
   { 
     this.router.navigate(['doctorhomepage']);
@@ -98,5 +88,4 @@ export class PatientListComponent implements AfterViewInit {
   
 
 }
-
 

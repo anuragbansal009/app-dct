@@ -1,1 +1,83 @@
-<p>bill works!</p>
+<div>
+
+  <h1 class="display-3 text-center heading my-3">Patient Bill</h1>
+
+  <div *ngIf="!post" novalidate>
+      <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
+
+
+          <mat-form-field appearance="outline" class="form-element">
+              <mat-label>Name</mat-label>
+              <input matInput placeholder="Name" value={{inputname}} formControlName="name">
+              <mat-error *ngIf="!formGroup.controls['name'].valid && formGroup.controls['name'].touched">
+                  {{ getErrorUsername() }}
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-element">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Email" value={{inputemail}} formControlName="email">
+              <mat-error *ngIf="formGroup.controls['email'].touched">
+                  {{ titleAlert }}
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-element">
+              <mat-label>Gender</mat-label>
+              <input matInput placeholder="Gender" value={{inputgender}} formControlName="gender">
+              <mat-error *ngIf="formGroup.controls['gender'].touched">
+                  {{ titleAlert }}
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-element">
+              <mat-label>DOB</mat-label>
+              <input matInput placeholder="DOB" value={{inputdob}} formControlName="dob">
+              <mat-error *ngIf="formGroup.controls['dob'].touched">
+                  {{ titleAlert }}
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-element">
+              <mat-label>Age</mat-label>
+              <input matInput placeholder="Age" value={{inputage}} formControlName="age">
+              <mat-error *ngIf="formGroup.controls['age'].touched">
+                  {{ titleAlert }}
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-element">
+              <mat-label>Doctor Name</mat-label>
+              <input matInput placeholder="Doctor Name" value={{inputdoctor}} formControlName="doctor_name">
+              <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
+                  {{ titleAlert }}
+              </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="form-element">
+            <mat-label>Patient ID</mat-label>
+            <input matInput placeholder="Doctor Name" value={{allocateid}} formControlName="allocateid">
+            <mat-error *ngIf="formGroup.controls['allocateid'].touched">
+                {{ titleAlert }}
+            </mat-error>
+        </mat-form-field>
+
+          <div class="form-element">
+              <button mat-raised-button color="primary" type="submit" class="button"
+                  [disabled]="!formGroup.valid">Submit</button>
+          </div>
+
+          <div class="form-element">
+              <button mat-raised-button color="primary" type="submit" class="button"
+                  (click)="handleEvent()">Cancel</button>
+          </div>
+          <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+              User Created Successfully
+          </div>
+          <div class="alert alert-danger" role="alert" *ngIf="showError">
+              {{ errorString }}
+          </div>
+
+      </form>
+  </div>
+</div>

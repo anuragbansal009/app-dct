@@ -61,6 +61,17 @@ router.post('/patient/bill',async (req, res) => {
 
 })
 
+router.get('/patient/billsummary', async (req, res) =>{
+    try {
+        const bills = await Bill.find()
+
+        res.json(bills)
+        
+    } catch (error) {
+        res.status(500).send("Error occured");
+    }
+})
+
 
 module.exports = router
 

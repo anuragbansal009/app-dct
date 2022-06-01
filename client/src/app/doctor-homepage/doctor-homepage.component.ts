@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, TemplateRef, ChangeDetectionStrategy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Router } from '@angular/router';
 import {
   ChartComponent,
   ApexAxisChartSeries,
@@ -168,6 +169,11 @@ export class DoctorHomepageComponent implements OnInit {
     window.location.replace(environment.patientlist);
   }
 
+  handlebillsummary()
+  { 
+    this.router.navigate(['billsummary']);
+  }
+
   eventTimesChanged({
     event,
     newStart,
@@ -224,7 +230,7 @@ export class DoctorHomepageComponent implements OnInit {
 
   public chartOptions1: ChartOptions;
 
-  constructor(private modal: NgbModal) {
+  constructor(private modal: NgbModal, private router: Router) {
     this.chartOptions1 = {
       series: [
         {

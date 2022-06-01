@@ -5,11 +5,11 @@ const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctor');
 const MongoClient = require('mongodb').MongoClient;
 const mongoURI = "mongodb://localhost:27017/hospital?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
-var database 
+var database
 
 
-MongoClient.connect(mongoURI,{useNewUrlParser:true}, (err, res)=>{
-    if(err) throw err;
+MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, res) => {
+    if (err) throw err;
     database = res.db('hospital')
 })
 
@@ -46,7 +46,7 @@ router.post('/patient/create', [
             doctor_name,
         } = req.body;
 
-        lastPatient = await database.collection('patients').findOne({}, {sort:{_id:-1}});
+        lastPatient = await database.collection('patients').findOne({}, { sort: { _id: -1 } });
 
         position = lastPatient.position + 1
         allocateid = doctor.allocateid.concat(String(position))
@@ -83,11 +83,11 @@ router.get('/patient/get', async (req, res) => {
         const patients = await Patient.find()
 
         res.send(patients)
-        
+
     } catch (error) {
 
         res.status(500).send("Error occured");
-        
+
     }
 })
 
@@ -96,15 +96,75 @@ router.post('/patient/getid', async (req, res) => {
 
         const id = req.body
 
-        const patient = await Patient.find({_id: id })
+        const patient = await Patient.find({ _id: id })
 
         res.json(patient)
-        
+
     } catch (error) {
 
         res.status(500).send("Error occured");
-        
+
     }
+})
+
+router.post('/patient/updatepatient/:id', async (req, res) => {
+    const {
+        name,
+        gender,
+        dob,
+        age,
+        mobile,
+        email,
+        bloodgroup,
+        city,
+        pin,
+        doctor_name
+    } = req.body;
+
+    try {
+        const newPatient = {};
+        if (name) {
+            newPatient.name = name;
+        }
+        if (gender) {
+            newPatient.gender = gender;
+        }
+        if (dob) {
+            newPatient.dob = dob;
+        }
+        if (age) {
+            newPatient.age = age;
+        }
+        if (mobile) {
+            newPatient.mobile = mobile;
+        }
+        if (email) {
+            newPatient.email = email;
+        }
+        if (bloodgroup) {
+            newPatient.bloodgroup = bloodgroup;
+        }
+
+        if (city) {
+            newPatient.city = city;
+        }
+        if (pin) {
+            newPatient.pin = pin;
+        }
+        if (doctor_name) {
+            newPatient.doctor_name = doctor_name;
+        }
+
+        let patient = await Patient.findById(req.params.id)
+
+        patient = await Patient.findByIdAndUpdate(req.params.id, { $set: newPatient }, { new: true })
+        res.json({ patient });
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error occured");
+    }
+
 })
 
 module.exports = router

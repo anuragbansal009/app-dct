@@ -14,6 +14,10 @@ import { ForgotModule } from './forgot/forgot.module';
 import { DoctorHomepageModule } from './doctor-homepage/doctor-homepage.module';
 import { PatientRegistrationModule } from './patient-registration/patient-registration.module';
 import { PatientListModule } from './patient-list/patient-list.module';
+import { UpdatePatientModule } from './update-patient/update-patient.module';
+import { BillModule } from './bill/bill.module';
+import { BilSummaryModule } from './bil-summary/bill-summary.module';
+
 
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
 
@@ -26,6 +30,7 @@ import { PatientListModule } from './patient-list/patient-list.module';
     BrowserModule,
     AppRoutingModule,
     ForgotModule,
+    BilSummaryModule,
     BrowserAnimationsModule,
     MaterialModule,
     AdminRegistrationModule,
@@ -33,8 +38,10 @@ import { PatientListModule } from './patient-list/patient-list.module';
     PatientRegistrationModule,
     AdminLoginModule,
     HomepageModule,
+    BillModule,
     PatientListModule,
     DoctorLoginModule,
+    UpdatePatientModule,
     DoctorHomepageModule,
   ],
   providers: [],
