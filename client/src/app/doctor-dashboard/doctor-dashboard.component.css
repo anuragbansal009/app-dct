@@ -1,0 +1,20 @@
+h5 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.cardIcons {
+    font-size: 36px;
+    float: left;
+    line-height: 0.5;
+}
+
+.buttonIcons {
+    float: left;
+    margin-right: 5px;
+}
+
+mat-progress-bar {
+    margin-top: 8px;
+  }

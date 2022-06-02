@@ -6,8 +6,7 @@ import { HomepageComponent } from './homepage.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from 'src/material.module';
-import { CoreUIModule } from 'src/coreui.module';
-@NgModule({
+import { CoreUIModule } from 'src/coreui.module';@NgModule({
     declarations: [HomepageComponent],
     imports: [
         BrowserAnimationsModule,
@@ -17,7 +16,7 @@ import { CoreUIModule } from 'src/coreui.module';
         ReactiveFormsModule,
         MatNativeDateModule,
         MaterialModule,
-        CoreUIModule
+        CoreUIModule,
     ],
     exports: [HomepageComponent],
     providers: [],
