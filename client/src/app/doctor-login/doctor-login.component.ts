@@ -8,6 +8,7 @@ import {
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { RecaptchaComponent,RecaptchaErrorParameters, RecaptchaFormsModule } from 'ng-recaptcha';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-doctor-login',
@@ -27,7 +28,7 @@ export class DoctorLoginComponent implements OnInit {
   recaptchaPublicKey: string = environment.recaptcha.siteKey;
 
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -58,7 +59,7 @@ export class DoctorLoginComponent implements OnInit {
         this.user = res
         localStorage.setItem("currentDoctor", JSON.stringify(this.user));
         console.log("Login Successful");
-        window.location.replace(environment.doctorHomepage);
+        this.router.navigate(['doctordashboard']);
       },
       error: error => {
         this.showError = true
