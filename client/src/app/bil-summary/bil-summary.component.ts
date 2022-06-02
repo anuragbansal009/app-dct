@@ -43,7 +43,7 @@ export class BilSummaryComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
 
-  displayedColumns: string[] = ['allocateid','name', 'email', 'doctor','consultation'];
+  displayedColumns: string[] = ['allocateid','name', 'doctor','gender', 'mobile', 'update', 'view'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient,private router: Router, public dialog: MatDialog) { }

@@ -8,21 +8,33 @@ const BillSchema = new Schema({
         type: String,
         required: true,
     },
+    gender:{
+        type: String,
+        required: true,
+    },
     doctor_name: {
         type: String,
         required: true
     },
     consultation: {
         type: String,
-        required: true,
     },
     mobile: {
         type: Number,
         required: true
     },
-    email: {
+    medicines: {
         type: String,
-        required: true
+    },
+    advice: {
+        type: String,
+
+    },
+    nextvisit: {
+        type: String,
+    },
+    labcharges: {
+        type: String,
     },
     allocateid: {
         type: String,

@@ -4,6 +4,7 @@ const { body, validationResult } = require('express-validator');
 const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctor');
 const MongoClient = require('mongodb').MongoClient;
+const Bill = require('../models/Bill');
 const mongoURI = "mongodb://localhost:27017/hospital?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
 var database
 
@@ -17,7 +18,6 @@ router.post('/patient/create', [
 
     body('name', 'Enter a valid user name').isLength({ min: 4 }),
     body('mobile', 'Enter a valid Mobile Number').isLength(10),
-    body('email', 'Enter a valid Email').isEmail(),
 
 ], async (req, res) => {
 
@@ -36,14 +36,14 @@ router.post('/patient/create', [
         const {
             name,
             gender,
-            dob,
             age,
             mobile,
-            email,
             bloodgroup,
             city,
             pin,
             doctor_name,
+            slotdate,
+            time,
         } = req.body;
 
         lastPatient = await database.collection('patients').findOne({}, { sort: { _id: -1 } });
@@ -55,7 +55,6 @@ router.post('/patient/create', [
 
             name: name,
             gender: gender,
-            dob: dob,
             age: age,
             mobile: mobile,
             email: email,
@@ -64,7 +63,10 @@ router.post('/patient/create', [
             pin: pin,
             doctor_name: doctor_name,
             allocateid: allocateid,
-            position: position
+            position: position,
+            slotdate: slotdate,
+            time: time,
+            status: false
 
         })
 
@@ -111,14 +113,14 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
     const {
         name,
         gender,
-        dob,
         age,
         mobile,
-        email,
         bloodgroup,
         city,
         pin,
-        doctor_name
+        doctor_name,
+        slotdate,
+        time,
     } = req.body;
 
     try {
@@ -129,20 +131,20 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
         if (gender) {
             newPatient.gender = gender;
         }
-        if (dob) {
-            newPatient.dob = dob;
-        }
         if (age) {
             newPatient.age = age;
         }
         if (mobile) {
             newPatient.mobile = mobile;
         }
-        if (email) {
-            newPatient.email = email;
-        }
         if (bloodgroup) {
             newPatient.bloodgroup = bloodgroup;
+        }
+        if (slotdate) {
+            newPatient.slotdate = slotdate;
+        }
+        if (bloodgroup) {
+            newPatient.time = time;
         }
 
         if (city) {

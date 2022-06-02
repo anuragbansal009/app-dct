@@ -31,10 +31,8 @@ export class UpdatePatientComponent implements OnInit {
   patient:any
 
   inputname: any
-  inputemail: any
   inputmobile: any
   inputgender: any
-  inputdob: any
   inputage: any
   inputbloodgroup: any
   inputcity: any
@@ -76,10 +74,8 @@ export class UpdatePatientComponent implements OnInit {
     console.log(this.patient)
     
     this.inputname = this.patient[0].name
-    this.inputemail = this.patient[0].email
     this.inputmobile = this.patient[0].mobile
     this.inputgender = this.patient[0].gender
-    this.inputdob = this.patient[0].dob
     this.inputage = this.patient[0].age
     this.inputbloodgroup = this.patient[0].bloodgroup
     this.inputcity = this.patient[0].city
@@ -89,10 +85,8 @@ export class UpdatePatientComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       name: [this.inputname, Validators.required, this.checkInUseUsername,],
       gender: [this.inputgender, Validators.required],
-      dob: [this.inputdob, Validators.required],
       age: [this.inputage, Validators.required],
       mobile: [this.inputmobile, Validators.required],
-      email: [this.inputemail, Validators.required],
       bloodgroup: [this.inputbloodgroup, Validators.required],
       city: [this.inputcity, Validators.required],
       pin: [this.inputpin, Validators.required],
@@ -150,7 +144,7 @@ export class UpdatePatientComponent implements OnInit {
       next: res => {
         console.log('Patient Updated')
         this.showSuccess = true;
-        window.location.replace(environment.doctorHomepage)
+        this.router.navigate(['doctordashboard']);
       },
       error: error => {
         if (error.status === 400) {
@@ -174,7 +168,7 @@ export class UpdatePatientComponent implements OnInit {
   handleEvent()
   {
     
-    this.router.navigate(['patientlist']);
+    this.router.navigate(['doctordashboard']);
   }
 
 

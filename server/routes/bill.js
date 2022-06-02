@@ -14,12 +14,14 @@ router.post('/patient/bill',async (req, res) => {
         const {
             name,
             allocateid,
+            medicines,
+            labcharges,
+            nextvisit,
+            advice,
             
         } = req.body;
 
         let patient = await Patient.findOne({ allocateid: allocateid });
-
-        console.log(patient.doctor_name);
 
         let doctor = await Doctor.findOne({ username: patient.doctor_name });
 
@@ -30,11 +32,16 @@ router.post('/patient/bill',async (req, res) => {
                 bill = await Bill.create({
 
                     name: name,
+                    gender: patient.gender,
+                    age: patient.age,
                     doctor_name: patient.doctor_name,
                     consultation: doctor.consultation,
                     mobile: patient.mobile,
-                    email: patient.email,
-                    allocateid: allocateid
+                    allocateid: allocateid,
+                    medicines: medicines,
+                    labcharges: labcharges,
+                    nextvisit: nextvisit,
+                    advice: advice,
         
                 })
                 patient.paid = true
@@ -71,6 +78,7 @@ router.get('/patient/billsummary', async (req, res) =>{
         res.status(500).send("Error occured");
     }
 })
+
 
 
 module.exports = router

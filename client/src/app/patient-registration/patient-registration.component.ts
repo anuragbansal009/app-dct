@@ -9,6 +9,7 @@ import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
+import { DateAdapter } from '@angular/material/core';
 
 @Component({
   selector: 'app-patient-registration',
@@ -26,7 +27,9 @@ export class PatientRegistrationComponent implements OnInit {
 
   hide = true;
 
-  constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient, private dateAdapter: DateAdapter<Date>) { 
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
+  }
 
   ngOnInit() {
     this.createForm();
@@ -36,15 +39,16 @@ export class PatientRegistrationComponent implements OnInit {
     this.formGroup = this.formBuilder.group({
       name: [null, Validators.required],
       gender: [null, Validators.required],
-      dob: [null, Validators.required],
       age: [null, Validators.required],
       mobile: [null, Validators.required],
-      email: [null, Validators.required],
       bloodgroup: [null, Validators.required],
       // allocate_id: [null, Validators.required],
       city: [null, Validators.required],
       pin: [null, Validators.required],
       doctor_name: [null, Validators.required],
+      slotdate: [null, Validators.required],
+      time: [null, Validators.required],
+
     });
   }
 
@@ -89,12 +93,13 @@ export class PatientRegistrationComponent implements OnInit {
   }
   handleclick()
   { 
-    this.router.navigate(['doctorhomepage']);
+    this.router.navigate(['doctordashboard']);
   }
 
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
+    console.log(post);
     this.http.post(this.patientRegistrationAPI, post).subscribe({
       next: res => {
         console.log('Patient Created')

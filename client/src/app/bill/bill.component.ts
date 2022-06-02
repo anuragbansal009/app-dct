@@ -31,9 +31,7 @@ export class BillComponent implements OnInit {
   patient:any
 
   inputname: any
-  inputemail: any
   inputgender: any
-  inputdob: any
   inputage: any
   inputdoctor: any
   allocateid: any
@@ -60,9 +58,7 @@ export class BillComponent implements OnInit {
     console.log(this.patient)
     
     this.inputname = this.patient[0].name
-    this.inputemail = this.patient[0].email
     this.inputgender = this.patient[0].gender
-    this.inputdob = this.patient[0].dob
     this.inputage = this.patient[0].age
     this.inputdoctor = this.patient[0].doctor_name
     this.allocateid = this.patient[0].allocateid
@@ -71,12 +67,14 @@ export class BillComponent implements OnInit {
 
     this.formGroup = this.formBuilder.group({
       name: [this.inputname, Validators.required, this.checkInUseUsername,],
-      email: [this.inputemail, Validators.required],
       gender: [this.inputgender, Validators.required],
-      dob: [this.inputdob, Validators.required],
       age: [this.inputage, Validators.required],
       doctor_name: [this.inputdoctor, Validators.required],
       allocateid: [this.allocateid, Validators.required],
+      medicines: [' ', Validators.required],
+      labcharges: [' ', Validators.required],
+      nextvisit: [' ', Validators.required],
+      advice: [' ', Validators.required],
     });
 
 
@@ -126,6 +124,7 @@ export class BillComponent implements OnInit {
     this.http.post('http://localhost:5000/api/patient/bill', {name: post.name, allocateid: post.allocateid}).subscribe((res)=>{
       console.log(res);
     })
+    this.router.navigate(['doctordashboard']);
     // this.showSuccess = false;
     // this.showError = false;
     // this.http.post(this.patientRegistrationAPI, post).subscribe({
@@ -156,7 +155,7 @@ export class BillComponent implements OnInit {
   handleEvent()
   {
     
-    this.router.navigate(['patientlist']);
+    this.router.navigate(['doctordashboard']);
   }
 
 

@@ -24,9 +24,14 @@
       </ng-container>
 
       <!-- Name Column -->
-      <ng-container matColumnDef="email">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> email </th>
-        <td mat-cell *matCellDef="let row"> {{row.email}} </td>
+      <ng-container matColumnDef="gender">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> gender </th>
+        <td mat-cell *matCellDef="let row"> {{row.gender}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="mobile">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> mobile </th>
+        <td mat-cell *matCellDef="let row"> {{row.mobile}} </td>
       </ng-container>
 
       <ng-container matColumnDef="doctor">
@@ -37,6 +42,21 @@
       <ng-container matColumnDef="consultation">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> consultation </th>
         <td mat-cell *matCellDef="let row"> {{row.consultation}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="update">
+        <th mat-header-cell *matHeaderCellDef> Update </th>
+        <td mat-cell *matCellDef="let row"> <button  mat-icon-button color="primary"
+            aria-label="Example icon-button with a heart icon">
+            <mat-icon>edit</mat-icon>
+          </button> </td>
+
+      </ng-container>
+
+      <ng-container matColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef> Details </th>
+        <td mat-cell *matCellDef="let row"> <button mat-stroked-button color="primary">Details</button></td>
+
       </ng-container>
 
 

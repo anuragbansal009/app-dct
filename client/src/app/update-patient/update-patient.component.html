@@ -15,25 +15,9 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Email</mat-label>
-                <input matInput placeholder="Email" value={{inputemail}} formControlName="email">
-                <mat-error *ngIf="formGroup.controls['email'].touched">
-                    {{ titleAlert }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-element">
                 <mat-label>Gender</mat-label>
                 <input matInput placeholder="Gender" value={{inputgender}} formControlName="gender">
                 <mat-error *ngIf="formGroup.controls['gender'].touched">
-                    {{ titleAlert }}
-                </mat-error>
-            </mat-form-field>
-
-            <mat-form-field appearance="outline" class="form-element">
-                <mat-label>DOB</mat-label>
-                <input matInput placeholder="DOB" value={{inputdob}} formControlName="dob">
-                <mat-error *ngIf="formGroup.controls['dob'].touched">
                     {{ titleAlert }}
                 </mat-error>
             </mat-form-field>
@@ -88,7 +72,7 @@
 
             <div class="form-element">
                 <button mat-raised-button color="primary" type="submit" class="button"
-                    [disabled]="!formGroup.valid">Register</button>
+                    [disabled]="!formGroup.valid">Save</button>
             </div>
 
             <div class="form-element">
