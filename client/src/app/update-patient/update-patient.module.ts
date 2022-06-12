@@ -6,6 +6,7 @@ import { UpdatePatientComponent } from './update-patient.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../../material.module';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [UpdatePatientComponent],
@@ -14,6 +15,7 @@ import { MaterialModule } from '../../material.module';
         BrowserModule,
         FormsModule,
         HttpClientModule,
+        MatSnackBarModule,
         ReactiveFormsModule,
         MatNativeDateModule,
         MaterialModule

@@ -5,7 +5,7 @@ const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctor');
 const Bill = require('../models/Bill');
 
-router.post('/patient/bill', async (req, res) => {
+router.post('/patient/bill/:id', async (req, res) => {
 
 
     try {
@@ -13,52 +13,69 @@ router.post('/patient/bill', async (req, res) => {
 
         const {
             name,
-            allocateid,
-            medicines,
+            gender,
+            age,
+            doctor_name,
             labcharges,
-            nextvisit,
             advice,
 
         } = req.body;
 
         let bill
 
-        let patient = await Patient.findOne({ allocateid: allocateid });
+        let patient = await Patient.findById(req.params.id);
 
         let doctor = await Doctor.findOne({ username: patient.doctor_name });
 
-        let patientbill = await Bill.findOne({ allocateid: allocateid });
+        let patientbill = await Bill.findOne({ allocateid: patient.allocateid });
 
         if (patientbill) {
-            bill = await Bill.findOneAndUpdate(
+            const newBill = {};
+
+            if (name) {
+                newBill.name = name;
+            }
+            if (gender) {
+                newBill.gender = gender;
+            }
+            if (age) {
+                newBill.age = age;
+            }
+            if (doctor_name) {
+                newBill.doctor_name = doctor_name;
+            }
+            if (labcharges) {
+                newBill.labcharges = labcharges;
+            }
+            if (advice) {
+                newBill.advice = advice;
+            }
+
+            let bill = await Bill.findOneAndUpdate(
                 {
-                    allocateid: allocateid
+                    _id: req.params.id
                 },
                 {
-                    medicines: medicines,
-                    labcharges: labcharges,
-                    nextvisit: nextvisit,
-                    advice: advice,
+                    $set: newBill
                 }
             )
 
-            if (labcharges == null) {
+            if (newBill.labcharges == null) {
                 updatepatient = await Patient.findOneAndUpdate(
                     {
-                        allocateid: allocateid
+                        _id: req.params.id
                     },
                     {
-
-                        status: "Consultaion Charge"
+                        status: "Partial"
                     }
                 )
 
             }
-            else {
+            if(newBill.labcharges !== null) {
 
                 updatepatient = await Patient.findOneAndUpdate(
                     {
-                        allocateid: allocateid
+                        _id: req.params.id
                     },
                     {
 
@@ -79,24 +96,22 @@ router.post('/patient/bill', async (req, res) => {
                 if (doctor) {
                     bill = await Bill.create({
 
-                        name: name,
+                        name: patient.name,
                         gender: patient.gender,
                         age: patient.age,
                         doctor_name: patient.doctor_name,
                         consultation: doctor.consultation,
                         mobile: patient.mobile,
-                        allocateid: allocateid,
-                        medicines: medicines,
+                        allocateid: patient.allocateid,
                         labcharges: labcharges,
-                        nextvisit: nextvisit,
                         advice: advice,
                         _id: patient._id
 
                     })
-                    if (labcharges == null) {
+                    if (bill.labcharges == null) {
                         updatepatient = await Patient.findOneAndUpdate(
                             {
-                                allocateid: allocateid
+                                _id: req.params.id
                             },
                             {
 
@@ -109,7 +124,7 @@ router.post('/patient/bill', async (req, res) => {
 
                         updatepatient = await Patient.findOneAndUpdate(
                             {
-                                allocateid: allocateid
+                                _id: req.params.id
                             },
                             {
 
@@ -149,16 +164,15 @@ router.post('/bill/getid', async (req, res) => {
 
         const bill = await Bill.find({ _id: id })
 
-        if(bill)
-        {
+        if (bill) {
             res.json(bill)
 
         }
-        else{
+        else {
             res.json("Not found")
         }
 
-        
+
 
     } catch (error) {
 
