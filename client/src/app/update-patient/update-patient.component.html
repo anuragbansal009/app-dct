@@ -9,9 +9,6 @@
             <mat-form-field appearance="outline" class="form-element">
                 <mat-label>Name</mat-label>
                 <input matInput placeholder="Name" value={{inputname}} formControlName="name">
-                <mat-error *ngIf="!formGroup.controls['name'].valid && formGroup.controls['name'].touched">
-                    {{ getErrorUsername() }}
-                </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-element">
@@ -72,7 +69,7 @@
 
             <div class="form-element">
                 <button mat-raised-button color="primary" type="submit" class="button"
-                    [disabled]="!formGroup.valid">Save</button>
+                    >Save</button>
             </div>
 
             <div class="form-element">

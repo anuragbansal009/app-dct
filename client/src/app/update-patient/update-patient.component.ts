@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
+import { MatDialog } from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -10,6 +10,7 @@ import {
 import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -27,78 +28,55 @@ export class UpdatePatientComponent implements OnInit {
   errorString: string = 'Error! Please Try Again';
   patientRegistrationAPI = environment.patientRegistrationAPI;
 
-  id:any
-  patient:any
+  id: any
+  patient: any
 
-  inputname: any
-  inputmobile: any
-  inputgender: any
-  inputage: any
-  inputbloodgroup: any
-  inputcity: any
-  inputpin: any
-  inputdoctor: any
-
-  // createForm() {
-  //   this.formGroup = this.formBuilder.group({
-  //     name: [this.inputname, Validators.required, this.checkInUseUsername,],
-  //     gender: [this.inputgender, Validators.required],
-  //     dob: [this.inputdob, Validators.required],
-  //     age: [this.inputage, Validators.required],
-  //     mobile: [this.inputmobile, Validators.required],
-  //     email: [this.inputemail, Validators.required],
-  //     bloodgroup: [this.inputbloodgroup, Validators.required],
-  //     city: [this.inputcity, Validators.required],
-  //     pin: [this.inputpin, Validators.required],
-  //     doctor_name: [this.inputdoctor, Validators.required],
-  //   });
-  // }
-
-  get name() {
-    return this.formGroup.get('name') as FormControl;
-  }
+  inputname: any = ''
+  inputmobile: any = ''
+  inputgender: any = ''
+  inputage: any = ''
+  inputbloodgroup: any = ''
+  inputcity: any = ''
+  inputpin: any = ''
+  inputdoctor: any = ''
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private router: Router) { }
 
   ngOnInit() {
-    
+
     this.id = this.route.snapshot.params['id'];
 
-    this.http.post('http://localhost:5000/api/patient/getid', {_id: this.id}).subscribe((res)=>{
-    this.patient = res
+    this.http.post('http://localhost:5000/api/patient/getallocateid', { allocateid: this.id }).subscribe((res) => {
+      this.patient = res
 
-    console.log(this.patient)
-    
-    this.inputname = this.patient[0].name
-    this.inputmobile = this.patient[0].mobile
-    this.inputgender = this.patient[0].gender
-    this.inputage = this.patient[0].age
-    this.inputbloodgroup = this.patient[0].bloodgroup
-    this.inputcity = this.patient[0].city
-    this.inputpin = this.patient[0].pin
-    this.inputdoctor = this.patient[0].doctor_name
-
-    this.formGroup = this.formBuilder.group({
-      name: [this.inputname, Validators.required, this.checkInUseUsername,],
-      gender: [this.inputgender, Validators.required],
-      age: [this.inputage, Validators.required],
-      mobile: [this.inputmobile, Validators.required],
-      bloodgroup: [this.inputbloodgroup, Validators.required],
-      city: [this.inputcity, Validators.required],
-      pin: [this.inputpin, Validators.required],
-      doctor_name: [this.inputdoctor, Validators.required],
-    });
-
+      this.inputname = this.patient[0].name
+      this.inputmobile = this.patient[0].mobile
+      this.inputgender = this.patient[0].gender
+      this.inputage = this.patient[0].age
+      this.inputbloodgroup = this.patient[0].bloodgroup
+      this.inputcity = this.patient[0].city
+      this.inputpin = this.patient[0].pin
+      this.inputdoctor = this.patient[0].doctor_name
 
     })
 
-    // this.createForm();
+    this.formGroup = this.formBuilder.group({
+      name: [this.inputname],
+      gender: [this.inputgender],
+      age: [this.inputage],
+      mobile: [this.inputmobile],
+      bloodgroup: [this.inputbloodgroup],
+      city: [this.inputcity],
+      pin: [this.inputpin],
+      doctor_name: [this.inputdoctor],
+    });
 
-    console.log(this.id)
+    // this.createForm();
   }
 
   checkPassword(control: any) {
@@ -136,13 +114,17 @@ export class UpdatePatientComponent implements OnInit {
         ? 'Password needs to be at least eight characters, one uppercase letter and one number'
         : '';
   }
-  
+
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
-    this.http.post(this.patientRegistrationAPI, post).subscribe({
+    console.log(post);
+    this.http.post(`http://localhost:5000/api/patient/updatepatient/${this.id}`, post).subscribe({
       next: res => {
         console.log('Patient Updated')
+        this.snackBar.open('Patient Updated Successfully', 'Close', {
+          duration: 3000,
+        });
         this.showSuccess = true;
         this.router.navigate(['doctordashboard']);
       },
@@ -165,9 +147,8 @@ export class UpdatePatientComponent implements OnInit {
     })
   }
 
-  handleEvent()
-  {
-    
+  handleEvent() {
+
     this.router.navigate(['doctordashboard']);
   }
 

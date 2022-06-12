@@ -179,10 +179,20 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
             newPatient.doctor_name = doctor_name;
         }
 
-        let patient = await Patient.findById(req.params.id)
+        console.log(req.params.id)
 
-        patient = await Patient.findByIdAndUpdate(req.params.id, { $set: newPatient }, { new: true })
-        res.json({ patient });
+        // let patient = await Patient.findOneAndUpdate(req.params.id, { $set: newPatient }, { new: true })
+
+        let patient = await Patient.findOneAndUpdate(
+            {
+                allocateid: req.params.id
+            },
+            {
+               $set: newPatient 
+            }
+        )
+        
+        res.json(patient);
 
     } catch (err) {
         console.log(err.message);
