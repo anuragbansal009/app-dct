@@ -18,7 +18,8 @@ import { environment } from './../../environments/environment';
   styleUrls: ['./bill.component.css']
 })
 export class BillComponent implements OnInit {
-
+  
+  color = 'primary';
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
@@ -41,7 +42,7 @@ export class BillComponent implements OnInit {
   nextvisit: any = null
   advice: any = null
   bill: any;
-
+  services: any;
   data: any;
 
   constructor(private http: HttpClient,
@@ -51,6 +52,11 @@ export class BillComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit() {
+
+    this.http.get(environment.servicesGet).subscribe((res) => {
+      this.services = res;
+      console.log(this.data);
+    });
 
     this.id = this.route.snapshot.params['id'];
 

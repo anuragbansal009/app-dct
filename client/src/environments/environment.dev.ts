@@ -16,4 +16,6 @@ export const environment = {
     siteKey: '6LdfWRYgAAAAAO64AMfigSwfKz5-5uxZrNGiBVBK',
   },
   patientlist: 'http://localhost:4200/patientlist',
+  servicesAdd: 'http://localhost:5000/api/services/add',
+  servicesGet: 'http://localhost:5000/api/services/get',
 };

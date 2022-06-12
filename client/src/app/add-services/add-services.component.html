@@ -1,0 +1,43 @@
+<div class="container-fluid">
+    <h1 class="display-3 text-center heading my-3">Add Services</h1>
+    <div *ngIf="!post" novalidate>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-10">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>Service</mat-label>
+                            <input matInput placeholder="Service" formControlName="service">
+                            <mat-error *ngIf="formGroup.controls['service'].touched">
+                                {{ titleAlert }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-2">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>Charges</mat-label>
+                            <input matInput type="number" placeholder="Charges" formControlName="charges">
+                            <span matPrefix class="rupeePrefix">₹&nbsp;</span>
+                            <mat-error *ngIf="formGroup.controls['charges'].touched">
+                                {{ titleAlert }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-element">
+                    <button mat-raised-button color="primary" type="submit" class="button"
+                        [disabled]="!formGroup.valid">Submit</button>
+                </div>
+                <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+                    Service Added Successfully
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="showError">
+                    {{ errorString }}
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>

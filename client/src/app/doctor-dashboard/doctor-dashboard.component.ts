@@ -35,6 +35,10 @@ const colors: any = {
     primary: '#e3bc08',
     secondary: '#FDF1BA',
   },
+  green: {
+    primary: '#00ff00',
+    secondary: '#00ff00',
+  }
 };
 @Component({
   selector: 'app-doctor-dashboard',
@@ -99,41 +103,31 @@ export class DoctorDashboardComponent implements OnInit {
 
   events: CalendarEvent[] = [
     {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
+      start: new Date('Tue Jun 12 2022 14:00:57 GMT+0530 (India Standard Time)'),
+      end: new Date('Tue Jun 12 2022 14:30:57 GMT+0530 (India Standard Time)'),
+      title: 'Skin - Mbappe',
+      color: colors.green,
       draggable: true,
     },
     {
-      start: startOfDay(new Date()),
-      title: 'An event with no end date',
-      color: colors.yellow,
-      actions: this.actions,
+      start: new Date('Tue Jun 14 2022 13:00:57 GMT+0530 (India Standard Time)'),
+      end: new Date('Tue Jun 14 2022 19:00:57 GMT+0530 (India Standard Time)'),
+      title: 'Ortho - Neymar',
+      color: colors.red,
+      draggable: true,
     },
     {
-      start: subDays(endOfMonth(new Date()), 3),
-      end: addDays(endOfMonth(new Date()), 3),
-      title: 'A long event that spans 2 months',
+      start: new Date('Mon Jun 13 2022 15:00:04 GMT+0530 (India Standard Time)'),
+      end: new Date('Mon Jun 13 2022 16:00:04 GMT+0530 (India Standard Time)'),
+      title: 'ENT - Cristiano',
+      color: colors.yellow,
+      draggable: true,
+    },
+    {
+      start: new Date('Mon Jun 15 2022 12:00:04 GMT+0530 (India Standard Time)'),
+      end: new Date('Mon Jun 15 2022 13:00:04 GMT+0530 (India Standard Time)'),
+      title: 'Dermatology - Lionel',
       color: colors.blue,
-      allDay: true,
-    },
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
       draggable: true,
     },
   ];
@@ -174,8 +168,8 @@ export class DoctorDashboardComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
-    this.modal.open(this.modalContent, { size: 'lg' });
+    // this.modalData = { event, action };
+    // this.modal.open(this.modalContent, { size: 'lg' });
   }
 
   addEvent(): void {
@@ -214,6 +208,7 @@ export class DoctorDashboardComponent implements OnInit {
   patientCount: number = 100;
   totalBillAmount: string = '$10000';
   isBillSummaryShowing = false;
+  isAddServicesShowing = false;
 
   togglePatientRegistration() {
     this.isPatientRegistrationShowing = !this.isPatientRegistrationShowing;
@@ -225,5 +220,8 @@ export class DoctorDashboardComponent implements OnInit {
 
   toggleBillSummary() {
     this.isBillSummaryShowing = !this.isBillSummaryShowing;
+  }
+  toggleAddServices() {
+    this.isAddServicesShowing = !this.isAddServicesShowing;
   }
 }
