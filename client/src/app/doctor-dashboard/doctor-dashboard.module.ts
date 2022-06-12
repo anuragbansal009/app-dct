@@ -13,6 +13,13 @@ import { CoreUIModule } from 'src/coreui.module';
 import { PatientRegistrationModule } from '../patient-registration/patient-registration.module';
 import { PatientListModule } from '../patient-list/patient-list.module';
 import { BilSummaryModule } from '../bil-summary/bill-summary.module';
+import { AddServicesModule } from '../add-services/add-services.module';
+import {
+    NgxMatDatetimePickerModule,
+    NgxMatNativeDateModule,
+    NgxMatTimepickerModule
+  } from '@angular-material-components/datetime-picker';
+
 @NgModule({
     declarations: [DoctorDashboardComponent],
     imports: [
@@ -24,6 +31,9 @@ import { BilSummaryModule } from '../bil-summary/bill-summary.module';
         MatNativeDateModule,
         MaterialModule,
         NgApexchartsModule,
+        NgxMatDatetimePickerModule,
+        NgxMatNativeDateModule,
+        NgxMatTimepickerModule,
         CalendarModule.forRoot({
             provide: DateAdapter,
             useFactory: adapterFactory,
@@ -31,7 +41,8 @@ import { BilSummaryModule } from '../bil-summary/bill-summary.module';
         CoreUIModule,
         PatientRegistrationModule,
         PatientListModule,
-        BilSummaryModule
+        BilSummaryModule,
+        AddServicesModule
         
     ],
     exports: [DoctorDashboardComponent],

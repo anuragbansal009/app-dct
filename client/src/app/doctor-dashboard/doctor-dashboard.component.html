@@ -1,129 +1,135 @@
-<div @slideOutIn *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing)">
-    <div class="container-fluid my-3">
-        <div class="row">
-            <div class="col-md-4">
-                <c-card class="text-center mb-4">
-                    <c-card-body>
-                        <h5 cCardTitle>
-                            <mat-icon class="cardIcons">how_to_reg</mat-icon>Patient Registration
-                        </h5>
-                        <p cCardText>
-                            Register a new patient.
-                        </p>
-                        <button cButton color="primary" (click)="togglePatientRegistration()">
-                            <mat-icon class="buttonIcons">add</mat-icon>Add Patient
-                        </button>
-                    </c-card-body>
-                </c-card>
-            </div>
-            <div class="col-md-4">
-                <c-card class="text-center mb-4">
-                    <c-card-body>
-                        <h5 cCardTitle>
-                            <mat-icon class="cardIcons">list</mat-icon>Patient List
-                        </h5>
-                        <p cCardText>
-                            Currently there are {{patientCount}} patients registered.
-                        </p>
-                        <button cButton color="primary" (click)="togglePatientList()">
-                            View List
-                        </button>
-                    </c-card-body>
-                </c-card>
-            </div>
-            <div class="col-md-4">
-                <c-card class="text-center mb-4">
-                    <c-card-body>
-                        <h5 cCardTitle>
-                            <mat-icon class="cardIcons">receipt</mat-icon>Bill Summary
-                        </h5>
-                        <p cCardText>
-                            Total bill amount for all patients is {{totalBillAmount}}.
-                        </p>
-                        <button cButton color="primary" (click)="toggleBillSummary()">
-                            View Summary
-                        </button>
-                    </c-card-body>
-                </c-card>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <c-card class="text-center mb-4">
-                    <c-card-body>
-                        <h5 cCardTitle>
-                            <mat-icon class="cardIcons">medication</mat-icon>Doctors
-                        </h5>
-                        <table class="table">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Doctor</th>
-                                    <th scope="col" style="width:20%">Availability</th>
-                                    <th scope="col" style="width:20%">Patients</th>
-                                    <th scope="col" style="width:30%">Empty Slot</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <th scope="row">Doctor 1</th>
-                                    <td><mat-slide-toggle></mat-slide-toggle>
-                                    </td>
-                                    <td>
-                                        <mat-progress-bar mode="determinate" value="15"></mat-progress-bar>
-                                    </td>
-                                    <td>10:00 PM</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Doctor 2</th>
-                                    <td><mat-slide-toggle></mat-slide-toggle>
-                                    </td>
-                                    <td>
-                                        <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
-                                    </td>
-                                    <td>7:00 PM</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Doctor 3</th>
-                                    <td><mat-slide-toggle></mat-slide-toggle>
-                                    </td>
-                                    <td>
-                                        <mat-progress-bar mode="determinate" value="25"></mat-progress-bar>
-                                    </td>
-                                    <td>5:00 PM</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Doctor 4</th>
-                                    <td><mat-slide-toggle></mat-slide-toggle>
-                                    </td>
-                                    <td>
-                                        <mat-progress-bar mode="determinate" value="15"></mat-progress-bar>
-                                    </td>
-                                    <td>11:00 PM</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Doctor 5</th>
-                                    <td><mat-slide-toggle></mat-slide-toggle>
-                                    </td>
-                                    <td>
-                                        <mat-progress-bar mode="determinate" value="5"></mat-progress-bar>
-                                    </td>
-                                    <td>6:00 PM</td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">Doctor 6</th>
-                                    <td><mat-slide-toggle></mat-slide-toggle>
-                                    </td>
-                                    <td>
-                                        <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
-                                    </td>
-                                    <td>1:00 PM</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </c-card-body>
-                </c-card>
-            </div>
-            <!-- <div class="col-md-6">
+<div @slideOutIn *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing)">
+  <div class="container-fluid my-3">
+    <div class="row">
+      <div class="col-md-4">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">how_to_reg</mat-icon>Patient Registration
+            </h5>
+            <p cCardText>
+              Register a new patient.
+            </p>
+            <button cButton color="primary" (click)="togglePatientRegistration()">
+              <mat-icon class="buttonIcons">add</mat-icon>Add Patient
+            </button>
+          </c-card-body>
+        </c-card>
+      </div>
+      <div class="col-md-4">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">list</mat-icon>Patient List
+            </h5>
+            <p cCardText>
+              Currently there are {{patientCount}} patients registered.
+            </p>
+            <button cButton color="primary" (click)="togglePatientList()">
+              View List
+            </button>
+          </c-card-body>
+        </c-card>
+      </div>
+      <div class="col-md-4">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">receipt</mat-icon>Bill Summary
+            </h5>
+            <p cCardText>
+              Total bill amount for all patients is {{totalBillAmount}}.
+            </p>
+            <button cButton color="primary" (click)="toggleBillSummary()">
+              View Summary
+            </button>
+          </c-card-body>
+        </c-card>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">medication</mat-icon>Doctors
+            </h5>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">Doctor</th>
+                  <th scope="col" style="width:20%">Availability</th>
+                  <th scope="col" style="width:20%">Patients</th>
+                  <th scope="col" style="width:30%">Empty Slot</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">Doctor 1</th>
+                  <td>
+                    <mat-slide-toggle></mat-slide-toggle>
+                  </td>
+                  <td>
+                    <mat-progress-bar mode="determinate" value="15"></mat-progress-bar>
+                  </td>
+                  <td>10:00 PM</td>
+                </tr>
+                <tr>
+                  <th scope="row">Doctor 2</th>
+                  <td>
+                    <mat-slide-toggle></mat-slide-toggle>
+                  </td>
+                  <td>
+                    <mat-progress-bar mode="determinate" value="10"></mat-progress-bar>
+                  </td>
+                  <td>7:00 PM</td>
+                </tr>
+                <tr>
+                  <th scope="row">Doctor 3</th>
+                  <td>
+                    <mat-slide-toggle></mat-slide-toggle>
+                  </td>
+                  <td>
+                    <mat-progress-bar mode="determinate" value="25"></mat-progress-bar>
+                  </td>
+                  <td>5:00 PM</td>
+                </tr>
+                <tr>
+                  <th scope="row">Doctor 4</th>
+                  <td>
+                    <mat-slide-toggle></mat-slide-toggle>
+                  </td>
+                  <td>
+                    <mat-progress-bar mode="determinate" value="15"></mat-progress-bar>
+                  </td>
+                  <td>11:00 PM</td>
+                </tr>
+                <tr>
+                  <th scope="row">Doctor 5</th>
+                  <td>
+                    <mat-slide-toggle></mat-slide-toggle>
+                  </td>
+                  <td>
+                    <mat-progress-bar mode="determinate" value="5"></mat-progress-bar>
+                  </td>
+                  <td>6:00 PM</td>
+                </tr>
+                <tr>
+                  <th scope="row">Doctor 6</th>
+                  <td>
+                    <mat-slide-toggle></mat-slide-toggle>
+                  </td>
+                  <td>
+                    <mat-progress-bar mode="determinate" value="30"></mat-progress-bar>
+                  </td>
+                  <td>1:00 PM</td>
+                </tr>
+              </tbody>
+            </table>
+          </c-card-body>
+        </c-card>
+      </div>
+      <!-- <div class="col-md-6">
                 <c-card class="text-center mb-4">
                     <c-card-body>
                         <h5 cCardTitle>
@@ -135,205 +141,209 @@
                     </c-card-body>
                 </c-card>
             </div> -->
-        </div>
-        <div class="row">
-            <div class="col-md-12">
-                <c-card class="text-center mb-4">
-                    <c-card-body>
-                        <h5 cCardTitle>
-                            <mat-icon class="cardIcons">assignment</mat-icon>Component
-                        </h5>
-                        <div class="row text-center">
-                            <div class="col-md-4">
-                              <div class="btn-group">
-                                <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                                  (viewDateChange)="closeOpenMonthViewDay()">
-                                  Previous
-                                </div>
-                                <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-                                  Today
-                                </div>
-                                <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                                  (viewDateChange)="closeOpenMonthViewDay()">
-                                  Next
-                                </div>
-                              </div>
-                            </div>
-                            <div class="col-md-4">
-                              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-                            </div>
-                            <div class="col-md-4">
-                              <div class="btn-group">
-                                <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
-                                  [class.active]="view === CalendarView.Month">
-                                  Month
-                                </div>
-                                <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
-                                  [class.active]="view === CalendarView.Week">
-                                  Week
-                                </div>
-                                <div class="btn btn-primary" (click)="setView(CalendarView.Day)"
-                                  [class.active]="view === CalendarView.Day">
-                                  Day
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <br />
-                          <div [ngSwitch]="view">
-                            <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-                              [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-                              (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-                            </mwl-calendar-month-view>
-                            <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-                              [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                              (eventTimesChanged)="eventTimesChanged($event)">
-                            </mwl-calendar-week-view>
-                            <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-                              [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                              (eventTimesChanged)="eventTimesChanged($event)">
-                            </mwl-calendar-day-view>
-                          </div>
-                  
-                          <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
-                  
-                          <br /><br /><br />
-                                    
-                                    <h3>
-                                      Edit events
-                                      <button class="btn btn-primary float-right" (click)="addEvent()">
-                                        Add new
-                                      </button>
-                                      <div class="clearfix"></div>
-                                    </h3>
-                                    
-                                    <div class="table-responsive">
-                                      <table class="table table-bordered">
-                                        <thead>
-                                          <tr>
-                                            <th>Title</th>
-                                            <th>Primary color</th>
-                                            <th>Secondary color</th>
-                                            <th>Starts at</th>
-                                            <th>Ends at</th>
-                                            <th>Remove</th>
-                                          </tr>
-                                        </thead>
-                                    
-                                        <tbody>
-                                          <tr *ngFor="let event of events">
-                                            <td>
-                                              <input
-                                                type="text"
-                                                class="form-control"
-                                                [(ngModel)]="event.title"
-                                                (keyup)="refresh.next()"
-                                              />
-                                            </td>
-                                            <td>
-                                              <input
-                                                type="color"
-                                                
-                                                (change)="refresh.next()"
-                                              />
-                                            </td>
-                                            <td>
-                                              <input
-                                                type="color"
-                                                
-                                                (change)="refresh.next()"
-                                              />
-                                            </td>
-                                            <td>
-                                              <input
-                                                class="form-control"
-                                                type="text"
-                                                mwlFlatpickr
-                                                [(ngModel)]="event.start"
-                                                (ngModelChange)="refresh.next()"
-                                                
-                                                dateFormat="Y-m-dTH:i"
-                                                altFormat="F j, Y H:i"
-                                                placeholder="Not set"
-                                              />
-                                            </td>
-                                            <td>
-                                              <input
-                                                class="form-control"
-                                                type="text"
-                                                mwlFlatpickr
-                                                [(ngModel)]="event.end"
-                                                (ngModelChange)="refresh.next()"
-                                                
-                                                dateFormat="Y-m-dTH:i"
-                                                altFormat="F j, Y H:i"
-                                                placeholder="Not set"
-                                              />
-                                            </td>
-                                            <td>
-                                              <button class="btn btn-danger" (click)="deleteEvent(event)">
-                                                Delete
-                                              </button>
-                                            </td>
-                                          </tr>
-                                        </tbody>
-                                      </table>
-                                    </div>
-                                    
-                                    <ng-template #modalContent let-close="close">
-                                      <div class="modal-header">
-                                        <h5 class="modal-title">Event action occurred</h5>
-                                        <button type="button" class="close" (click)="close()">
-                                          <span aria-hidden="true">&times;</span>
-                                        </button>
-                                      </div>
-                                      <div class="modal-body">
-                                        <div>
-                                          Action:
-                                          <pre>{{ modalData?.action }}</pre>
-                                        </div>
-                                        <div>
-                                          Event:
-                                          <pre>{{ modalData?.event | json }}</pre>
-                                        </div>
-                                      </div>
-                                      <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" (click)="close()">
-                                          OK
-                                        </button>
-                                      </div>
-                                    </ng-template>
-                    </c-card-body>
-                </c-card>
-            </div>
-        </div>
     </div>
+    <div class="row">
+      <div class="col-md-12">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">medical_services</mat-icon>Add Services
+            </h5>
+            <p cCardText>
+              Currently there are {{patientCount}} services present.
+            </p>
+            <button cButton color="primary" (click)="toggleAddServices()">
+              <mat-icon class="buttonIcons">add</mat-icon>Add Service
+            </button>
+          </c-card-body>
+        </c-card>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">calendar_month</mat-icon>Calendar
+            </h5>
+            <div class="row text-center">
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()">
+                    Previous
+                  </div>
+                  <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                    Today
+                  </div>
+                  <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                    (viewDateChange)="closeOpenMonthViewDay()">
+                    Next
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+              </div>
+              <div class="col-md-4">
+                <div class="btn-group">
+                  <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
+                    [class.active]="view === CalendarView.Month">
+                    Month
+                  </div>
+                  <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
+                    [class.active]="view === CalendarView.Week">
+                    Week
+                  </div>
+                  <div class="btn btn-primary" (click)="setView(CalendarView.Day)"
+                    [class.active]="view === CalendarView.Day">
+                    Day
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+            <div [ngSwitch]="view">
+              <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+                (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-month-view>
+              <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-week-view>
+              <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+                [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+                (eventTimesChanged)="eventTimesChanged($event)">
+              </mwl-calendar-day-view>
+            </div>
+
+            <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+
+            <br /><br /><br />
+
+            <!-- <h3>
+                          Edit events
+                          <button class="btn btn-primary float-right" (click)="addEvent()">
+                              Add new
+                          </button>
+                          <div class="clearfix"></div>
+                      </h3>
+
+                      <div class="table-responsive">
+                          <table class="table table-bordered">
+                              <thead>
+                                  <tr>
+                                      <th>Title</th>
+                                      <th>Primary color</th>
+                                      <th>Secondary color</th>
+                                      <th>Starts at</th>
+                                      <th>Ends at</th>
+                                      <th>Remove</th>
+                                  </tr>
+                              </thead>
+
+                              <tbody>
+                                  <tr *ngFor="let event of events">
+                                      <td>
+                                          <input type="text" class="form-control" [(ngModel)]="event.title"
+                                              (keyup)="refresh.next()" />
+                                      </td>
+                                      <td>
+                                          <input type="color" [(ngModel)]="event.color" (change)="refresh.next()" />
+                                      </td>
+                                      <td>
+                                          <input type="color" [(ngModel)]="event.color" (change)="refresh.next()" />
+                                      </td>
+                                      <td>
+                                          <mat-form-field>
+                                              <input class="form-control" matInput [ngxMatDatetimePicker]="picker1" placeholder="Choose a date & time" [(ngModel)]="event.start" (ngModelChange)="refresh.next()" >
+                                              <mat-datepicker-toggle matSuffix [for]="$any(picker1)"></mat-datepicker-toggle>
+                                              <ngx-mat-datetime-picker #picker1></ngx-mat-datetime-picker>
+                                          </mat-form-field>
+                                      </td>
+                                      <td>
+                                          <mat-form-field>
+                                              <input class="form-control" matInput [ngxMatDatetimePicker]="picker2" placeholder="Choose a date & time" [(ngModel)]="event.end" (ngModelChange)="refresh.next()" >
+                                              <mat-datepicker-toggle matSuffix [for]="$any(picker2)"></mat-datepicker-toggle>
+                                              <ngx-mat-datetime-picker #picker2></ngx-mat-datetime-picker>
+                                          </mat-form-field>
+                                      </td>
+                                      <td>
+                                          <button class="btn btn-danger" (click)="deleteEvent(event)">
+                                              Delete
+                                          </button>
+                                      </td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                      </div> -->
+
+            <!-- <ng-template #modalContent let-close="close">
+                          <div class="modal-header">
+                              <h5 class="modal-title">Event action occurred</h5>
+                              <button type="button" class="close" (click)="close()">
+                                  <span aria-hidden="true">&times;</span>
+                              </button>
+                          </div>
+                          <div class="modal-body">
+                              <div>
+                                  Action:
+                                  <pre>{{ modalData?.action }}</pre>
+                              </div>
+                              <div>
+                                  Event:
+                                  <pre>{{ modalData?.event | json }}</pre>
+                              </div>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-outline-secondary" (click)="close()">
+                                  OK
+                              </button>
+                          </div>
+                      </ng-template> -->
+
+          </c-card-body>
+        </c-card>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 <div @slideInOut *ngIf="isPatientRegistrationShowing" class="box">
-    <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-        <button (click)="togglePatientRegistration()" mat-icon-button>
-            <mat-icon>close</mat-icon>
-        </button>
-    </span>
-    <app-patient-registration></app-patient-registration>
+  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+    <button (click)="togglePatientRegistration()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+  <app-patient-registration></app-patient-registration>
 </div>
 
 <div @slideInOut *ngIf="isPatientListShowing" class="box">
-    <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-        <button (click)="togglePatientList()" mat-icon-button>
-            <mat-icon>close</mat-icon>
-        </button>
-    </span>
-    <app-patient-list></app-patient-list>
+  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+    <button (click)="togglePatientList()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+  <app-patient-list></app-patient-list>
 </div>
 
 <div @slideInOut *ngIf="isBillSummaryShowing" class="box">
-    <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-        <button (click)="toggleBillSummary()" mat-icon-button>
-            <mat-icon>close</mat-icon>
-        </button>
-    </span>
-    <app-bil-summary></app-bil-summary>
+  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+    <button (click)="toggleBillSummary()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+  <app-bil-summary></app-bil-summary>
+</div>
+
+<div @slideInOut *ngIf="isAddServicesShowing" class="box">
+  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+    <button (click)="toggleAddServices()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+  <app-add-services></app-add-services>
 </div>
