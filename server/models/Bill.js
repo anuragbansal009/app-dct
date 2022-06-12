@@ -40,6 +40,9 @@ const BillSchema = new Schema({
         type: String,
         required: true
     },
+    patientid: {
+        type: String,
+    },
     date: {
         type: String,
         default: Date.now,

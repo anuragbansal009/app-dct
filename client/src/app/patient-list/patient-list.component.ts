@@ -44,7 +44,7 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
 
-  displayedColumns: string[] = ['name', 'age','gender','doctor', 'update', 'bill'];
+  displayedColumns: string[] = ['allocateid','name', 'age','gender','doctor', 'update', 'status'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient,private router: Router, public dialog: MatDialog) { }
@@ -95,6 +95,12 @@ export class PatientListComponent implements AfterViewInit {
   { 
     this.router.navigate(['doctordashboard']);
   }
+
+  handlestatus(id:number)
+  { 
+    this.router.navigate(['doctordashboard', id]);
+  }
+
 
   
 

@@ -11,6 +11,7 @@ import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
 import { DateAdapter } from '@angular/material/core';
 
+
 @Component({
   selector: 'app-patient-registration',
   templateUrl: './patient-registration.component.html',
@@ -26,6 +27,8 @@ export class PatientRegistrationComponent implements OnInit {
   patientRegistrationAPI = environment.patientRegistrationAPI;
 
   hide = true;
+  patientid:any;
+  patientdata:any;
 
   constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient, private dateAdapter: DateAdapter<Date>) { 
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
@@ -46,7 +49,7 @@ export class PatientRegistrationComponent implements OnInit {
       city: [null, Validators.required],
       pin: [null, Validators.required],
       doctor_name: [null, Validators.required],
-      slotdate: [null, Validators.required],
+      slotdate: [' ', Validators.required],
       time: [null, Validators.required],
 
     });
@@ -99,12 +102,15 @@ export class PatientRegistrationComponent implements OnInit {
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
-    console.log(post);
+
     this.http.post(this.patientRegistrationAPI, post).subscribe({
       next: res => {
         console.log('Patient Created')
+        this.patientdata = res
+        this.patientid = this.patientdata._id
         this.showSuccess = true;
-        window.location.replace(environment.doctorHomepage)
+        console.log(this.patientid)
+        this.router.navigate([`bill/${this.patientid}`]);
       },
       error: error => {
         if (error.status === 400) {
@@ -113,7 +119,7 @@ export class PatientRegistrationComponent implements OnInit {
         }
         else if (error.status === 500) {
           this.showError = true;
-          this.errorString = 'Error! User Already Registered';
+          this.errorString = 'Error';
         }
         else {
           this.showError = true;

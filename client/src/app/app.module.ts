@@ -18,7 +18,7 @@ import { UpdatePatientModule } from './update-patient/update-patient.module';
 import { BillModule } from './bill/bill.module';
 import { BilSummaryModule } from './bil-summary/bill-summary.module';
 import { DoctorDashboardModule} from './doctor-dashboard/doctor-dashboard.module';
-import { BillDetailsComponent } from './bill-details/bill-details.component';
+//import { UpdateBillModule } from './update-bill/update-bill.module';
 
 
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
@@ -26,7 +26,6 @@ import { BillDetailsComponent } from './bill-details/bill-details.component';
 @NgModule({
   declarations: [
     AppComponent,
-    BillDetailsComponent,
   ],
   imports: [
     BrowserModule,
@@ -40,6 +39,7 @@ import { BillDetailsComponent } from './bill-details/bill-details.component';
     PatientRegistrationModule,
     AdminLoginModule,
     HomepageModule,
+    // UpdateBillModule,
     BillModule,
     PatientListModule,
     DoctorLoginModule,

@@ -1,5 +1,5 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import { MatDialog } from '@angular/material/dialog';
+import {MatDialog} from '@angular/material/dialog';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -10,14 +10,12 @@ import {
 import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
-
-
 @Component({
-  selector: 'app-bill',
-  templateUrl: './bill.component.html',
-  styleUrls: ['./bill.component.css']
+  selector: 'app-update-bill',
+  templateUrl: './update-bill.component.html',
+  styleUrls: ['./update-bill.component.css']
 })
-export class BillComponent implements OnInit {
+export class UpdateBillComponent implements OnInit {
 
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
@@ -27,8 +25,8 @@ export class BillComponent implements OnInit {
   errorString: string = 'Error! Please Try Again';
   patientRegistrationAPI = environment.patientRegistrationAPI;
 
-  id: any
-  patient: any
+  id:any
+  patient:any
 
   inputname: any
   inputgender: any
@@ -40,9 +38,12 @@ export class BillComponent implements OnInit {
   labcharges: any = null
   nextvisit: any = null
   advice: any = null
-  bill: any;
 
   data: any;
+
+  get name() {
+    return this.formGroup.get('name') as FormControl;
+  }
 
   constructor(private http: HttpClient,
     private route: ActivatedRoute,
@@ -50,63 +51,38 @@ export class BillComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router) { }
 
-  async ngOnInit() {
-
+  ngOnInit() {
+    
     this.id = this.route.snapshot.params['id'];
 
-    await this.billdetails()
+    this.http.post('http://localhost:5000/api/patient/getid', {_id: this.id}).subscribe((res)=>{
+    this.patient = res
 
-    await this.http.post('http://localhost:5000/api/patient/getid', { _id: this.id }).subscribe((res) => {
-      this.patient = res
-
-
-      this.inputname = this.patient[0].name
-      this.inputgender = this.patient[0].gender
-      this.inputage = this.patient[0].age
-      this.inputdoctor = this.patient[0].doctor_name
-      this.allocateid = this.patient[0].allocateid
-
-      this.formGroup = this.formBuilder.group({
-        name: [this.inputname],
-        gender: [this.inputgender],
-        age: [this.inputage],
-        doctor_name: [this.inputdoctor],
-        allocateid: [this.allocateid],
-        labcharges: [this.labcharges],
-        advice: [this.advice],
-  
-      });
-
-    })
-
+    console.log(this.patient)
     
+    this.inputname = this.patient[0].name
+    this.inputgender = this.patient[0].gender
+    this.inputage = this.patient[0].age
+    this.inputdoctor = this.patient[0].doctor_name
+    this.allocateid = this.patient[0].allocateid
 
-    
-  }
-
-  billdetails() {
-
-    this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
-
-      if (res) {
-        this.bill = res
-
-        console.log(this.bill)
-
-        this.advice = this.bill[0].advice
-        this.labcharges = this.bill[0].labcharges
-
-      }
-
-      else{
-        console.log('create bill first')
-      }
-
-
+    this.formGroup = this.formBuilder.group({
+      name: [this.inputname],
+      gender: [this.inputgender],
+      age: [this.inputage],
+      doctor_name: [this.inputdoctor],
+      allocateid: [this.allocateid],
+      medicines: [this.medicines ],
+      labcharges: [this.labcharges],
+      nextvisit: [this.nextvisit],
+      advice: [this.advice],
+      
+    });
 
 
     })
 
+    console.log(this.id)
   }
 
   checkPassword(control: any) {
@@ -144,10 +120,10 @@ export class BillComponent implements OnInit {
         ? 'Password needs to be at least eight characters, one uppercase letter and one number'
         : '';
   }
-
+  
   onSubmit(post: any) {
 
-    this.http.post('http://localhost:5000/api/patient/bill', { name: this.inputname, allocateid: post.allocateid, medicines: post.medicines, labcharges: post.labcharges, nextvisit: post.nextvisit, advice: post.advice }).subscribe((res) => {
+    this.http.post('http://localhost:5000/api/patient/bill', {name: post.name, allocateid: post.allocateid, medicines: post.medicines, labcharges: post.labcharges, nextvisit: post.nextvisit, advice: post.advice}).subscribe((res)=>{
       console.log(res);
     })
     this.router.navigate(['doctordashboard']);
@@ -178,11 +154,13 @@ export class BillComponent implements OnInit {
     // })
   }
 
-  handleEvent() {
-
+  handleEvent()
+  {
+    
     this.router.navigate(['doctordashboard']);
   }
 
 
 
 }
+

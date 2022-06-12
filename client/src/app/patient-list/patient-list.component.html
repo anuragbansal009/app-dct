@@ -72,7 +72,10 @@
   <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
 
-
+      <ng-container matColumnDef="allocateid">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+        <td mat-cell *matCellDef="let row"> {{row.allocateid}} </td>
+      </ng-container>
       <!-- Progress Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> name </th>
@@ -107,12 +110,10 @@
 
       </ng-container>
 
-      <ng-container matColumnDef="bill">
-        <th mat-header-cell *matHeaderCellDef> Bill </th>
-        <td mat-cell *matCellDef="let row"> <button (click)="handleBill(row._id)" mat-icon-button color="primary"
-            aria-label="Example icon-button with a heart icon">
-            <mat-icon>payment</mat-icon>
-          </button> </td>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let row"> <button (click)="handleBill(row._id)" mat-raised-button color="accent">{{row.status}}</button>
+        </td>
 
       </ng-container>
 
@@ -128,7 +129,7 @@
       </tr>
     </table>
 
-    
+
 
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>

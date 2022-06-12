@@ -19,9 +19,6 @@ const PatientSchema = new Schema({
         type: Number,
         required: true
     },
-    email: {
-        type: String,
-    },
     bloodgroup: {
         type: String,
         required: true
@@ -39,11 +36,11 @@ const PatientSchema = new Schema({
         required: true
     },
     pin: {
-        type: String,
+        type: Number,
         
     },
     status: {
-        type: Boolean
+        type: String
     },
     slotdate: {
         type: String

@@ -57,7 +57,6 @@ router.post('/patient/create', [
             gender: gender,
             age: age,
             mobile: mobile,
-            email: email,
             bloodgroup: bloodgroup,
             city: city,
             pin: pin,
@@ -66,7 +65,7 @@ router.post('/patient/create', [
             position: position,
             slotdate: slotdate,
             time: time,
-            status: false
+            status: "Pending"
 
         })
 
@@ -101,6 +100,29 @@ router.post('/patient/getid', async (req, res) => {
         const patient = await Patient.find({ _id: id })
 
         res.json(patient)
+
+    } catch (error) {
+
+        res.status(500).send("Error occured");
+
+    }
+})
+
+router.post('/patient/getallocateid', async (req, res) => {
+    try {
+
+        const {allocateid} = req.body
+
+        const patient = await Patient.find({ allocateid: allocateid })
+
+        if(patient)
+        {
+            res.json(patient)
+
+        }
+        else{
+            res.json("Not found")
+        }
 
     } catch (error) {
 
