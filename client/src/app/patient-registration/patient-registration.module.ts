@@ -6,6 +6,7 @@ import { PatientRegistrationComponent } from './patient-registration.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../../material.module';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 @NgModule({
     declarations: [PatientRegistrationComponent],
@@ -15,6 +16,7 @@ import { MaterialModule } from '../../material.module';
         FormsModule,
         HttpClientModule,
         ReactiveFormsModule,
+        MatSnackBarModule,
         MatNativeDateModule,
         MaterialModule
     ],

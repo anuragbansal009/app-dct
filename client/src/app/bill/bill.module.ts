@@ -10,6 +10,9 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
+
 
 @NgModule({
     declarations: [BillComponent],
@@ -20,9 +23,11 @@ import {MatDialogModule} from '@angular/material/dialog';
         HttpClientModule,
         ReactiveFormsModule,
         MatNativeDateModule,
+        NgMultiSelectDropDownModule.forRoot(),
         MaterialModule,
         MatTableModule,
         MatSortModule,
+        MatSnackBarModule,
         MatPaginatorModule,
         MatDialogModule
     ],

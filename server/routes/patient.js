@@ -191,6 +191,15 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
                $set: newPatient 
             }
         )
+
+        let bill = await Bill.findOneAndUpdate(
+            {
+                allocateid: req.params.id
+            },
+            {
+               $set: newPatient 
+            }
+        )
         
         res.json(patient);
 

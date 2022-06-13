@@ -34,7 +34,7 @@ const BillSchema = new Schema({
         type: String,
     },
     labcharges: {
-        type: String,
+        type: Array,
     },
     allocateid: {
         type: String,

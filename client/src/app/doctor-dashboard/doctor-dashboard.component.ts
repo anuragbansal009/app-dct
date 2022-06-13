@@ -105,29 +105,22 @@ export class DoctorDashboardComponent implements OnInit {
     {
       start: new Date('Tue Jun 12 2022 14:00:57 GMT+0530 (India Standard Time)'),
       end: new Date('Tue Jun 12 2022 14:30:57 GMT+0530 (India Standard Time)'),
-      title: 'Skin - Mbappe',
+      title: 'Skin - doctor',
       color: colors.green,
       draggable: true,
     },
     {
       start: new Date('Tue Jun 14 2022 13:00:57 GMT+0530 (India Standard Time)'),
       end: new Date('Tue Jun 14 2022 19:00:57 GMT+0530 (India Standard Time)'),
-      title: 'Ortho - Neymar',
+      title: 'Ortho - Dhirendra',
       color: colors.red,
       draggable: true,
     },
     {
       start: new Date('Mon Jun 13 2022 15:00:04 GMT+0530 (India Standard Time)'),
       end: new Date('Mon Jun 13 2022 16:00:04 GMT+0530 (India Standard Time)'),
-      title: 'ENT - Cristiano',
+      title: 'ENT - gulshan',
       color: colors.yellow,
-      draggable: true,
-    },
-    {
-      start: new Date('Mon Jun 15 2022 12:00:04 GMT+0530 (India Standard Time)'),
-      end: new Date('Mon Jun 15 2022 13:00:04 GMT+0530 (India Standard Time)'),
-      title: 'Dermatology - Lionel',
-      color: colors.blue,
       draggable: true,
     },
   ];

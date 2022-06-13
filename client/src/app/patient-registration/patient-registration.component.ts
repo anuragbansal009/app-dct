@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
 import { DateAdapter } from '@angular/material/core';
-
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-patient-registration',
@@ -30,7 +30,7 @@ export class PatientRegistrationComponent implements OnInit {
   patientid:any;
   patientdata:any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient, private dateAdapter: DateAdapter<Date>) { 
+  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar,private router: Router,private http: HttpClient, private dateAdapter: DateAdapter<Date>) { 
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
 
@@ -105,11 +105,12 @@ export class PatientRegistrationComponent implements OnInit {
 
     this.http.post(this.patientRegistrationAPI, post).subscribe({
       next: res => {
-        console.log('Patient Created')
         this.patientdata = res
         this.patientid = this.patientdata._id
         this.showSuccess = true;
-        console.log(this.patientid)
+        this.snackBar.open('Patient Registered Successfully', 'Close', {
+          duration: 3000,
+        });
         this.router.navigate([`bill/${this.patientid}`]);
       },
       error: error => {

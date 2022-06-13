@@ -47,7 +47,8 @@
                                 <mat-option value="A-">A-</mat-option>
                                 <mat-option value="B+">B+</mat-option>
                                 <mat-option value="B-">B-</mat-option>
-                                <mat-option value="AB">AB</mat-option>
+                                <mat-option value="AB">AB+</mat-option>
+                                <mat-option value="AB">AB-</mat-option>
                             </mat-select>
                             <mat-error *ngIf="formGroup.controls['bloodgroup'].touched">
                                 {{ titleAlert }}
@@ -91,7 +92,8 @@
                             <mat-label>Doctor Name</mat-label>
                             <mat-select placeholder="Doctor Name" formControlName="doctor_name">
                                 <mat-option value="doctor">doctor</mat-option>
-                                <mat-option value="doctor2">doctor2</mat-option>
+                                <mat-option value="dhirendra">dhirendra</mat-option>
+                                <mat-option value="gulshan">gulshan</mat-option>
                             </mat-select>
                             <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
                                 {{ titleAlert }}

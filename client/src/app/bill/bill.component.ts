@@ -10,6 +10,8 @@ import {
 import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 
 @Component({
@@ -18,6 +20,10 @@ import { environment } from './../../environments/environment';
   styleUrls: ['./bill.component.css']
 })
 export class BillComponent implements OnInit {
+
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings!:IDropdownSettings;
   
   color = 'primary';
   formGroup: any = FormGroup;
@@ -30,6 +36,9 @@ export class BillComponent implements OnInit {
 
   id: any
   patient: any
+
+  item!: number
+  itemn!: string
 
   inputname: any
   inputgender: any
@@ -49,25 +58,33 @@ export class BillComponent implements OnInit {
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
+    private snackBar: MatSnackBar,
     private router: Router) { }
 
   ngOnInit() {
 
-    this.http.get(environment.servicesGet).subscribe((res) => {
-      this.services = res;
-      console.log(this.data);
-    });
-
-    this.http.get(environment.servicesGet).subscribe((res) => {
-      this.services = res;
-      console.log(this.data);
-    });
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'charges',
+      textField: 'service',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 3,
+      allowSearchFilter: true
+    };
 
     this.id = this.route.snapshot.params['id'];
 
-    this.patientdetails()
-
     this.billdetails()
+
+    this.http.get(environment.servicesGet).subscribe((res) => {
+      this.services = res;
+      this.dropdownList = this.services
+      console.log(this.dropdownList);
+    });
+
+
+    this.patientdetails()
 
     this.formGroup = this.formBuilder.group({
       name: [this.inputname],
@@ -81,6 +98,13 @@ export class BillComponent implements OnInit {
     });
 
 
+  }
+
+  onItemSelect(item: any) {
+    console.log(item);
+  }
+  onSelectAll(items: any) {
+    console.log(items);
   }
 
   patientdetails() {
@@ -106,12 +130,10 @@ export class BillComponent implements OnInit {
         this.bill = res
 
         if (this.bill.length !== 0) {
+
+          
           if (this.bill[0].advice) {
             this.advice = this.bill[0].advice
-          }
-
-          if (this.bill[0].advice) {
-            this.labcharges = this.bill[0].labcharges
           }
         }
 
@@ -128,6 +150,9 @@ export class BillComponent implements OnInit {
   onSubmit(post: any) {
 
     this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,post).subscribe((res) => {
+      this.snackBar.open('Bill Made Successfully', 'Close', {
+        duration: 3000,
+      });
       this.router.navigate(['doctordashboard']);
     })
 
