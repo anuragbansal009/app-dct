@@ -1,4 +1,4 @@
-<div @slideOutIn *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing)">
+<div @slideOutIn *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing || isAddLabtestShowing)">
   <div class="container-fluid my-3">
     <div class="row">
       <div class="col-md-4">
@@ -143,7 +143,7 @@
             </div> -->
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-6">
         <c-card class="text-center mb-4">
           <c-card-body>
             <h5 cCardTitle>
@@ -154,6 +154,21 @@
             </p>
             <button cButton color="primary" (click)="toggleAddServices()">
               <mat-icon class="buttonIcons">add</mat-icon>Add Service
+            </button>
+          </c-card-body>
+        </c-card>
+      </div>
+      <div class="col-md-6">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">science</mat-icon>Add Labtest
+            </h5>
+            <p cCardText>
+              Add a new labtest here.
+            </p>
+            <button cButton color="primary" (click)="toggleAddLabtest()">
+              <mat-icon class="buttonIcons">add</mat-icon>Add Labtest
             </button>
           </c-card-body>
         </c-card>
@@ -346,4 +361,13 @@
     </button>
   </span>
   <app-add-services></app-add-services>
+</div>
+
+<div @slideInOut *ngIf="isAddLabtestShowing" class="box">
+  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+    <button (click)="toggleAddLabtest()" mat-icon-button>
+      <mat-icon>close</mat-icon>
+    </button>
+  </span>
+  <app-add-labtest></app-add-labtest>
 </div>

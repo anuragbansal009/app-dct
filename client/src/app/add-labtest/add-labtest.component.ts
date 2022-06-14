@@ -10,11 +10,12 @@ import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-add-services',
-  templateUrl: './add-services.component.html',
-  styleUrls: ['./add-services.component.css']
+  selector: 'app-add-labtest',
+  templateUrl: './add-labtest.component.html',
+  styleUrls: ['./add-labtest.component.css']
 })
-export class AddServicesComponent implements OnInit {
+export class AddLabtestComponent implements OnInit {
+
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
@@ -36,7 +37,7 @@ export class AddServicesComponent implements OnInit {
 
   createForm() {
     this.formGroup = this.formBuilder.group({
-      service: [null, Validators.required],
+      labtest: [null, Validators.required],
       charges: [null, Validators.required],
       doctor_name: [null, Validators.required],
     });
@@ -49,7 +50,7 @@ export class AddServicesComponent implements OnInit {
 
   handleService()
   { 
-    this.http.post('http://localhost:5000/api/services/get', {doctor_name: "doctor"}).subscribe((res)=>{
+    this.http.post('http://localhost:5000/api/labtest/get', {doctor_name: "doctor"}).subscribe((res)=>{
       console.log(res)
       this.services = res
     })
@@ -60,16 +61,16 @@ export class AddServicesComponent implements OnInit {
     this.showSuccess = false;
     this.showError = false;
     console.log(post);
-    this.http.post(environment.servicesAdd, post).subscribe({
+    this.http.post(environment.labtestAdd, post).subscribe({
       next: res => {
-        console.log('Service Added')
+        console.log('Labtest Added')
         this.handleService()
         this.showSuccess = true;
       },
       error: error => {
         if (error.status === 400) {
           this.showError = true;
-          this.errorString = 'Service Already Exists';
+          this.errorString = 'Labtest Already Exists';
         }
         else if (error.status === 500) {
           this.showError = true;

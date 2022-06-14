@@ -202,6 +202,7 @@ export class DoctorDashboardComponent implements OnInit {
   totalBillAmount: string = '$10000';
   isBillSummaryShowing = false;
   isAddServicesShowing = false;
+  isAddLabtestShowing = false;
 
   togglePatientRegistration() {
     this.isPatientRegistrationShowing = !this.isPatientRegistrationShowing;
@@ -216,5 +217,8 @@ export class DoctorDashboardComponent implements OnInit {
   }
   toggleAddServices() {
     this.isAddServicesShowing = !this.isAddServicesShowing;
+  }
+  toggleAddLabtest() {
+    this.isAddLabtestShowing = !this.isAddLabtestShowing;
   }
 }

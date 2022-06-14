@@ -1,0 +1,64 @@
+<div class="container-fluid">
+    <h1 class="display-3 text-center heading my-3">Add Labtests</h1>
+    <div *ngIf="!post" novalidate>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>Labtest</mat-label>
+                            <input matInput placeholder="Labtest" formControlName="labtest">
+                            <mat-error *ngIf="formGroup.controls['labtest'].touched">
+                                {{ titleAlert }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>Doctor Name</mat-label>
+                            <mat-select placeholder="Doctor Name" formControlName="doctor_name">
+                                <mat-option value="doctor">doctor</mat-option>
+                                <mat-option value="dhirendra">dhirendra</mat-option>
+                                <mat-option value="gulshan">gulshan</mat-option>
+                            </mat-select>
+                            <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
+                                {{ titleAlert }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>Charges</mat-label>
+                            <input matInput type="number" placeholder="Charges" formControlName="charges">
+                            <span matPrefix class="rupeePrefix">₹&nbsp;</span>
+                            <mat-error *ngIf="formGroup.controls['charges'].touched">
+                                {{ titleAlert }}
+                            </mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="form-element">
+                    <button mat-raised-button color="primary" type="submit" class="button"
+                        [disabled]="!formGroup.valid">Submit</button>
+                </div>
+                <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+                    Service Added Successfully
+                </div>
+                <div class="alert alert-danger" role="alert" *ngIf="showError">
+                    {{ errorString }}
+                </div>
+            </div>
+        </form>
+
+    </div>
+</div>
+
+<div *ngFor="let services of services">
+
+    {{services.charges}}
+
+</div>

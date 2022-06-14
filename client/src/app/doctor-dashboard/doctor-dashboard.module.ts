@@ -14,6 +14,7 @@ import { PatientRegistrationModule } from '../patient-registration/patient-regis
 import { PatientListModule } from '../patient-list/patient-list.module';
 import { BilSummaryModule } from '../bil-summary/bill-summary.module';
 import { AddServicesModule } from '../add-services/add-services.module';
+import { AddLabtestModule } from '../add-labtest/add-labtest.module';
 import {
     NgxMatDatetimePickerModule,
     NgxMatNativeDateModule,
@@ -42,8 +43,8 @@ import {
         PatientRegistrationModule,
         PatientListModule,
         BilSummaryModule,
-        AddServicesModule
-        
+        AddServicesModule,
+        AddLabtestModule
     ],
     exports: [DoctorDashboardComponent],
     providers: [],

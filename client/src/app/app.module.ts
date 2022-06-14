@@ -20,6 +20,7 @@ import { BilSummaryModule } from './bil-summary/bill-summary.module';
 import { DoctorDashboardModule} from './doctor-dashboard/doctor-dashboard.module';
 import { AddServicesModule } from './add-services/add-services.module';
 import { BillInvoiceModule } from './bill-invoice/bill-invoice.module';
+import { AddLabtestModule } from './add-labtest/add-labtest.module';
 //import { UpdateBillModule } from './update-bill/update-bill.module';
 
 
@@ -49,7 +50,8 @@ import { BillInvoiceModule } from './bill-invoice/bill-invoice.module';
     DoctorHomepageModule,
     DoctorDashboardModule,
     AddServicesModule,
-    BillInvoiceModule
+    BillInvoiceModule,
+    AddLabtestModule
   ],
   providers: [],
   bootstrap: [AppComponent]

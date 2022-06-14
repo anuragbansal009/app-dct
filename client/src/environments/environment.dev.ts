@@ -18,4 +18,6 @@ export const environment = {
   patientlist: 'http://localhost:4200/patientlist',
   servicesAdd: 'http://localhost:5000/api/services/add',
   servicesGet: 'http://localhost:5000/api/services/get',
+  labtestAdd: 'http://localhost:5000/api/labtest/add',
+  labtestGet: 'http://localhost:5000/api/labtest/get',
 };
