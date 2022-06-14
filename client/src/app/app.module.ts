@@ -19,6 +19,7 @@ import { BillModule } from './bill/bill.module';
 import { BilSummaryModule } from './bil-summary/bill-summary.module';
 import { DoctorDashboardModule} from './doctor-dashboard/doctor-dashboard.module';
 import { AddServicesModule } from './add-services/add-services.module';
+import { BillInvoiceModule } from './bill-invoice/bill-invoice.module';
 //import { UpdateBillModule } from './update-bill/update-bill.module';
 
 
@@ -26,7 +27,7 @@ import { AddServicesModule } from './add-services/add-services.module';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
   ],
   imports: [
     BrowserModule,
@@ -47,7 +48,8 @@ import { AddServicesModule } from './add-services/add-services.module';
     UpdatePatientModule,
     DoctorHomepageModule,
     DoctorDashboardModule,
-    AddServicesModule
+    AddServicesModule,
+    BillInvoiceModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -23,13 +23,13 @@ import {MatSnackBarModule} from '@angular/material/snack-bar';
         HttpClientModule,
         ReactiveFormsModule,
         MatNativeDateModule,
-        NgMultiSelectDropDownModule.forRoot(),
         MaterialModule,
         MatTableModule,
         MatSortModule,
         MatSnackBarModule,
         MatPaginatorModule,
-        MatDialogModule
+        MatDialogModule,
+        NgMultiSelectDropDownModule.forRoot()
     ],
     exports: [BillComponent],
     providers: [],

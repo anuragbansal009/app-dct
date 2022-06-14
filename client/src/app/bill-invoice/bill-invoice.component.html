@@ -1,0 +1,284 @@
+<div id="pdfTable" #pdfTable>
+  <div class="container-fluid my-2">
+    <div class="border border-5 rounded-3 p-2 mb-2 mx-auto border-dark" style="width: 99%">
+      <div class="row">
+        <div class="col-md-12">
+          <h1 class="display-1 text-center heading align-middle">
+            {{ hospitalName }}
+          </h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h2 class="display-4 text-center align-middle" style="margin-bottom: 0px">
+            {{ hospitalSubtext }}
+          </h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="display-5 text-center align-middle" style="margin-bottom: 0px">
+            {{ hospitalAddress }}
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="row border-2 border-bottom border-dark">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="display-2 text-center align-middle" style="margin-bottom: 10px; font-size: 1.2rem">
+            <strong>
+              Bill Cum Recipt
+            </strong>
+          </h3>
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-md-12">
+        <table style="width: 100%">
+          <tbody>
+            <tr>
+              <td style="width: 70%">
+                <table>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Patient Name
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ patientName }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Mobile Number
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ patientMobileNumber }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Patient ID
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ patientId }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Refereed By
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ referredBy }}
+                      </h4>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Bill Date
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ billDate }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Bill Number
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ billNumber }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Bill Status
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ billStatus }}
+                      </h4>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row border-2 border-bottom border-top border-dark mb-2">
+      <div class="col-md-12 mx-auto">
+        <table class="table table-borderless">
+          <thead class="table-dark">
+            <tr>
+              <th style="width: 5%">#</th>
+              <th style="width: 65%">Service Particulars</th>
+              <th class="text-end" style="width: 15%">Price</th>
+              <th class="text-end" style="width: 15%">Net Price</th>
+            </tr>
+          </thead>
+          <tbody class="table-group-divider">
+            <tr *ngFor="let service of services; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ service.serviceName }}</td>
+              <td class="text-end">{{ service.servicePrice }}</td>
+              <td class="text-end">{{ service.serviceNetPrice }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 mx-auto">
+        <table class="mx-auto" style="width: 90%">
+          <tbody>
+            <tr>
+              <td style="width: 70%">
+                <table>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Payment Mode
+                        </strong>
+                        : {{ paymentMode }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td colspan="2">
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        {{ amountInWords }}
+                      </h4>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+              <td>
+                <table>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Billed Amount
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ billedAmount }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Discounted Amount
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ discountedAmount }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Final Amount
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ finalAmount }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Recieved Amount
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ recievedAmount }}
+                      </h4>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        <strong>
+                          Balance Amount
+                        </strong>
+                      </h4>
+                    </td>
+                    <td>
+                      <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                        : {{ balanceAmount }}
+                      </h4>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+
+
+    <div class="text-center "> <button mat-flat-button color="primary" (click)="printDiv()">Print</button></div>
+  </div>
