@@ -31,7 +31,7 @@ export class AddServicesComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.handleService()
+    //this.handleService()
   }
 
   createForm() {
@@ -47,13 +47,13 @@ export class AddServicesComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
-  handleService()
-  { 
-    this.http.post('http://localhost:5000/api/services/get', {doctor_name: "doctor"}).subscribe((res)=>{
-      console.log(res)
-      this.services = res
-    })
-  }
+  // handleService()
+  // { 
+  //   this.http.post('http://localhost:5000/api/services/get', {doctor_name: "doctor"}).subscribe((res)=>{
+  //     console.log(res)
+  //     this.services = res
+  //   })
+  // }
 
 
   onSubmit(post: any) {
@@ -63,7 +63,7 @@ export class AddServicesComponent implements OnInit {
     this.http.post(environment.servicesAdd, post).subscribe({
       next: res => {
         console.log('Service Added')
-        this.handleService()
+        //this.handleService()
         this.showSuccess = true;
       },
       error: error => {

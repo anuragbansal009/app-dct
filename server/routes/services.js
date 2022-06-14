@@ -6,11 +6,6 @@ const Patient = require('../models/Patient');
 
 router.post('/services/add', async (req, res) => {
     try {
-
-        let services = await Services.findOne({ service: req.body.service });
-        if (services) {
-            return res.status(400).json({ error: "Service Already Exists" })
-        }
         
         const {
             service,
