@@ -81,9 +81,9 @@ export class BilSummaryComponent implements AfterViewInit {
     }
   }
 
-  handleclick()
+  handleclick(id: number)
   { 
-    this.router.navigate(['doctorhomepage']);
+    this.router.navigate(['billinvoice']);
   }
   
 

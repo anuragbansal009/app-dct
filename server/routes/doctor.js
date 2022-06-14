@@ -50,7 +50,9 @@ router.post('/doctor', [
             designation,
             location,
             consultation,
-            allocateid
+            allocateid,
+            specialization,
+            followup
         } = req.body;
 
         const salt = await bcrypt.genSalt(10)
@@ -65,7 +67,9 @@ router.post('/doctor', [
             designation: designation,
             location: location,
             consultation: consultation,
-            allocateid: allocateid
+            allocateid: allocateid,
+            specialization: specialization,
+            followup: followup
 
         })
         const data = {

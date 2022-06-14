@@ -39,14 +39,9 @@
         <td mat-cell *matCellDef="let row"> {{row.doctor_name}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="consultation">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> consultation </th>
-        <td mat-cell *matCellDef="let row"> {{row.consultation}} </td>
-      </ng-container>
-
       <ng-container matColumnDef="view">
-        <th mat-header-cell *matHeaderCellDef> Print </th>
-        <td mat-cell *matCellDef="let row"> <button mat-stroked-button color="primary">Print</button></td>
+        <th mat-header-cell *matHeaderCellDef> Details </th>
+        <td mat-cell *matCellDef="let row"> <button (click)="handleclick(row.allocateid)" mat-stroked-button color="primary">Details</button></td>
 
       </ng-container>
 

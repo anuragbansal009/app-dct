@@ -17,6 +17,8 @@ router.post('/patient/bill/:id', async (req, res) => {
             age,
             doctor_name,
             labcharges,
+            labtests,
+            discount,
             advice,
 
         } = req.body;
@@ -47,8 +49,11 @@ router.post('/patient/bill/:id', async (req, res) => {
             if (labcharges) {
                 newBill.labcharges = labcharges;
             }
-            if (advice) {
-                newBill.advice = advice;
+            if (labtests) {
+                newBill.labtests = labtests;
+            }
+            if (discount) {
+                newBill.discount = discount;
             }
 
             let bill = await Bill.findOneAndUpdate(
@@ -59,31 +64,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                     $set: newBill
                 }
             )
-
-            if (newBill.labcharges == null) {
-                updatepatient = await Patient.findOneAndUpdate(
-                    {
-                        _id: req.params.id
-                    },
-                    {
-                        status: "Partial"
-                    }
-                )
-
-            }
-            if(newBill.labcharges !== null) {
-
-                updatepatient = await Patient.findOneAndUpdate(
-                    {
-                        _id: req.params.id
-                    },
-                    {
-
-                        status: "Paid"
-                    }
-                )
-
-            }
 
             res.json(bill)
 
@@ -104,35 +84,22 @@ router.post('/patient/bill/:id', async (req, res) => {
                         mobile: patient.mobile,
                         allocateid: patient.allocateid,
                         labcharges: labcharges,
+                        labtests: labtests,
                         advice: advice,
+                        discount: discount,
                         _id: patient._id
 
                     })
-                    if (bill.labcharges == null) {
-                        updatepatient = await Patient.findOneAndUpdate(
-                            {
-                                _id: req.params.id
-                            },
-                            {
 
-                                status: "Partial"
-                            }
-                        )
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            _id: req.params.id
+                        },
+                        {
+                            status: "Paid"
+                        }
+                    )
 
-                    }
-                    else {
-
-                        updatepatient = await Patient.findOneAndUpdate(
-                            {
-                                _id: req.params.id
-                            },
-                            {
-
-                                status: "Paid"
-                            }
-                        )
-
-                    }
 
                     res.json(bill)
 

@@ -31,6 +31,14 @@ const DoctorSchema = new Schema({
         type: String,
         required: true
     },
+    specialization:{
+        type: String,
+        required: true
+    },
+    followup:{
+        type: String,
+        required: true
+    },
     consultation: {
         type: String,
         required: true,

@@ -27,17 +27,20 @@ export class AddServicesComponent implements OnInit {
   hide = true;
   patientid:any;
   patientdata:any;
+  services: any;
 
   constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
     this.createForm();
+    this.handleService()
   }
 
   createForm() {
     this.formGroup = this.formBuilder.group({
       service: [null, Validators.required],
       charges: [null, Validators.required],
+      doctor_name: [null, Validators.required],
     });
   }
 
@@ -46,6 +49,15 @@ export class AddServicesComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
+  handleService()
+  { 
+    this.http.post('http://localhost:5000/api/services/get', {doctor_name: "doctor"}).subscribe((res)=>{
+      console.log(res)
+      this.services = res
+    })
+  }
+
+
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
@@ -53,6 +65,7 @@ export class AddServicesComponent implements OnInit {
     this.http.post(environment.servicesAdd, post).subscribe({
       next: res => {
         console.log('Service Added')
+        this.handleService()
         this.showSuccess = true;
       },
       error: error => {

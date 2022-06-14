@@ -159,15 +159,26 @@
                     </div>
 
                     <div class="col-md-6">
+                        <ng-multiselect-dropdown [placeholder]="'LabTests'" [settings]="dropdownTests"
+                            [data]="dropdowntestlist" formControlName="labtests" (onSelect)="onItemSelect($event)"
+                            (onSelectAll)="onSelectAll($event)">
+                        </ng-multiselect-dropdown>
+                        <!-- <mat-checkbox class="example-margin" [color]="color">Check me!</mat-checkbox>
                         <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Advice</mat-label>
-                            <input matInput placeholder="Advice" value={{advice}} formControlName="advice">
-                        </mat-form-field>
+
+                            <mat-label>Services</mat-label>
+                            <mat-select placeholder="Services" formControlName="labcharges">
+                                <mat-option *ngFor="let serviceList of services" [value]="serviceList.charges">
+                                    {{serviceList.service}}
+                                </mat-option>
+                            </mat-select>
+                            <input matInput placeholder="Lab charges" value={{labcharges}} formControlName="labcharges">
+                        </mat-form-field> -->
                     </div>
 
                 </div>
 
-                <div class="form-element">
+                <div class="my-4 form-element">
                     <button mat-raised-button color="primary" type="submit" class="button">Submit</button>
                 </div>
 

@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
-const ServicesSchema = new Schema({
+const LabtestSchema = new Schema({
 
-    service:{
+    labtest:{
         type: String,
         required: true,
     },
@@ -19,5 +19,5 @@ const ServicesSchema = new Schema({
 
 })
 
-const Services = mongoose.model('services', ServicesSchema);
-module.exports = Services
+const Labtest = mongoose.model('labtest', LabtestSchema);
+module.exports = Labtest

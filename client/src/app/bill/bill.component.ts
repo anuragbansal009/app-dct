@@ -22,8 +22,10 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 export class BillComponent implements OnInit {
 
   dropdownList = [];
+  dropdowntestlist = [];
   selectedItems = [];
   dropdownSettings!:IDropdownSettings;
+  dropdownTests!:IDropdownSettings;
   
   color = 'primary';
   formGroup: any = FormGroup;
@@ -52,6 +54,8 @@ export class BillComponent implements OnInit {
   advice: any = null
   bill: any;
   services: any;
+  labtests: any;
+  testlist: any;
   data: any;
 
   constructor(private http: HttpClient,
@@ -69,7 +73,17 @@ export class BillComponent implements OnInit {
       textField: 'service',
       selectAllText: 'Select All',
       unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 3,
+      itemsShowLimit: 5,
+      allowSearchFilter: true
+    };
+
+    this.dropdownTests = {
+      singleSelection: false,
+      idField: 'charges',
+      textField: 'labtest',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 5,
       allowSearchFilter: true
     };
 
@@ -77,14 +91,11 @@ export class BillComponent implements OnInit {
 
     this.billdetails()
 
-    this.http.get(environment.servicesGet).subscribe((res) => {
-      this.services = res;
-      this.dropdownList = this.services
-      console.log(this.dropdownList);
-    });
-
-
     this.patientdetails()
+    
+    this.serviceDetails()
+
+    this.LabDetails()
 
     this.formGroup = this.formBuilder.group({
       name: [this.inputname],
@@ -93,6 +104,7 @@ export class BillComponent implements OnInit {
       doctor_name: [this.inputdoctor],
       allocateid: [this.allocateid],
       labcharges: [this.labcharges],
+      labtests: [this.labtests],
       advice: [this.advice],
 
     });
@@ -105,6 +117,26 @@ export class BillComponent implements OnInit {
   }
   onSelectAll(items: any) {
     console.log(items);
+  }
+
+  serviceDetails()
+  {
+    this.http.post('http://localhost:5000/api/services/get', {id: this.id}).subscribe((res) => {
+      this.services = res;
+      this.dropdownList = this.services
+      console.log(this.dropdownList);
+    });
+
+  }
+
+  LabDetails()
+  {
+    this.http.post('http://localhost:5000/api/labtest/get', {id: this.id}).subscribe((res) => {
+      this.testlist = res;
+      this.dropdowntestlist = this.testlist
+      console.log(this.dropdowntestlist);
+    });
+
   }
 
   patientdetails() {
