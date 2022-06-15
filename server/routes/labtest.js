@@ -6,11 +6,6 @@ const Patient = require('../models/Patient');
 
 router.post('/labtest/add', async (req, res) => {
     try {
-
-        let labtests = await Labtest.findOne({ labtest: req.body.labtest });
-        if (labtests) {
-            return res.status(400).json({ error: "labtest Already Exists" })
-        }
         
         const {
             labtest,

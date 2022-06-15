@@ -32,7 +32,6 @@ export class AddLabtestComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.handleService()
   }
 
   createForm() {
@@ -48,14 +47,6 @@ export class AddLabtestComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
-  handleService()
-  { 
-    this.http.post('http://localhost:5000/api/labtest/get', {doctor_name: "doctor"}).subscribe((res)=>{
-      console.log(res)
-      this.services = res
-    })
-  }
-
 
   onSubmit(post: any) {
     this.showSuccess = false;
@@ -64,7 +55,6 @@ export class AddLabtestComponent implements OnInit {
     this.http.post(environment.labtestAdd, post).subscribe({
       next: res => {
         console.log('Labtest Added')
-        this.handleService()
         this.showSuccess = true;
       },
       error: error => {
