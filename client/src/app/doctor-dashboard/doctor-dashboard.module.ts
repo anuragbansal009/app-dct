@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
-import { DoctorDashboardComponent } from './doctor-dashboard.component';
+import { DoctorDashboardComponent, ModalComponent, SecondModalComponent } from './doctor-dashboard.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MaterialModule } from '../../material.module';
@@ -22,7 +22,7 @@ import {
   } from '@angular-material-components/datetime-picker';
 
 @NgModule({
-    declarations: [DoctorDashboardComponent],
+    declarations: [DoctorDashboardComponent, ModalComponent, SecondModalComponent],
     imports: [
         BrowserAnimationsModule,
         BrowserModule,

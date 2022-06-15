@@ -1,7 +1,7 @@
 import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
-
+import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import {
@@ -40,6 +40,35 @@ const colors: any = {
     secondary: '#00ff00',
   }
 };
+
+@Component({
+  selector: 'second-modal-component',
+  templateUrl: 'second-modal-component.html',
+})
+export class SecondModalComponent {
+  constructor(public dialog: MatDialog) { }
+  openDialog() {
+    const dialogRef = this.dialog.open(ModalComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+}
+
+@Component({
+  selector: 'modal-component',
+  templateUrl: 'modal-component.html',
+})
+export class ModalComponent {
+  constructor(public dialog: MatDialog) { }
+  openDialog() {
+    const dialogRef = this.dialog.open(SecondModalComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+}
+
 @Component({
   selector: 'app-doctor-dashboard',
   templateUrl: './doctor-dashboard.component.html',
@@ -65,10 +94,19 @@ const colors: any = {
     ])
   ]
 })
+
 export class DoctorDashboardComponent implements OnInit {
 
-  constructor(private modal: NgbModal) { }
+  constructor(public dialog: MatDialog) { }
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+
+  openDialog() {
+    const dialogRef = this.dialog.open(ModalComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
   view: CalendarView = CalendarView.Month;
 

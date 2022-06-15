@@ -28,7 +28,7 @@
     </nav> -->
     <h1 class="display-3 text-center heading my-3">Create Account</h1>
 
-    <div *ngIf="!post" novalidate>
+    <div *ngIf="!(post && apiLoaded)" novalidate>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
 
             <mat-form-field appearance="outline" class="form-element">

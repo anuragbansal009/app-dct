@@ -1,4 +1,5 @@
-<div @slideOutIn *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing || isAddLabtestShowing)">
+<div @slideOutIn
+  *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing || isAddLabtestShowing)">
   <div class="container-fluid my-3">
     <div class="row">
       <div class="col-md-4">
@@ -48,7 +49,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <!-- <div class="col-md-12">
         <c-card class="text-center mb-4">
           <c-card-body>
             <h5 cCardTitle>
@@ -128,19 +129,20 @@
             </table>
           </c-card-body>
         </c-card>
+      </div> -->
+      <div class="col-md-12">
+        <c-card class="text-center mb-4">
+          <c-card-body>
+            <h5 cCardTitle>
+              <mat-icon class="cardIcons">medication</mat-icon>Component
+            </h5>
+            <p cCardText>
+              Temporary Component.
+            </p>
+            <button cButton color="primary" (click)="openDialog()">Open Modal</button>
+          </c-card-body>
+        </c-card>
       </div>
-      <!-- <div class="col-md-6">
-                <c-card class="text-center mb-4">
-                    <c-card-body>
-                        <h5 cCardTitle>
-                            <mat-icon class="cardIcons">temp_preferences_custom</mat-icon>Component
-                        </h5>
-                        <p cCardText>
-                            Total bill amount for all patients is {{totalBillAmount}}.
-                        </p>
-                    </c-card-body>
-                </c-card>
-            </div> -->
     </div>
     <div class="row">
       <div class="col-md-6">

@@ -22,18 +22,19 @@ export class DoctorRegistrationComponent implements OnInit {
   showError: boolean = false;
   errorString: string = 'Error! Please Try Again';
   doctorRegistrationAPI = environment.doctorRegistrationAPI;
-
   hide = true;
+  doctorList: any = [];
+  apiLoaded: boolean = false;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
 
   ngOnInit() {
     this.createForm();
   }
-
+  
   createForm() {
     this.formGroup = this.formBuilder.group({
-      username: [null, Validators.required, this.checkInUseUsername,],
+      username: [null, Validators.required],
       name: [null, Validators.required],
       password: [null, [Validators.required, this.checkPassword]],
       hospital_name: [null, Validators.required],
@@ -52,18 +53,6 @@ export class DoctorRegistrationComponent implements OnInit {
     return !passwordCheck.test(enteredPassword) && enteredPassword
       ? { requirements: true }
       : null;
-  }
-
-  checkInUseUsername(control: any) {
-    let db = ['anuragbansal'];
-    return new Observable((observer: any) => {
-      setTimeout(() => {
-        let result =
-          db.indexOf(control.value) !== -1 ? { alreadyInUse: true } : null;
-        observer.next(result);
-        observer.complete();
-      }, 4000);
-    });
   }
 
   getErrorUsername() {
