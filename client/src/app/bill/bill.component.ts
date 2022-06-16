@@ -120,6 +120,12 @@ export class BillComponent implements OnInit {
 
   }
 
+  onItemDeSelect(item: any) {
+    this.patientcharges = item
+    this.subtotal = this.subtotal - this.patientcharges.charges
+    console.log(this.subtotal)
+  }
+
   onItemSelect(item: any) {
     
     this.patientcharges = item

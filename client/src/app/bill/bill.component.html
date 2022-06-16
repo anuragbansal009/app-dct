@@ -168,14 +168,14 @@
 
                     <div class="col-md-6">
                         <ng-multiselect-dropdown [placeholder]="'Services'" [settings]="dropdownSettings"
-                            [data]="dropdownList" formControlName="labcharges" (onSelect)="onItemSelect($event)"
+                            [data]="dropdownList" formControlName="labcharges" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
                             (onSelectAll)="onSelectAll($event)">
                         </ng-multiselect-dropdown>
                     </div>
 
                     <div class="col-md-6">
                         <ng-multiselect-dropdown [placeholder]="'LabTests'" [settings]="dropdownTests"
-                            [data]="dropdowntestlist" formControlName="labtests" (onSelect)="onItemSelect($event)"
+                            [data]="dropdowntestlist" formControlName="labtests" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
                             (onSelectAll)="onSelectAll($event)" (onUnselectAll)="onUnselectAll($event)">
                         </ng-multiselect-dropdown>
                     </div>
