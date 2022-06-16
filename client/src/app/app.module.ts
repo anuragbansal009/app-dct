@@ -22,6 +22,7 @@ import { AddServicesModule } from './add-services/add-services.module';
 import { BillInvoiceModule } from './bill-invoice/bill-invoice.module';
 import { AddLabtestModule } from './add-labtest/add-labtest.module';
 import { UpdateBillModule } from './update-bill/update-bill.module';
+import { VitalsModule } from './vitals/vitals.module';
 
 
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
@@ -43,6 +44,7 @@ import { UpdateBillModule } from './update-bill/update-bill.module';
     AdminLoginModule,
     HomepageModule,
     BillModule,
+    VitalsModule,
     PatientListModule,
     DoctorLoginModule,
     UpdatePatientModule,

@@ -46,7 +46,7 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
 
-  displayedColumns: string[] = ['allocateid','name', 'age','gender','doctor', 'update', 'status'];
+  displayedColumns: string[] = ['allocateid','name', 'age','gender','doctor','slotdate', 'update', 'status'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient,private router: Router, public dialog: MatDialog) { }

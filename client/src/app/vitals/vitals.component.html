@@ -1,0 +1,64 @@
+<div>
+
+    <h1 class="display-3 text-center heading my-3">Vitals</h1>
+
+    <div *ngIf="!post" novalidate>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>weight</mat-label>
+                            <input matInput placeholder="weight" formControlName="weight">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>height</mat-label>
+                            <input matInput placeholder="height" formControlName="height">
+                        </mat-form-field>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>fewer</mat-label>
+                            <input matInput placeholder="fewer" formControlName="fewer">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-6">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>blood pressure</mat-label>
+                            <input matInput placeholder="blood pressure" formControlName="bp">
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+                <mat-dialog-actions class="text-center mx-auto">
+                    <div class="row text-center mx-auto" style="width: 100%;">
+                        <div class="col-md-6">
+                            <div class="form-element">
+                                <button mat-raised-button color="primary" type="submit" class="button"
+                                    [mat-dialog-close]="true">Save</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-element">
+                                <button mat-raised-button color="warn" class="button" mat-dialog-close>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+                        Vitals Added Successfully
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngIf="showError">
+                        {{ errorString }}
+                    </div>
+                </mat-dialog-actions>
+            </div>
+
+        </form>
+    </div>
+</div>

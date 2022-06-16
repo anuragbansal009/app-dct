@@ -87,7 +87,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-3">
                         <mat-form-field appearance="outline" class="form-element">
                             <mat-label>Doctor Name</mat-label>
                             <mat-select placeholder="Doctor Name" formControlName="doctor_name">
@@ -120,6 +120,9 @@
                                 {{ titleAlert }}
                             </mat-error>
                         </mat-form-field>
+                    </div>
+                    <div class="my-3 col-md-3">
+                        <div class="vitals btn dropdown-toggle" mat-raised-button (click)="handlevitals()" color="primary">Vitals </div>
                     </div>
                 </div>
                 <div class="form-element">

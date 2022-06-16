@@ -39,6 +39,15 @@ const BillSchema = new Schema({
     discount: {
         type: Number,
     },
+    payment: {
+        type: Number,
+    },
+    paymentmode: {
+        type: String,
+    },
+    totalamount: {
+        type: Number,
+    },
     labtests: {
         type: Array,
     },

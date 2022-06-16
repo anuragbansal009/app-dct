@@ -19,6 +19,8 @@ router.post('/patient/bill/:id', async (req, res) => {
             labcharges,
             labtests,
             discount,
+            payment,
+            paymentmode,
             advice,
 
         } = req.body;
@@ -55,6 +57,12 @@ router.post('/patient/bill/:id', async (req, res) => {
             if (discount) {
                 newBill.discount = discount;
             }
+            if (payment) {
+                newBill.payment = payment;
+            }
+            if (paymentmode) {
+                newBill.paymentmode = paymentmode;
+            }
 
             let bill = await Bill.findOneAndUpdate(
                 {
@@ -87,6 +95,8 @@ router.post('/patient/bill/:id', async (req, res) => {
                         labtests: labtests,
                         advice: advice,
                         discount: discount,
+                        payment: payment,
+                        paymentmode: paymentmode,
                         _id: patient._id
 
                     })

@@ -164,45 +164,61 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row my-3">
 
                     <div class="col-md-6">
                         <ng-multiselect-dropdown [placeholder]="'Services'" [settings]="dropdownSettings"
                             [data]="dropdownList" formControlName="labcharges" (onSelect)="onItemSelect($event)"
                             (onSelectAll)="onSelectAll($event)">
                         </ng-multiselect-dropdown>
-                        <!-- <mat-checkbox class="example-margin" [color]="color">Check me!</mat-checkbox>
-                        <mat-form-field appearance="outline" class="form-element">
-
-                            <mat-label>Services</mat-label>
-                            <mat-select placeholder="Services" formControlName="labcharges">
-                                <mat-option *ngFor="let serviceList of services" [value]="serviceList.charges">
-                                    {{serviceList.service}}
-                                </mat-option>
-                            </mat-select>
-                            <input matInput placeholder="Lab charges" value={{labcharges}} formControlName="labcharges">
-                        </mat-form-field> -->
                     </div>
 
                     <div class="col-md-6">
                         <ng-multiselect-dropdown [placeholder]="'LabTests'" [settings]="dropdownTests"
                             [data]="dropdowntestlist" formControlName="labtests" (onSelect)="onItemSelect($event)"
-                            (onSelectAll)="onSelectAll($event)">
+                            (onSelectAll)="onSelectAll($event)" (onUnselectAll)="onUnselectAll($event)">
                         </ng-multiselect-dropdown>
-                        <!-- <mat-checkbox class="example-margin" [color]="color">Check me!</mat-checkbox>
-                        <mat-form-field appearance="outline" class="form-element">
+                    </div>
 
-                            <mat-label>Services</mat-label>
-                            <mat-select placeholder="Services" formControlName="labcharges">
-                                <mat-option *ngFor="let serviceList of services" [value]="serviceList.charges">
-                                    {{serviceList.service}}
-                                </mat-option>
-                            </mat-select>
-                            <input matInput placeholder="Lab charges" value={{labcharges}} formControlName="labcharges">
-                        </mat-form-field> -->
+                    <div class="row my-4">
+
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Payment Mode</mat-label>
+                                <mat-select placeholder="Payment Mode" formControlName="paymentmode">
+                                    <mat-option value="Cash">Cash</mat-option>
+                                    <mat-option value="Card">Card</mat-option>
+                                </mat-select>
+                                <mat-error>
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
+
+
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Discount</mat-label>
+                                <input matInput type="number" placeholder="Discount" formControlName="discount">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Payment</mat-label>
+                                <input type="number" matInput placeholder="Payment" formControlName="payment">
+
+                            </mat-form-field>
+                        </div>
+
+                        <h1>
+                            Total Charges : {{subtotal}}
+                        </h1>
+
                     </div>
 
                 </div>
+                
                 <mat-dialog-actions class="text-center mx-auto mt-2">
                     <div class="row text-center mx-auto" style="width: 100%;">
                         <div class="col-md-6">
@@ -247,3 +263,4 @@
     </div>
 
 </div>
+

@@ -11,6 +11,9 @@ import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
 import { DateAdapter } from '@angular/material/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import {MatDialog } from '@angular/material/dialog';
+import { VitalsComponent } from '../vitals/vitals.component';
+import { BillComponent } from '../bill/bill.component';
 
 @Component({
   selector: 'app-patient-registration',
@@ -30,7 +33,7 @@ export class PatientRegistrationComponent implements OnInit {
   patientid:any;
   patientdata:any;
 
-  constructor(private formBuilder: FormBuilder, private snackBar: MatSnackBar,private router: Router,private http: HttpClient, private dateAdapter: DateAdapter<Date>) { 
+  constructor(private formBuilder: FormBuilder,public dialog: MatDialog, private snackBar: MatSnackBar,private router: Router,private http: HttpClient, private dateAdapter: DateAdapter<Date>) { 
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
 
@@ -99,6 +102,14 @@ export class PatientRegistrationComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
+  handlevitals()
+  {
+    const dialogRef = this.dialog.open(VitalsComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
@@ -108,10 +119,11 @@ export class PatientRegistrationComponent implements OnInit {
         this.patientdata = res
         this.patientid = this.patientdata._id
         this.showSuccess = true;
+        this.router.navigate(['doctordashboard']);
         this.snackBar.open('Patient Registered Successfully', 'Close', {
           duration: 3000,
         });
-        this.router.navigate([`bill/${this.patientid}`]);
+        
       },
       error: error => {
         if (error.status === 400) {

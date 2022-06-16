@@ -24,3 +24,8 @@
 .mat-radio-button ~ .mat-radio-button {
     margin-left: 16px;
   }
+
+  .vitals{
+    text-align: center;
+    border: 1px lightgrey solid;
+  }

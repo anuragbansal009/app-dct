@@ -59,6 +59,9 @@ export class BillComponent implements OnInit {
   testlist: any;
   // data: any;
 
+  patientcharges: any;
+  subtotal: any = 0;
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {id: any},
     private http: HttpClient,
@@ -107,19 +110,36 @@ export class BillComponent implements OnInit {
       doctor_name: [this.inputdoctor],
       allocateid: [this.allocateid],
       labcharges: [this.labcharges],
-      labtests: [this.labtests],
+      labtests: [],
+      discount: [],
+      payment: [],
+      paymentmode: [],
       advice: [this.advice],
 
     });
 
-
   }
 
   onItemSelect(item: any) {
-    console.log(item);
+    
+    this.patientcharges = item
+    this.subtotal = this.subtotal + this.patientcharges.charges
+    console.log(this.subtotal)
   }
+
+  onUnselectAll(item: any) {
+    
+    console.log('unselect all')
+  }
+
   onSelectAll(items: any) {
-    console.log(items);
+    
+    this.patientcharges = items
+    this.patientcharges.forEach((charges:any) => {
+      this.subtotal = charges.charges + this.subtotal
+    });
+
+    console.log('sss',this.subtotal)
   }
 
   serviceDetails()
@@ -127,7 +147,6 @@ export class BillComponent implements OnInit {
     this.http.post('http://localhost:5000/api/services/get', {id: this.id}).subscribe((res) => {
       this.services = res;
       this.dropdownList = this.services
-      console.log(this.dropdownList);
     });
 
   }
@@ -137,7 +156,6 @@ export class BillComponent implements OnInit {
     this.http.post('http://localhost:5000/api/labtest/get', {id: this.id}).subscribe((res) => {
       this.testlist = res;
       this.dropdowntestlist = this.testlist
-      console.log(this.dropdowntestlist);
     });
 
   }
