@@ -31,13 +31,22 @@ const PatientSchema = new Schema({
         type: String,
         required: true
     },
-    position:{
+    position: {
         type: Number,
         required: true
     },
     pin: {
         type: Number,
-        
+
+    },
+    weight: {
+        type: Number,
+    },
+    height: {
+        type: Number,
+    },
+    bmi: {
+        type: Number,
     },
     status: {
         type: String

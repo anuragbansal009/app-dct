@@ -43,6 +43,8 @@ router.post('/patient/create', [
             pin,
             doctor_name,
             slotdate,
+            weight,
+            height,
             time,
         } = req.body;
 
@@ -64,6 +66,8 @@ router.post('/patient/create', [
             allocateid: allocateid,
             position: position,
             slotdate: slotdate,
+            weight: weight,
+            height: height,
             time: time,
             status: "Pending"
 

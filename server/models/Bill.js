@@ -46,6 +46,9 @@ const BillSchema = new Schema({
         type: String,
         required: true
     },
+    totalamount:{
+        type: String,
+    },
     patientid: {
         type: String,
     },
