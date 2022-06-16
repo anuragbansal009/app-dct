@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, OnInit,Inject } from '@angular/core';
+import { AfterViewInit, Component, ViewChild, OnInit, Inject, TemplateRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import {MatTable} from '@angular/material/table'
 import { Router } from '@angular/router';
@@ -6,6 +6,8 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog } from '@angular/material/dialog';
+import { UpdatePatientComponent } from '../update-patient/update-patient.component';
+import { BillComponent } from '../bill/bill.component';
 
 
 export interface PeriodicElement {
@@ -51,7 +53,8 @@ export class PatientListComponent implements AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  
+  @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
+
 
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
@@ -82,13 +85,27 @@ export class PatientListComponent implements AfterViewInit {
     }
   }
 
-  updateEmployee(id: number){
-    this.router.navigate(['update-patient', id]);
+  updateEmployee(id:number){
+    // this.router.navigate(['update-patient', id]);
+    const dialogRef = this.dialog.open(UpdatePatientComponent, {
+      data: { id: id },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.getallpatients();
+    });
   }
 
   handleBill(id:number)
   { 
-    this.router.navigate(['bill', id]);
+    // this.router.navigate(['bill', id]);
+    const dialogRef = this.dialog.open(BillComponent, {
+      data: { id: id },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.getallpatients();
+    });
   }
 
   handleclick()

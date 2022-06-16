@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,8 +10,8 @@ import {
 import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
-import {MatSnackBar} from '@angular/material/snack-bar';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-update-patient',
@@ -40,7 +40,9 @@ export class UpdatePatientComponent implements OnInit {
   inputpin: any = ''
   inputdoctor: any = ''
 
-  constructor(private http: HttpClient,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {id: any},
+    private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -49,7 +51,7 @@ export class UpdatePatientComponent implements OnInit {
 
   ngOnInit() {
 
-    this.id = this.route.snapshot.params['id'];
+    this.id = this.data.id;
 
     this.http.post('http://localhost:5000/api/patient/getallocateid', { allocateid: this.id }).subscribe((res) => {
       this.patient = res
@@ -143,15 +145,6 @@ export class UpdatePatientComponent implements OnInit {
         }
         console.error('There was an error!', error);
       }
-
     })
   }
-
-  handleEvent() {
-
-    this.router.navigate(['doctordashboard']);
-  }
-
-
-
 }

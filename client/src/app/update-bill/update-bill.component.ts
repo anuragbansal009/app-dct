@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
-import {MatDialog} from '@angular/material/dialog';
-import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,6 +10,9 @@ import {
 import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+
 @Component({
   selector: 'app-update-bill',
   templateUrl: './update-bill.component.html',
@@ -39,13 +42,15 @@ export class UpdateBillComponent implements OnInit {
   nextvisit: any = null
   advice: any = null
 
-  data: any;
+  // data: any;
 
   get name() {
     return this.formGroup.get('name') as FormControl;
   }
 
-  constructor(private http: HttpClient,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {id: any},
+    private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,

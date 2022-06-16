@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -12,6 +12,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 
 @Component({
@@ -56,9 +57,11 @@ export class BillComponent implements OnInit {
   services: any;
   labtests: any;
   testlist: any;
-  data: any;
+  // data: any;
 
-  constructor(private http: HttpClient,
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {id: any},
+    private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
@@ -87,7 +90,7 @@ export class BillComponent implements OnInit {
       allowSearchFilter: true
     };
 
-    this.id = this.route.snapshot.params['id'];
+    this.id = this.data.id;
 
     this.billdetails()
 
@@ -185,14 +188,14 @@ export class BillComponent implements OnInit {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });
-      this.router.navigate(['doctordashboard']);
+      // this.router.navigate(['doctordashboard']);
     })
 
   }
 
   handleEvent() {
 
-    this.router.navigate(['doctordashboard']);
+    // this.router.navigate(['doctordashboard']);
   }
 
 

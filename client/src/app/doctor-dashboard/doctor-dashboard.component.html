@@ -2,6 +2,13 @@
   *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing || isAddLabtestShowing)">
   <div class="container-fluid my-3">
     <div class="row">
+      <div class="col-md-12">
+        <div class="mb-4">
+          <app-patient-list></app-patient-list>
+        </div>
+      </div>
+    </div>
+    <div class="row">
       <div class="col-md-4">
         <c-card class="text-center mb-4">
           <c-card-body>

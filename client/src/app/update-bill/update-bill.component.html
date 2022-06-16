@@ -76,21 +76,24 @@
                         </mat-form-field>
                     </div>
                 </div>
-                <div class="form-element">
-                    <button mat-raised-button color="primary" type="submit" class="button">Submit</button>
-                </div>
-
-                <div class="form-element">
-                    <button mat-raised-button color="primary" type="submit" class="button"
-                        (click)="handleEvent()">Cancel</button>
-                </div>
-
-                <div class="alert alert-success" role="alert" *ngIf="showSuccess">
-                    User Created Successfully
-                </div>
-                <div class="alert alert-danger" role="alert" *ngIf="showError">
-                    {{ errorString }}
-                </div>
+                    <div class="row text-center" style="width: 100%;">
+                        <div class="col-md-6">
+                            <div class="form-element">
+                                <button mat-raised-button color="primary" type="submit" class="button">Save</button>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-element">
+                                <button mat-raised-button color="warn" class="button" (click)="handleEvent()">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+                        User Created Successfully
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngIf="showError">
+                        {{ errorString }}
+                    </div>
             </div>
         </form>
 

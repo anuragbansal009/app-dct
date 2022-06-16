@@ -21,7 +21,7 @@ import { DoctorDashboardModule} from './doctor-dashboard/doctor-dashboard.module
 import { AddServicesModule } from './add-services/add-services.module';
 import { BillInvoiceModule } from './bill-invoice/bill-invoice.module';
 import { AddLabtestModule } from './add-labtest/add-labtest.module';
-//import { UpdateBillModule } from './update-bill/update-bill.module';
+import { UpdateBillModule } from './update-bill/update-bill.module';
 
 
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
@@ -42,7 +42,6 @@ import { AddLabtestModule } from './add-labtest/add-labtest.module';
     PatientRegistrationModule,
     AdminLoginModule,
     HomepageModule,
-    // UpdateBillModule,
     BillModule,
     PatientListModule,
     DoctorLoginModule,
@@ -51,7 +50,8 @@ import { AddLabtestModule } from './add-labtest/add-labtest.module';
     DoctorDashboardModule,
     AddServicesModule,
     BillInvoiceModule,
-    AddLabtestModule
+    AddLabtestModule,
+    UpdateBillModule
   ],
   providers: [],
   bootstrap: [AppComponent]
