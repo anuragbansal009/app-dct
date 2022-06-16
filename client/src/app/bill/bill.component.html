@@ -211,9 +211,9 @@
                             </mat-form-field>
                         </div>
 
-                        <h1>
+                        <!-- <h1>
                             Total Charges : {{subtotal}}
-                        </h1>
+                        </h1> -->
 
                     </div>
 
@@ -229,7 +229,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-element">
-                                <button mat-raised-button color="warn" class="button" mat-dialog-close>Cancel</button>
+                                <button (click)="handleclose()" mat-raised-button color="warn" class="button" mat-dialog-close>Cancel</button>
                             </div>
                         </div>
                     </div>

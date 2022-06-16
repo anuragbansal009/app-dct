@@ -98,14 +98,14 @@ export class PatientListComponent implements AfterViewInit {
 
   handleBill(id:number)
   { 
-    // this.router.navigate(['bill', id]);
-    const dialogRef = this.dialog.open(BillComponent, {
-      data: { id: id },
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-      this.getallpatients();
-    });
+    this.router.navigate(['bill', id]);
+    // const dialogRef = this.dialog.open(BillComponent, {
+    //   data: { id: id },
+    // });
+    // dialogRef.afterClosed().subscribe(result => {
+    //   console.log(`Dialog result: ${result}`);
+    //   this.getallpatients();
+    // });
   }
 
   handleclick()

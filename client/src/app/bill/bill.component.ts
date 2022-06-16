@@ -63,7 +63,6 @@ export class BillComponent implements OnInit {
   subtotal: any = 0;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {id: any},
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -93,7 +92,7 @@ export class BillComponent implements OnInit {
       allowSearchFilter: true
     };
 
-    this.id = this.data.id;
+    this.id = this.route.snapshot.params['id'];
 
     this.billdetails()
 
@@ -217,9 +216,9 @@ export class BillComponent implements OnInit {
 
   }
 
-  handleEvent() {
+  handleclose() {
 
-    // this.router.navigate(['doctordashboard']);
+    this.router.navigate(['doctordashboard']);
   }
 
 

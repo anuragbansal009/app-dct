@@ -13,7 +13,6 @@ import { DateAdapter } from '@angular/material/core';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {MatDialog } from '@angular/material/dialog';
 import { VitalsComponent } from '../vitals/vitals.component';
-import { BillComponent } from '../bill/bill.component';
 
 @Component({
   selector: 'app-patient-registration',
@@ -119,7 +118,7 @@ export class PatientRegistrationComponent implements OnInit {
         this.patientdata = res
         this.patientid = this.patientdata._id
         this.showSuccess = true;
-        this.router.navigate(['doctordashboard']);
+        this.router.navigate([`bill/${this.patientid}`]);
         this.snackBar.open('Patient Registered Successfully', 'Close', {
           duration: 3000,
         });
