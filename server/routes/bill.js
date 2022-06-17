@@ -64,16 +64,22 @@ router.post('/patient/bill/:id', async (req, res) => {
             if (paymentmode) {
                 newBill.paymentmode = paymentmode;
             }
+            if (subtotal) {
+                newBill.subtotal = subtotal;
+            }
 
-            let bill = await Bill.findOneAndUpdate(
-                {
-                    _id: req.params.id
-                },
-                {
-                    $set: newBill
-                }
-            )
-            if (payment == null || payment < subtotal) {
+            if (payment == null) {
+                findpatient = await Patient.findOneAndUpdate(
+                    {
+                        _id: req.params.id
+                    },
+                    {
+                        status: "Unpaid"
+                    }
+                )
+            }
+
+            else if (payment < subtotal) {
                 findpatient = await Patient.findOneAndUpdate(
                     {
                         _id: req.params.id
@@ -96,6 +102,15 @@ router.post('/patient/bill/:id', async (req, res) => {
                 )
 
             }
+
+            let bill = await Bill.findOneAndUpdate(
+                {
+                    _id: req.params.id
+                },
+                {
+                    $set: newBill
+                }
+            )
 
             res.json(bill)
 
@@ -126,7 +141,18 @@ router.post('/patient/bill/:id', async (req, res) => {
 
                     })
 
-                    if (payment == null || payment < subtotal) {
+                    if (payment == null) {
+                        findpatient = await Patient.findOneAndUpdate(
+                            {
+                                _id: req.params.id
+                            },
+                            {
+                                status: "Unpaid"
+                            }
+                        )
+                    }
+
+                    else if (payment < subtotal) {
                         findpatient = await Patient.findOneAndUpdate(
                             {
                                 _id: req.params.id

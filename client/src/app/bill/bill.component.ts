@@ -209,7 +209,7 @@ export class BillComponent implements OnInit {
 
   onSubmit(post: any) {
 
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,post).subscribe((res) => {
+    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,{post, subtotal: this.subtotal}).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });
