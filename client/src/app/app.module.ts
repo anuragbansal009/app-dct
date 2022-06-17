@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { MaterialModule } from 'src/material.module';
+import { CoreUIModule } from 'src/coreui.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminRegistrationModule} from './admin-registration/admin-registration.module';
 import { DoctorRegistrationModule } from './doctor-registration/doctor-registration.module';
-import { MaterialModule } from 'src/material.module';
 import { AdminLoginModule } from './admin-login/admin-login.module';
 import { HomepageModule } from './homepage/homepage.module';
 import { DoctorLoginModule } from './doctor-login/doctor-login.module';
@@ -23,13 +23,21 @@ import { BillInvoiceModule } from './bill-invoice/bill-invoice.module';
 import { AddLabtestModule } from './add-labtest/add-labtest.module';
 import { UpdateBillModule } from './update-bill/update-bill.module';
 import { VitalsModule } from './vitals/vitals.module';
-
-
+import { NavbarService } from './navbar.service';
+import { CalendarComponent } from './app.component';
+import {
+  NgxMatDatetimePickerModule,
+  NgxMatNativeDateModule,
+  NgxMatTimepickerModule
+} from '@angular-material-components/datetime-picker';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
+import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent, CalendarComponent
   ],
   imports: [
     BrowserModule,
@@ -38,6 +46,7 @@ import { VitalsModule } from './vitals/vitals.module';
     BilSummaryModule,
     BrowserAnimationsModule,
     MaterialModule,
+    CoreUIModule,
     AdminRegistrationModule,
     DoctorRegistrationModule,
     PatientRegistrationModule,
@@ -53,9 +62,14 @@ import { VitalsModule } from './vitals/vitals.module';
     AddServicesModule,
     BillInvoiceModule,
     AddLabtestModule,
-    UpdateBillModule
+    UpdateBillModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
+    NgbPopoverModule    
   ],
-  providers: [],
+  providers: [NavbarService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

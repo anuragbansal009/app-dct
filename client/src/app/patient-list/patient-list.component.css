@@ -34,3 +34,13 @@ table {
   .form-field{
     width: 20%;
   }
+
+.success {
+  background-color: #146C43;
+  color: white
+}
+
+.warning {
+  background-color: #EFBD29;
+  color: black;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -10,9 +10,10 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
 import { DateAdapter } from '@angular/material/core';
-import {MatSnackBar} from '@angular/material/snack-bar';
-import {MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
 import { VitalsComponent } from '../vitals/vitals.component';
+import { BillComponent } from '../bill/bill.component';
 
 @Component({
   selector: 'app-patient-registration',
@@ -20,6 +21,7 @@ import { VitalsComponent } from '../vitals/vitals.component';
   styleUrls: ['./patient-registration.component.css']
 })
 export class PatientRegistrationComponent implements OnInit {
+
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
@@ -29,10 +31,10 @@ export class PatientRegistrationComponent implements OnInit {
   patientRegistrationAPI = environment.patientRegistrationAPI;
 
   hide = true;
-  patientid:any;
-  patientdata:any;
+  patientid: any;
+  patientdata: any;
 
-  constructor(private formBuilder: FormBuilder,public dialog: MatDialog, private snackBar: MatSnackBar,private router: Router,private http: HttpClient, private dateAdapter: DateAdapter<Date>) { 
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
 
@@ -96,19 +98,16 @@ export class PatientRegistrationComponent implements OnInit {
         ? 'Password needs to be at least eight characters, one uppercase letter and one number'
         : '';
   }
-  handleclick()
-  { 
+  handleclick() {
     this.router.navigate(['doctordashboard']);
   }
 
-  handlevitals()
-  {
+  handlevitals() {
     const dialogRef = this.dialog.open(VitalsComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
-
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
@@ -118,11 +117,24 @@ export class PatientRegistrationComponent implements OnInit {
         this.patientdata = res
         this.patientid = this.patientdata._id
         this.showSuccess = true;
-        this.router.navigate([`bill/${this.patientid}`]);
+
+        // this.router.navigate([`bill/${this.patientid}`]);
+
+        let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;
+        element.click();
+
+        const dialogRef = this.dialog.open(BillComponent, {
+          data: { id: this.patientid },
+        });
+        dialogRef.afterClosed().subscribe(result => {
+          console.log(`Dialog result: ${result}`);
+        });
+        // this.router.navigate(['doctordashboard']);
+
         this.snackBar.open('Patient Registered Successfully', 'Close', {
           duration: 3000,
         });
-        
+
       },
       error: error => {
         if (error.status === 400) {

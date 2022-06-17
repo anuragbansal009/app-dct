@@ -16,3 +16,7 @@ body {
 .cal-day-number {
   color: #212529 !important;
 }
+
+.cal-day-badge {
+  display: none !important;
+}

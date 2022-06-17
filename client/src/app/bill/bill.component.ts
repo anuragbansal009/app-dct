@@ -63,6 +63,7 @@ export class BillComponent implements OnInit {
   subtotal: any = 0;
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {id: any},
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -92,8 +93,8 @@ export class BillComponent implements OnInit {
       allowSearchFilter: true
     };
 
-    this.id = this.route.snapshot.params['id'];
-
+    // this.id = this.route.snapshot.params['id'];
+    this.id = this.data.id
     this.billdetails()
 
     this.patientdetails()

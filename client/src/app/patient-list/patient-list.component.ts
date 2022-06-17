@@ -8,7 +8,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog } from '@angular/material/dialog';
 import { UpdatePatientComponent } from '../update-patient/update-patient.component';
 import { BillComponent } from '../bill/bill.component';
-
+import { DatePipe } from '@angular/common';
 
 export interface PeriodicElement {
   name: string;
@@ -31,7 +31,8 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 @Component({
   selector: 'app-patient-list',
   templateUrl: './patient-list.component.html',
-  styleUrls: ['./patient-list.component.css']
+  styleUrls: ['./patient-list.component.css'],
+  providers: [DatePipe]
 })
 export class PatientListComponent implements AfterViewInit {
 
@@ -46,10 +47,10 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
 
-  displayedColumns: string[] = ['allocateid','name', 'age','gender','doctor', 'update', 'status'];
+  displayedColumns: string[] = ['allocateid','name', 'age','gender','doctor','slotdate','slottime','update', 'status'];
   dataSource!: MatTableDataSource<any>;
 
-  constructor(private http: HttpClient,private router: Router, public dialog: MatDialog) { }
+  constructor(private http: HttpClient,private router: Router, public dialog: MatDialog, public datepipe: DatePipe) { }
 
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -67,13 +68,15 @@ export class PatientListComponent implements AfterViewInit {
     this.http.get('http://localhost:5000/api/patient/get').subscribe((res) => {
 
       this.list = res
-      console.log(this.list)
+      // console.log(this.list)
+      this.list.forEach((element: { slotdate: any; time: any; }) => {
+        element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
+        element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
+      });
       this.dataSource = new MatTableDataSource(this.list);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort
-
     })
-
   }
 
   applyFilter(event: Event) {
@@ -98,14 +101,14 @@ export class PatientListComponent implements AfterViewInit {
 
   handleBill(id:number)
   { 
-    this.router.navigate(['bill', id]);
-    // const dialogRef = this.dialog.open(BillComponent, {
-    //   data: { id: id },
-    // });
-    // dialogRef.afterClosed().subscribe(result => {
-    //   console.log(`Dialog result: ${result}`);
-    //   this.getallpatients();
-    // });
+    // this.router.navigate(['bill', id]);
+    const dialogRef = this.dialog.open(BillComponent, {
+      data: { id: id },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.getallpatients();
+    });
   }
 
   handleclick()

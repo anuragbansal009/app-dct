@@ -3,6 +3,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NavbarService } from '../navbar.service';
 
 import {
   startOfDay,
@@ -61,13 +62,18 @@ export class SecondModalComponent {
 })
 export class ModalComponent {
   constructor(public dialog: MatDialog) { }
-  openDialog() {
-    const dialogRef = this.dialog.open(SecondModalComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
+
+    openDialog() {
+      const dialogRef = this.dialog.open(SecondModalComponent);
+      dialogRef.afterClosed().subscribe(result => {
+        console.log(`Dialog result: ${result}`);
+      });
+    }
+
+  
 }
+
+
 
 @Component({
   selector: 'app-doctor-dashboard',
@@ -76,20 +82,20 @@ export class ModalComponent {
   animations: [
     trigger('slideInOut', [
       transition(':enter', [
-        style({transform: 'translateX(100%)'}),
-        animate('500ms ease', style({transform: 'translateX(0%)'}))
+        style({ transform: 'translateX(100%)' }),
+        animate('500ms ease', style({ transform: 'translateX(0%)' }))
       ]),
       transition(':leave', [
-        animate('0ms ease', style({transform: 'translateX(100%)'}))
+        animate('0ms ease', style({ transform: 'translateX(100%)' }))
       ])
     ]),
     trigger('slideOutIn', [
       transition(':enter', [
-        style({transform: 'translateX(-100%)'}),
-        animate('500ms ease', style({transform: 'translateX(0%)'}))
+        style({ transform: 'translateX(-100%)' }),
+        animate('500ms ease', style({ transform: 'translateX(0%)' }))
       ]),
       transition(':leave', [
-        animate('0ms ease', style({transform: 'translateX(-100%)'}))
+        animate('0ms ease', style({ transform: 'translateX(-100%)' }))
       ])
     ])
   ]
@@ -97,142 +103,11 @@ export class ModalComponent {
 
 export class DoctorDashboardComponent implements OnInit {
 
-  constructor(public dialog: MatDialog) { }
+  constructor(public dialog: MatDialog, public nav: NavbarService) { }
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
-  openDialog() {
-    const dialogRef = this.dialog.open(ModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
-
-  view: CalendarView = CalendarView.Month;
-
-  CalendarView = CalendarView;
-
-  viewDate: Date = new Date();
-
-  modalData!: {
-    action: string;
-    event: CalendarEvent;
-  };
-
-  actions: CalendarEventAction[] = [
-    {
-      label: '<i class="fas fa-fw fa-pencil-alt"></i>',
-      a11yLabel: 'Edit',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.handleEvent('Edited', event);
-      },
-    },
-    {
-      label: '<i class="fas fa-fw fa-trash-alt"></i>',
-      a11yLabel: 'Delete',
-      onClick: ({ event }: { event: CalendarEvent }): void => {
-        this.events = this.events.filter((iEvent) => iEvent !== event);
-        this.handleEvent('Deleted', event);
-      },
-    },
-  ];
-
-  refresh = new Subject<void>();
-
-  events: CalendarEvent[] = [
-    {
-      start: new Date('Tue Jun 12 2022 14:00:57 GMT+0530 (India Standard Time)'),
-      end: new Date('Tue Jun 12 2022 14:30:57 GMT+0530 (India Standard Time)'),
-      title: 'Skin - doctor',
-      color: colors.green,
-      draggable: true,
-    },
-    {
-      start: new Date('Tue Jun 14 2022 13:00:57 GMT+0530 (India Standard Time)'),
-      end: new Date('Tue Jun 14 2022 19:00:57 GMT+0530 (India Standard Time)'),
-      title: 'Ortho - Dhirendra',
-      color: colors.red,
-      draggable: true,
-    },
-    {
-      start: new Date('Mon Jun 13 2022 15:00:04 GMT+0530 (India Standard Time)'),
-      end: new Date('Mon Jun 13 2022 16:00:04 GMT+0530 (India Standard Time)'),
-      title: 'ENT - gulshan',
-      color: colors.yellow,
-      draggable: true,
-    },
-  ];
-
-  activeDayIsOpen: boolean = true;
-
-
-  dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
-    if (isSameMonth(date, this.viewDate)) {
-      if (
-        (isSameDay(this.viewDate, date) && this.activeDayIsOpen === true) ||
-        events.length === 0
-      ) {
-        this.activeDayIsOpen = false;
-      } else {
-        this.activeDayIsOpen = true;
-      }
-      this.viewDate = date;
-    }
-  }
-
-  eventTimesChanged({
-    event,
-    newStart,
-    newEnd,
-  }: CalendarEventTimesChangedEvent): void {
-    this.events = this.events.map((iEvent) => {
-      if (iEvent === event) {
-        return {
-          ...event,
-          start: newStart,
-          end: newEnd,
-        };
-      }
-      return iEvent;
-    });
-    this.handleEvent('Dropped or resized', event);
-  }
-
-  handleEvent(action: string, event: CalendarEvent): void {
-    // this.modalData = { event, action };
-    // this.modal.open(this.modalContent, { size: 'lg' });
-  }
-
-  addEvent(): void {
-    this.events = [
-      ...this.events,
-      {
-        title: 'New event',
-        start: startOfDay(new Date()),
-        end: endOfDay(new Date()),
-        color: colors.red,
-        draggable: true,
-        resizable: {
-          beforeStart: true,
-          afterEnd: true,
-        },
-      },
-    ];
-  }
-
-  deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
-  }
-
-  setView(view: CalendarView) {
-    this.view = view;
-  }
-
-  closeOpenMonthViewDay() {
-    this.activeDayIsOpen = false;
-  }
-
   ngOnInit(): void {
+    this.nav.showCalIcon();
   }
   isPatientRegistrationShowing = false;
   isPatientListShowing = false;
@@ -244,6 +119,7 @@ export class DoctorDashboardComponent implements OnInit {
 
   togglePatientRegistration() {
     this.isPatientRegistrationShowing = !this.isPatientRegistrationShowing;
+    console.log(this.isPatientRegistrationShowing);
   }
 
   togglePatientList() {
