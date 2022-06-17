@@ -7,6 +7,8 @@ const MongoClient = require('mongodb').MongoClient;
 const Bill = require('../models/Bill');
 const mongoURI = "mongodb://localhost:27017/hospital?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
 var database
+const ZonedDateTime = require("zoned-date-time");
+const zoneData = require("iana-tz-data");
 
 
 MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, res) => {
@@ -43,8 +45,6 @@ router.post('/patient/create', [
             pin,
             doctor_name,
             slotdate,
-            weight,
-            height,
             time,
         } = req.body;
 
@@ -66,10 +66,8 @@ router.post('/patient/create', [
             allocateid: allocateid,
             position: position,
             slotdate: slotdate,
-            weight: weight,
-            height: height,
             time: time,
-            status: "Pending"
+            status: "Unpaid"
 
         })
 
@@ -77,6 +75,7 @@ router.post('/patient/create', [
 
     }
     catch (err) {
+        console.error(err)
         res.status(500).send("Error occured");
     }
 
@@ -91,6 +90,7 @@ router.get('/patient/get', async (req, res) => {
 
     } catch (error) {
 
+        console.log(error)
         res.status(500).send("Error occured");
 
     }
@@ -147,6 +147,7 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
         doctor_name,
         slotdate,
         time,
+        vitals,
     } = req.body;
 
     try {
@@ -182,8 +183,9 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
         if (doctor_name) {
             newPatient.doctor_name = doctor_name;
         }
-
-        console.log(req.params.id)
+        if (vitals) {
+            newPatient.vitals = vitals;
+        }
 
         // let patient = await Patient.findOneAndUpdate(req.params.id, { $set: newPatient }, { new: true })
 
@@ -211,6 +213,43 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
         console.log(err.message);
         res.status(500).send("Error occured");
     }
+
+})
+
+router.post('/patient/filter', async (req, res) => {
+
+    let alldates = []
+
+    let patients = []
+
+    const {date} = req.body;
+
+    let allpatients = await Patient.find()
+
+    allpatients.forEach(async (patient, i) => {
+
+        const t2 = new Date(`${patient.slotdate}`).getTime();
+        if(t2 < (date + 86400000) && t2 > date )
+        {
+            alldates[i] = patient.slotdate
+        }
+        
+    })
+
+    console.log(alldates) 
+
+    alldates.forEach(async (date)=>{
+        if(date !== null)
+        {
+            console.log(date)
+            patients = await Patient.find({slotdate: date})
+        }
+    })
+
+    console.log(patients)
+
+    // 1655251200000
+
 
 })
 

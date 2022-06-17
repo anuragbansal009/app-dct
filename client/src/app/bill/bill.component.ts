@@ -114,6 +114,7 @@ export class BillComponent implements OnInit {
       discount: [],
       payment: [],
       paymentmode: [],
+      subtotal: [this.subtotal],
       advice: [this.advice],
 
     });
@@ -218,6 +219,8 @@ export class BillComponent implements OnInit {
   }
 
   handleclose() {
+
+    console.log('handle close')
 
     this.router.navigate(['doctordashboard']);
   }

@@ -21,6 +21,7 @@ router.post('/patient/bill/:id', async (req, res) => {
             discount,
             payment,
             paymentmode,
+            subtotal,
             advice,
 
         } = req.body;
@@ -72,6 +73,29 @@ router.post('/patient/bill/:id', async (req, res) => {
                     $set: newBill
                 }
             )
+            if (payment == null || payment < subtotal) {
+                findpatient = await Patient.findOneAndUpdate(
+                    {
+                        _id: req.params.id
+                    },
+                    {
+                        status: "Pending"
+                    }
+                )
+            }
+
+            else {
+
+                findpatient = await Patient.findOneAndUpdate(
+                    {
+                        _id: req.params.id
+                    },
+                    {
+                        status: "Paid"
+                    }
+                )
+
+            }
 
             res.json(bill)
 
@@ -97,19 +121,34 @@ router.post('/patient/bill/:id', async (req, res) => {
                         discount: discount,
                         payment: payment,
                         paymentmode: paymentmode,
+                        subtotal: subtotal,
                         _id: patient._id
 
                     })
 
-                    findpatient = await Patient.findOneAndUpdate(
-                        {
-                            _id: req.params.id
-                        },
-                        {
-                            status: "Paid"
-                        }
-                    )
+                    if (payment == null || payment < subtotal) {
+                        findpatient = await Patient.findOneAndUpdate(
+                            {
+                                _id: req.params.id
+                            },
+                            {
+                                status: "Pending"
+                            }
+                        )
+                    }
 
+                    else {
+
+                        findpatient = await Patient.findOneAndUpdate(
+                            {
+                                _id: req.params.id
+                            },
+                            {
+                                status: "Paid"
+                            }
+                        )
+
+                    }
 
                     res.json(bill)
 

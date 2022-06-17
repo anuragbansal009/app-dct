@@ -12,7 +12,6 @@ import { Router } from '@angular/router';
 import { DateAdapter } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
-import { VitalsComponent } from '../vitals/vitals.component';
 import { BillComponent } from '../bill/bill.component';
 
 @Component({
@@ -102,12 +101,6 @@ export class PatientRegistrationComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
-  handlevitals() {
-    const dialogRef = this.dialog.open(VitalsComponent);
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
-    });
-  }
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;

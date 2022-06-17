@@ -48,6 +48,9 @@ const BillSchema = new Schema({
     totalamount: {
         type: Number,
     },
+    subtotal: {
+        type: Number,
+    },
     labtests: {
         type: Array,
     },

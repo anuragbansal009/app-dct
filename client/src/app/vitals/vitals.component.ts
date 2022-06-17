@@ -20,6 +20,8 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 })
 export class VitalsComponent implements OnInit {
 
+  id: any
+
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
@@ -29,7 +31,7 @@ export class VitalsComponent implements OnInit {
   patientRegistrationAPI = environment.patientRegistrationAPI;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: [],
+    @Inject(MAT_DIALOG_DATA) public data: {id: any},
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -39,18 +41,26 @@ export class VitalsComponent implements OnInit {
 
   ngOnInit(): void {
 
+    this.id = this.data.id;
+
+    console.log("asas", this.id);
+
     this.formGroup = this.formBuilder.group({
       weight: [],
       height: [],
       fewer: [],
       bp: [],
+      pulse: [],
     });
 
   }
 
   onSubmit(post: any) {
-    this.data = post
-    console.log(this.data)
+    
+    this.http.post(`http://localhost:5000/api/patient/updatepatient/${this.id}`, {vitals: post}).subscribe((res:any) => {
+      console.log('res')
+    })
+    
   }
 
 }

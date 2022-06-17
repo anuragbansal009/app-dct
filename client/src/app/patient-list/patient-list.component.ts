@@ -9,6 +9,7 @@ import {MatDialog } from '@angular/material/dialog';
 import { UpdatePatientComponent } from '../update-patient/update-patient.component';
 import { BillComponent } from '../bill/bill.component';
 import { DatePipe } from '@angular/common';
+import { VitalsComponent } from '../vitals/vitals.component';
 
 export interface PeriodicElement {
   name: string;
@@ -46,8 +47,9 @@ export class PatientListComponent implements AfterViewInit {
   position: any = [];
   len: any;
   tableCreate: boolean = false;
+  date: any;
 
-  displayedColumns: string[] = ['allocateid','name', 'age','gender','doctor','slotdate','slottime','update', 'status'];
+  displayedColumns: string[] = ['allocateid','name','vitals','doctor','slotdate','slottime','update', 'status','print'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient,private router: Router, public dialog: MatDialog, public datepipe: DatePipe) { }
@@ -79,6 +81,15 @@ export class PatientListComponent implements AfterViewInit {
     })
   }
 
+  filterPatients()
+  {
+    this.date = document.getElementById('filterdate');
+    this.date = new Date(this.date.value).valueOf();
+    console.log(this.date)
+
+  
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
@@ -99,6 +110,15 @@ export class PatientListComponent implements AfterViewInit {
     });
   }
 
+  handlevitals(id: number) {
+    const dialogRef = this.dialog.open(VitalsComponent, {
+      data: { id: id}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   handleBill(id:number)
   { 
     // this.router.navigate(['bill', id]);
@@ -109,6 +129,11 @@ export class PatientListComponent implements AfterViewInit {
       console.log(`Dialog result: ${result}`);
       this.getallpatients();
     });
+  }
+
+  handleprint(id: number)
+  { 
+    this.router.navigate(['billinvoice']);
   }
 
   handleclick()

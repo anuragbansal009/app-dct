@@ -21,11 +21,9 @@ const PatientSchema = new Schema({
     },
     bloodgroup: {
         type: String,
-        required: true
     },
     city: {
         type: String,
-        required: true
     },
     allocateid: {
         type: String,
@@ -39,15 +37,6 @@ const PatientSchema = new Schema({
         type: Number,
 
     },
-    weight: {
-        type: Number,
-    },
-    height: {
-        type: Number,
-    },
-    bmi: {
-        type: Number,
-    },
     status: {
         type: String
     },
@@ -56,6 +45,9 @@ const PatientSchema = new Schema({
     },
     time: {
         type: String
+    },
+    vitals: {
+        type: Array,
     },
     doctor_name: {
         type: String,

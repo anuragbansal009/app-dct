@@ -1,37 +1,45 @@
 <div>
 
-    <h1 class="display-3 text-center heading my-3">Vitals</h1>
+    <h1 class="display-3 heading my-3">Vitals</h1>
+
+    <hr>
 
     <div *ngIf="!post" novalidate>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
 
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Weight</mat-label>
+                            <mat-label>Weight(kg)</mat-label>
                             <input matInput placeholder="Weight" formControlName="weight">
                         </mat-form-field>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Height</mat-label>
+                            <mat-label>Height(m)</mat-label>
                             <input matInput placeholder="Height" formControlName="height">
                         </mat-form-field>
                     </div>
                 </div>
 
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Fever</mat-label>
+                            <mat-label>Temperature(F)</mat-label>
                             <input matInput placeholder="Fever" formControlName="fewer">
                         </mat-form-field>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Blood Pressure</mat-label>
+                            <mat-label>BP(mmHg)</mat-label>
                             <input matInput placeholder="Blood Pressure" formControlName="bp">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-md-4">
+                        <mat-form-field appearance="outline" class="form-element">
+                            <mat-label>Pulse(bpm)</mat-label>
+                            <input matInput placeholder="Blood Pressure" formControlName="pulse">
                         </mat-form-field>
                     </div>
                 </div>
