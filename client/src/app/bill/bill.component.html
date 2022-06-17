@@ -211,15 +211,15 @@
                             </mat-form-field>
                         </div>
 
-                        <!-- <h1>
+                        <h1>
                             Total Charges : {{subtotal}}
-                        </h1> -->
+                        </h1>
 
                     </div>
 
                 </div>
                 
-                <mat-dialog-actions class="text-center mx-auto mt-2">
+                <!-- <mat-dialog-actions class="text-center mx-auto mt-2">
                     <div class="row text-center mx-auto" style="width: 100%;">
                         <div class="col-md-6">
                             <div class="form-element">
@@ -239,23 +239,27 @@
                     <div class="alert alert-danger" role="alert" *ngIf="showError">
                         {{ errorString }}
                     </div>
-                </mat-dialog-actions>
+                </mat-dialog-actions> -->
 
-                <!-- <div class="my-4 form-element">
-                    <button mat-raised-button color="primary" type="submit" class="button">Submit</button>
+                <div class="row text-center mx-auto" style="width: 100%;">
+                    <div class="col-md-6">
+                        <div class="form-element">
+                            <button mat-raised-button color="primary" type="submit" class="button">Submit</button>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-element">
+                            <button mat-raised-button color="warn" type="submit" class="button"
+                                (click)="handleclose()">Cancel</button>
+                        </div>
+                    </div>
                 </div>
-
-                <div class="form-element">
-                    <button mat-raised-button color="primary" type="submit" class="button"
-                        (click)="handleEvent()">Cancel</button>
-                </div>
-
                 <div class="alert alert-success" role="alert" *ngIf="showSuccess">
                     User Created Successfully
                 </div>
                 <div class="alert alert-danger" role="alert" *ngIf="showError">
                     {{ errorString }}
-                </div> -->
+                </div> 
             </div>
         </form>
 

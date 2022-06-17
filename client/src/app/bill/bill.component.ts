@@ -211,7 +211,7 @@ export class BillComponent implements OnInit {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });
-      // this.router.navigate(['doctordashboard']);
+      this.router.navigate(['doctordashboard']);
     })
 
   }
