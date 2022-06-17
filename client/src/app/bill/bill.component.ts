@@ -116,7 +116,6 @@ export class BillComponent implements OnInit {
       paymentmode: [],
       subtotal: [this.subtotal],
       advice: [this.advice],
-
     });
 
   }
@@ -128,7 +127,6 @@ export class BillComponent implements OnInit {
   }
 
   onItemSelect(item: any) {
-    
     this.patientcharges = item
     this.subtotal = this.subtotal + this.patientcharges.charges
     console.log(this.subtotal)
@@ -208,8 +206,8 @@ export class BillComponent implements OnInit {
   }
 
   onSubmit(post: any) {
-
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,post).subscribe((res) => {
+    console.log(post)
+    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,{post, subtotal: this.subtotal}).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });

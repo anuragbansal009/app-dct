@@ -64,6 +64,9 @@ router.post('/patient/bill/:id', async (req, res) => {
             if (paymentmode) {
                 newBill.paymentmode = paymentmode;
             }
+            if (subtotal) {
+                newBill.subtotal = subtotal;
+            }
 
             let bill = await Bill.findOneAndUpdate(
                 {
