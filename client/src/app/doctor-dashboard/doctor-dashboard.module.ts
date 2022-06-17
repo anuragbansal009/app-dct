@@ -20,6 +20,7 @@ import {
     NgxMatNativeDateModule,
     NgxMatTimepickerModule
   } from '@angular-material-components/datetime-picker';
+  import { NavbarService } from '../navbar.service';
 
 @NgModule({
     declarations: [DoctorDashboardComponent, ModalComponent, SecondModalComponent],
@@ -47,7 +48,7 @@ import {
         AddLabtestModule
     ],
     exports: [DoctorDashboardComponent],
-    providers: [],
+    providers: [NavbarService],
     bootstrap: [DoctorDashboardComponent],
 })
 export class DoctorDashboardModule { }
