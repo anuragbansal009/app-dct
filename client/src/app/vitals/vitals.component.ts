@@ -29,6 +29,11 @@ export class VitalsComponent implements OnInit {
   showError: boolean = false;
   errorString: string = 'Error! Please Try Again';
   patientRegistrationAPI = environment.patientRegistrationAPI;
+  weight: any
+  bmi: any = 0;
+  height: any
+  weightAdded: boolean = false;
+  heightAdded: boolean = false;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public patientVital: {id: any},
@@ -49,10 +54,32 @@ export class VitalsComponent implements OnInit {
       weight: [],
       height: [],
       fewer: [],
-      bp: [],
+      sbp: [],
+      dbp: [],
       pulse: [],
     });
+  }
 
+  weightField() {
+    // console.log(this.formGroup.get('weight').value)
+    if (this.formGroup.get('weight').value) {
+      this.weightAdded = true;
+      this.weight = this.formGroup.get('weight').value;
+    }
+    else {
+      this.weightAdded = false;
+    }
+  }
+
+  heightField() {
+    console.log(this.formGroup.get('height').value)
+    if (this.formGroup.get('height').value) {
+      this.heightAdded = true;
+      this.height = this.formGroup.get('height').value;
+    }
+    else {
+      this.heightAdded = false;
+    }
   }
 
   onSubmit(post: any) {

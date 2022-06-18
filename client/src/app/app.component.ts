@@ -23,6 +23,9 @@ import {
 } from 'angular-calendar';
 import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.component';
 import { animate, style, transition, trigger } from '@angular/animations';
+import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
+import { AddServicesComponent } from './add-services/add-services.component';
+import { AddLabtestComponent } from './add-labtest/add-labtest.component';
 
 const colors: any = {
   red: {
@@ -52,7 +55,7 @@ const eventList: CalendarEvent[] = [];
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent {
-  constructor() { }
+  constructor(public dialog: MatDialog) { }
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
@@ -63,6 +66,13 @@ export class CalendarComponent {
     action: string;
     event: CalendarEvent;
   };
+
+  openAddPatient() {
+    const dialogRef = this.dialog.open(PatientRegistrationComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
 
   actions: CalendarEventAction[] = [
     {
@@ -221,6 +231,27 @@ export class AppComponent implements OnInit {
   openDialog() {
     const dialogRef = this.dialog.open(CalendarComponent);
 
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openPatientRegistration() {
+    const dialogRef = this.dialog.open(PatientRegistrationComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openAddServices() {
+    const dialogRef = this.dialog.open(AddServicesComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  openAddLabtest() {
+    const dialogRef = this.dialog.open(AddLabtestComponent);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });

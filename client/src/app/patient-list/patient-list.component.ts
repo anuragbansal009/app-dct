@@ -10,6 +10,7 @@ import { UpdatePatientComponent } from '../update-patient/update-patient.compone
 import { BillComponent } from '../bill/bill.component';
 import { DatePipe } from '@angular/common';
 import { VitalsComponent } from '../vitals/vitals.component';
+import { DateAdapter } from '@angular/material/core';
 
 export interface PeriodicElement {
   name: string;
@@ -54,7 +55,9 @@ export class PatientListComponent implements AfterViewInit {
   displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'update', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
 
-  constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe) { }
+  constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe, private dateAdapter: DateAdapter<Date>) {
+    this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
+  }
 
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -87,10 +90,12 @@ export class PatientListComponent implements AfterViewInit {
   }
 
 
-  filterallpatients() {
-
-    this.date = document.getElementById('filterdate');
-    this.date = new Date(this.date.value).valueOf();
+  filterallpatients(event: any) {
+    // this.date = document.getElementById('filterdate');
+    // console.log(this.date)
+    // this.date = new Date(this.date.value).valueOf();
+    this.date =  new Date(event.value).valueOf();
+    this.date = this.date + 19800000;
     this.http.post('http://localhost:5000/api/patient/filter', { date: this.date }).subscribe({
       next: res => {
         this.list = res

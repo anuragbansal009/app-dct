@@ -101,8 +101,18 @@
 
 
 <div>
+    <mat-dialog-actions style=" margin-top: -20px">
+        <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+            <button mat-icon-button mat-dialog-close>
+                <mat-icon>close</mat-icon>
+            </button>
+        </span>
+    </mat-dialog-actions>
 
-    <h1 class="display-3 text-center heading my-3">Patient Bill</h1>
+    <!-- <h1 class="display-3 text-center heading my-3">Patient Bill</h1> -->
+    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Patient Bill</h1>
+
+    <hr>
 
     <div *ngIf="!post" novalidate>
         <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">

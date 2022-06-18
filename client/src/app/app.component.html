@@ -10,19 +10,28 @@
     <span><a onclick="location.href='/doctordashboard'">Front Desk App - DCT</a></span>
     <span class="example-spacer"></span>
     <!-- <a href="/doctorlogin"> -->
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="togglePatientRegistration()" matTooltip="Patient Registration">
+    <!-- <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" (click)="togglePatientRegistration()" matTooltip="Patient Registration">
       <mat-icon>how_to_reg</mat-icon>
     </button>
-    <!-- <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleBillSummary()" matTooltip="Bill Summary">
+    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleBillSummary()" matTooltip="Bill Summary">
       <mat-icon>receipt</mat-icon>
-    </button> -->
+    </button>
     <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleAddServices()" matTooltip="Add Services">
       <mat-icon>medical_services</mat-icon>
     </button>
     <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleAddLabtest()" matTooltip="Add Labtests">
       <mat-icon>science</mat-icon>
+    </button> -->
+    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Patient Registration" (click)="openPatientRegistration()" matTooltip="Patient Registration">
+      <mat-icon>how_to_reg</mat-icon>
     </button>
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="openDialog()" matTooltip="Calendar">
+    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Services" (click)="openAddServices()" matTooltip="Add Services">
+      <mat-icon>medical_services</mat-icon>
+    </button>
+    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Labtests" (click)="openAddLabtest()" matTooltip="Add Labtests">
+      <mat-icon>science</mat-icon>
+    </button>
+    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Calendar" (click)="openDialog()" matTooltip="Calendar">
       <mat-icon>calendar_month</mat-icon>
     </button>
 

@@ -1,9 +1,9 @@
 table {
-    width: 100%;
-    margin-top: 20px;
-  }
+  width: 100%;
+  margin-top: 20px;
+}
 
-  .form {
+/* .form {
     min-width: 150px;
     max-width: 500px;
     width: 100%;
@@ -12,20 +12,19 @@ table {
 .form-element {
     padding: 5px 0px 25px 2px;
     width: 100%;
-}
+} */
 
 .button {
-    width: 100%;
+  width: 100%;
 }
 
 .heading {
-    font-size: 3rem;
-    font-weight: 300;
-    line-height: 1.2;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1.2;
 }
 
-  
-  .mat-form-field {
+/* .mat-form-field {
     font-size: 14px;
     width: 50%;
     text-align: center;
@@ -33,19 +32,37 @@ table {
   
   .form-field{
     width: 20%;
-  }
+  } */
 
 .success {
-  background-color: #146C43;
-  color: white
+  background-color: #146c43;
+  color: white;
 }
 
 .warning {
-  background-color: #EFBD29;
+  background-color: #efbd29;
   color: black;
 }
 
-.print{
+.print {
   background-color: lightblue;
   color: black;
 }
+
+.search-bar {
+  background-color: #ffffff;
+  height: 40px;
+  border-radius: 20px;
+  display: flex;
+  padding: 10px;
+  min-width: fit-content;
+  width: max-content;
+}
+
+th {
+  font-size: 1.1em;
+  background-color: #3f51b5;
+  /* font-weight: bold; */
+  color: white;
+}
+
