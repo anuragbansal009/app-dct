@@ -86,23 +86,38 @@ export class PatientListComponent implements AfterViewInit {
     })
   }
 
+
   filterallpatients() {
 
     this.date = document.getElementById('filterdate');
     this.date = new Date(this.date.value).valueOf();
-    this.http.post('http://localhost:5000/api/patient/filter', { date: this.date }).subscribe((res) => {
-
-
-      this.list = res
-      console.log(this.labtestitems)
-      this.list.forEach((element: { slotdate: any; time: any; }) => {
-        element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
-        element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
-      });
-      this.dataSource = new MatTableDataSource(this.list);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort
-    })
+    this.http.post('http://localhost:5000/api/patient/filter', { date: this.date }).subscribe({
+      next: res => {
+        this.list = res
+        if (this.list.length == 0) {
+          this.dataSource = new MatTableDataSource(this.list);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort
+        }
+        else {
+          this.serviceitems = this.list[0].services
+          this.labtestitems = this.list[0].labtests
+          this.list.forEach((element: { slotdate: any; time: any; }) => {
+            element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
+            element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
+          });
+          this.dataSource = new MatTableDataSource(this.list);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort
+        }
+      },
+      error: err => {
+        this.list = [];
+        this.dataSource = new MatTableDataSource(this.list);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort
+      }
+    });
   }
 
   applyFilter(event: Event) {
