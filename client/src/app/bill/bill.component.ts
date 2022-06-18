@@ -48,11 +48,12 @@ export class BillComponent implements OnInit {
   inputage: any
   inputdoctor: any
   allocateid: any
-
-  medicines: any = null
+  inputpaymentmode: any
+  inputsubtotal: any
+  inputbalance: any = 0
+  inputpayment: any
+  
   labcharges: any = null
-  nextvisit: any = null
-  advice: any = null
   bill: any;
   services: any;
   labtests: any;
@@ -109,13 +110,12 @@ export class BillComponent implements OnInit {
       age: [this.inputage],
       doctor_name: [this.inputdoctor],
       allocateid: [this.allocateid],
-      labcharges: [this.labcharges],
-      labtests: [],
-      discount: [],
-      payment: [],
-      paymentmode: [],
-      subtotal: [this.subtotal],
-      advice: [this.advice],
+      labcharges: [null],
+      labtests: [null],
+      discount: [null],
+      payment: [null],
+      paymentmode: [null],
+      subtotal: [null],
     });
 
   }
@@ -123,13 +123,14 @@ export class BillComponent implements OnInit {
   onItemDeSelect(item: any) {
     this.patientcharges = item
     this.subtotal = this.subtotal - this.patientcharges.charges
-    console.log(this.subtotal)
+    this.inputbalance = this.inputbalance - this.patientcharges.charges
+
   }
 
   onItemSelect(item: any) {
     this.patientcharges = item
     this.subtotal = this.subtotal + this.patientcharges.charges
-    console.log(this.subtotal)
+    this.inputbalance = this.inputbalance + this.patientcharges.charges
   }
 
   onUnselectAll(item: any) {
@@ -144,7 +145,6 @@ export class BillComponent implements OnInit {
       this.subtotal = charges.charges + this.subtotal
     });
 
-    console.log('sss',this.subtotal)
   }
 
   serviceDetails()
@@ -184,30 +184,40 @@ export class BillComponent implements OnInit {
 
     this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
 
-      if (res) {
-        this.bill = res
-
-        if (this.bill.length !== 0) {
-
-          
-          if (this.bill[0].advice) {
-            this.advice = this.bill[0].advice
-          }
+    this.bill = res
+    if(this.bill.length !== 0)
+    {
+      if(this.bill[0].subtotal)
+      {
+        this.subtotal = this.bill[0].subtotal
+        if(this.bill[0].payment)
+        {
+          this.inputpayment = this.bill[0].payment
+          this.inputbalance = this.bill[0].subtotal - this.bill[0].payment
         }
-
+        else{
+          this.inputbalance = this.bill[0].subtotal
+        }
       }
-
-      else {
-        console.log('create bill first')
+      if(this.bill[0].paymentmode)
+      {
+        this.inputpaymentmode = this.bill[0].paymentmode
       }
+    }
 
     })
 
   }
 
   onSubmit(post: any) {
-    console.log(post)
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,{post, subtotal: this.subtotal}).subscribe((res) => {
+
+    console.log('post', post)
+    post.subtotal = this.subtotal
+    if(this.inputbalance !== 0)
+    {
+      post.payment = post.payment + this.inputpayment
+    }
+    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });
@@ -217,10 +227,7 @@ export class BillComponent implements OnInit {
   }
 
   handleclose() {
-
-    console.log('handle close')
-
-    this.router.navigate(['doctordashboard']);
+    window.location.reload();
   }
 
 

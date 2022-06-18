@@ -39,6 +39,8 @@ export class UpdatePatientComponent implements OnInit {
   inputcity: any = ''
   inputpin: any = ''
   inputdoctor: any = ''
+  inputdate: any = ''
+  inputtime: any = ''
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {id: any},
@@ -64,6 +66,8 @@ export class UpdatePatientComponent implements OnInit {
       this.inputcity = this.patient[0].city
       this.inputpin = this.patient[0].pin
       this.inputdoctor = this.patient[0].doctor_name
+      this.inputdate = this.patient[0].slotdate
+      this.inputtime = this.patient[0].time
 
     })
 
@@ -76,6 +80,8 @@ export class UpdatePatientComponent implements OnInit {
       city: [this.inputcity],
       pin: [this.inputpin],
       doctor_name: [this.inputdoctor],
+      slotdate: [this.inputdate],
+      time: [this.inputtime],
     });
 
     // this.createForm();

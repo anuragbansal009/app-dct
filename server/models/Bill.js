@@ -16,22 +16,9 @@ const BillSchema = new Schema({
         type: String,
         required: true
     },
-    consultation: {
-        type: String,
-    },
     mobile: {
         type: Number,
         required: true
-    },
-    medicines: {
-        type: String,
-    },
-    advice: {
-        type: String,
-
-    },
-    nextvisit: {
-        type: String,
     },
     labcharges: {
         type: Array,
@@ -45,9 +32,6 @@ const BillSchema = new Schema({
     paymentmode: {
         type: String,
     },
-    totalamount: {
-        type: Number,
-    },
     subtotal: {
         type: Number,
     },
@@ -57,9 +41,6 @@ const BillSchema = new Schema({
     allocateid: {
         type: String,
         required: true
-    },
-    totalamount:{
-        type: String,
     },
     patientid: {
         type: String,

@@ -10,7 +10,6 @@ router.post('/patient/bill/:id', async (req, res) => {
 
     try {
 
-
         const {
             name,
             gender,
@@ -22,7 +21,6 @@ router.post('/patient/bill/:id', async (req, res) => {
             payment,
             paymentmode,
             subtotal,
-            advice,
 
         } = req.body;
 
@@ -68,49 +66,59 @@ router.post('/patient/bill/:id', async (req, res) => {
                 newBill.subtotal = subtotal;
             }
 
-            if (payment == null) {
-                findpatient = await Patient.findOneAndUpdate(
-                    {
-                        _id: req.params.id
-                    },
-                    {
-                        status: "Unpaid"
-                    }
-                )
-            }
-
-            else if (payment < subtotal) {
-                findpatient = await Patient.findOneAndUpdate(
-                    {
-                        _id: req.params.id
-                    },
-                    {
-                        status: "Pending"
-                    }
-                )
-            }
-
-            else {
-
-                findpatient = await Patient.findOneAndUpdate(
-                    {
-                        _id: req.params.id
-                    },
-                    {
-                        status: "Paid"
-                    }
-                )
-
-            }
-
             let bill = await Bill.findOneAndUpdate(
                 {
                     _id: req.params.id
                 },
                 {
                     $set: newBill
+                },
+                {
+                    new: true,
                 }
             )
+
+            if (bill.payment == null) {
+                findpatient = await Patient.findOneAndUpdate(
+                    {
+                        _id: req.params.id
+                    },
+                    {
+                        status: "Unpaid",
+                        labtests: bill.labtests,
+                        services: bill.labcharges,
+                    }
+                )
+            }
+
+
+            if (bill.payment < bill.subtotal) {
+                findpatient = await Patient.findOneAndUpdate(
+                    {
+                        _id: req.params.id
+                    },
+                    {
+                        status: "Pending",
+                        labtests: bill.labtests,
+                        services: bill.labcharges,
+                    }
+                )
+            }
+
+            if (bill.payment == bill.subtotal) {
+
+                findpatient = await Patient.findOneAndUpdate(
+                    {
+                        _id: req.params.id
+                    },
+                    {
+                        status: "Paid",
+                        labtests: bill.labtests,
+                        services: bill.labcharges,
+                    }
+                )
+
+            }
 
             res.json(bill)
 
@@ -127,12 +135,10 @@ router.post('/patient/bill/:id', async (req, res) => {
                         gender: patient.gender,
                         age: patient.age,
                         doctor_name: patient.doctor_name,
-                        consultation: doctor.consultation,
                         mobile: patient.mobile,
                         allocateid: patient.allocateid,
                         labcharges: labcharges,
                         labtests: labtests,
-                        advice: advice,
                         discount: discount,
                         payment: payment,
                         paymentmode: paymentmode,
@@ -141,36 +147,42 @@ router.post('/patient/bill/:id', async (req, res) => {
 
                     })
 
-                    if (payment == null) {
+                    if (bill.payment == null) {
                         findpatient = await Patient.findOneAndUpdate(
                             {
                                 _id: req.params.id
                             },
                             {
-                                status: "Unpaid"
+                                status: "Unpaid",
+                                labtests: bill.labtests,
+                                services: bill.labcharges,
                             }
                         )
                     }
 
-                    else if (payment < subtotal) {
+                    if (bill.payment < bill.subtotal) {
                         findpatient = await Patient.findOneAndUpdate(
                             {
                                 _id: req.params.id
                             },
                             {
-                                status: "Pending"
+                                status: "Pending",
+                                labtests: bill.labtests,
+                                services: bill.labcharges,
                             }
                         )
                     }
 
-                    else {
+                    if (bill.payment == bill.subtotal) {
 
                         findpatient = await Patient.findOneAndUpdate(
                             {
                                 _id: req.params.id
                             },
                             {
-                                status: "Paid"
+                                status: "Paid",
+                                labtests: bill.labtests,
+                                services: bill.labcharges,
                             }
                         )
 

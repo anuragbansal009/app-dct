@@ -170,6 +170,9 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
         if (slotdate) {
             newPatient.slotdate = slotdate;
         }
+        if (time) {
+            newPatient.time = time;
+        }
         if (bloodgroup) {
             newPatient.time = time;
         }
@@ -229,24 +232,33 @@ router.post('/patient/filter', async (req, res) => {
     allpatients.forEach(async (patient, i) => {
 
         const t2 = new Date(`${patient.slotdate}`).getTime();
-        if(t2 < (date + 86400000) && t2 > date )
+        if(t2 > (date - 86400000) && t2 < date )
         {
             alldates[i] = patient.slotdate
         }
         
     })
 
-    console.log(alldates) 
+    console.log(alldates.length)
 
-    alldates.forEach(async (date)=>{
-        if(date !== null)
+    if(alldates.length == 0)
+    {
+        res.json([])
+    }
+    else{
+        for(var i=0; i<alldates.length; i++)
         {
-            console.log(date)
-            patients = await Patient.find({slotdate: date})
+            console.log(alldates[i])
+            if(alldates[i] !== undefined)
+            {
+                console.log(alldates[i])
+                patients = await Patient.find({slotdate: alldates[i]})
+                res.json(patients)
+                break
+            }
+            
         }
-    })
-
-    console.log(patients)
+    }
 
     // 1655251200000
 

@@ -68,8 +68,8 @@
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
-    <input type="date" id="filterdate" (change)="filterPatients()">
-    
+    <input type="date" id="filterdate" (change)="filterallpatients()">
+
   </div>
 
   <div class="mat-elevation-z8">
@@ -119,6 +119,34 @@
         <td mat-cell *matCellDef="let row"> {{row.time}} </td>
       </ng-container>
 
+      <ng-container matColumnDef="labtests">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Labtest </th>
+        <td *matCellDef="let row">
+          <div>
+            {{row.labtests[0].labtest}}
+          </div>
+          <!-- <ng-container *ngIf="row.status !== 'Empty'">
+            <li *ngFor="let item of labtestitems">
+              {{item.labtest}}
+            </li>
+          </ng-container> -->
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="services">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Services </th>
+        <td mat-cell *matCellDef="let row">
+          <div>
+            {{row.services[0].service}}
+          </div>
+          <!-- <ng-container *ngIf="row.status !== 'Empty'">
+            <li *ngFor="let item of serviceitems">
+              {{item.service}}
+            </li>
+          </ng-container> -->
+        </td>
+      </ng-container>
+
 
       <ng-container matColumnDef="update">
         <th mat-header-cell *matHeaderCellDef> Update </th>
@@ -151,10 +179,12 @@
           <button *ngIf="row.status == 'Paid'" (click)="handleprint(row.allocateid)" mat-raised-button class="print">
             Print
           </button>
-          <button *ngIf="row.status == 'Pending'" (click)="handleprint(row.allocateid)" disabled="true" mat-raised-button>
+          <button *ngIf="row.status == 'Pending'" (click)="handleprint(row.allocateid)" disabled="true"
+            mat-raised-button>
             Print
           </button>
-          <button *ngIf="row.status == 'Unpaid'" (click)="handleprint(row.allocateid)" disabled="true" mat-raised-button>
+          <button *ngIf="row.status == 'Unpaid'" (click)="handleprint(row.allocateid)" disabled="true"
+            mat-raised-button>
             Print
           </button>
         </td>

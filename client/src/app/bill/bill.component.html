@@ -185,7 +185,7 @@
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" class="form-element">
                                 <mat-label>Payment Mode</mat-label>
-                                <mat-select placeholder="Payment Mode" formControlName="paymentmode">
+                                <mat-select placeholder="Payment Mode" value="{{inputpaymentmode}}" formControlName="paymentmode">
                                     <mat-option value="Cash">Cash</mat-option>
                                     <mat-option value="Card">Card</mat-option>
                                 </mat-select>
@@ -199,20 +199,30 @@
 
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Discount</mat-label>
-                                <input matInput type="number" placeholder="Discount" formControlName="discount">
+                                <mat-label>Payment</mat-label>
+                                <input matInput type="number" placeholder="Payment" formControlName="payment">
                             </mat-form-field>
                         </div>
                         <div class="col-md-4">
                             <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Payment</mat-label>
-                                <input type="number" matInput placeholder="Payment" formControlName="payment">
+                                <mat-label>discount</mat-label>
+                                <input matInput type="number" placeholder="discount" formControlName="discount">
                             </mat-form-field>
                         </div>
 
-                        <h1>
-                            Total Charges : {{subtotal}}
-                        </h1>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Sub Total</mat-label>
+                                <input type="number" matInput placeholder="SubTotal" value="{{subtotal}}" formControlName="subtotal">
+                            </mat-form-field>
+                        </div>
+
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Balance</mat-label>
+                                <input type="number" matInput placeholder="Balance" value="{{inputbalance}}" formControlName="subtotal">
+                            </mat-form-field>
+                        </div>
 
                     </div>
 
@@ -228,7 +238,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="form-element">
-                                <button (click)="handleclose()" mat-raised-button color="warn" class="button" mat-dialog-close>Cancel</button>
+                                <button mat-raised-button color="warn" class="button" mat-dialog-close>Cancel</button>
                             </div>
                         </div>
                     </div>

@@ -1,11 +1,11 @@
 import { AfterViewInit, Component, ViewChild, OnInit, Inject, TemplateRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import {MatTable} from '@angular/material/table'
+import { MatTable } from '@angular/material/table'
 import { Router } from '@angular/router';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
-import {MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
 import { UpdatePatientComponent } from '../update-patient/update-patient.component';
 import { BillComponent } from '../bill/bill.component';
 import { DatePipe } from '@angular/common';
@@ -38,7 +38,9 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 export class PatientListComponent implements AfterViewInit {
 
 
-
+  serviceitems: any
+  labtestitems: any
+  bill: any;
   list: any;
   name: any = [];
   mobile: any = [];
@@ -49,10 +51,10 @@ export class PatientListComponent implements AfterViewInit {
   tableCreate: boolean = false;
   date: any;
 
-  displayedColumns: string[] = ['allocateid','name','vitals','doctor','slotdate','slottime','update', 'status','print'];
+  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime','labtests', 'services', 'update', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
 
-  constructor(private http: HttpClient,private router: Router, public dialog: MatDialog, public datepipe: DatePipe) { }
+  constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe) { }
 
   @ViewChild(MatPaginator) paginator: any = MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -62,15 +64,19 @@ export class PatientListComponent implements AfterViewInit {
   ngAfterViewInit() {
     // this.dataSource.paginator = this.paginator;
     this.getallpatients();
-    
+
   }
 
-  getallpatients()
-  {
-    this.http.get('http://localhost:5000/api/patient/get').subscribe((res) => {
+  getallpatients() {
+    const now = Date.now(); // Unix timestamp in milliseconds
+    console.log(now);
+    this.date = document.getElementById('filterdate');
+    this.date = new Date(this.date.value).valueOf();
+    this.http.post('http://localhost:5000/api/patient/filter', { date: now }).subscribe((res) => {
 
       this.list = res
-      // console.log(this.list)
+      this.serviceitems = this.list[0].services
+      this.labtestitems = this.list[0].labtests
       this.list.forEach((element: { slotdate: any; time: any; }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
         element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
@@ -81,13 +87,25 @@ export class PatientListComponent implements AfterViewInit {
     })
   }
 
-  filterPatients()
-  {
+  filterallpatients() {
+
     this.date = document.getElementById('filterdate');
     this.date = new Date(this.date.value).valueOf();
-    console.log(this.date)
+    this.http.post('http://localhost:5000/api/patient/filter', { date: this.date }).subscribe((res) => {
 
-  
+
+      this.list = res
+      this.serviceitems = this.list[0].services
+      this.labtestitems = this.list[0].labtests
+      console.log(this.labtestitems)
+      this.list.forEach((element: { slotdate: any; time: any; }) => {
+        element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
+        element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
+      });
+      this.dataSource = new MatTableDataSource(this.list);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort
+    })
   }
 
   applyFilter(event: Event) {
@@ -99,7 +117,7 @@ export class PatientListComponent implements AfterViewInit {
     }
   }
 
-  updateEmployee(id:number){
+  updateEmployee(id: number) {
     // this.router.navigate(['update-patient', id]);
     const dialogRef = this.dialog.open(UpdatePatientComponent, {
       data: { id: id },
@@ -112,15 +130,14 @@ export class PatientListComponent implements AfterViewInit {
 
   handlevitals(id: number) {
     const dialogRef = this.dialog.open(VitalsComponent, {
-      data: { id: id}
+      data: { id: id }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
-  handleBill(id:number)
-  { 
+  handleBill(id: number) {
     // this.router.navigate(['bill', id]);
     const dialogRef = this.dialog.open(BillComponent, {
       data: { id: id },
@@ -131,23 +148,20 @@ export class PatientListComponent implements AfterViewInit {
     });
   }
 
-  handleprint(id: number)
-  { 
+  handleprint(id: number) {
     this.router.navigate(['billinvoice']);
   }
 
-  handleclick()
-  { 
+  handleclick() {
     this.router.navigate(['doctordashboard']);
   }
 
-  handlestatus(id:number)
-  { 
+  handlestatus(id: number) {
     this.router.navigate(['doctordashboard', id]);
   }
 
 
-  
+
 
 }
 

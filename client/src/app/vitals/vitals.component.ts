@@ -31,7 +31,7 @@ export class VitalsComponent implements OnInit {
   patientRegistrationAPI = environment.patientRegistrationAPI;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {id: any},
+    @Inject(MAT_DIALOG_DATA) public patientVital: {id: any},
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -41,7 +41,7 @@ export class VitalsComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.id = this.data.id;
+    this.id = this.patientVital.id;
 
     console.log("asas", this.id);
 
