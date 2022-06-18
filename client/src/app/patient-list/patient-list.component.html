@@ -119,19 +119,6 @@
         <td mat-cell *matCellDef="let row"> {{row.time}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="labtests">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Labtest </th>
-        <td *matCellDef="let row">
-          <div>
-            {{row.labtests[0].labtest}}
-          </div>
-          <!-- <ng-container *ngIf="row.status !== 'Empty'">
-            <li *ngFor="let item of labtestitems">
-              {{item.labtest}}
-            </li>
-          </ng-container> -->
-        </td>
-      </ng-container>
 
       <ng-container matColumnDef="services">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Services </th>

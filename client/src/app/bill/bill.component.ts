@@ -24,7 +24,8 @@ export class BillComponent implements OnInit {
 
   dropdownList = [];
   dropdowntestlist = [];
-  selectedItems = [];
+  selectedservice = [];
+  selectedlabtest = [];
   dropdownSettings!:IDropdownSettings;
   dropdownTests!:IDropdownSettings;
   
@@ -187,6 +188,9 @@ export class BillComponent implements OnInit {
     this.bill = res
     if(this.bill.length !== 0)
     {
+      console.log(this.bill[0].labcharges)
+      this.selectedservice = this.bill[0].labcharges
+      this.selectedlabtest = this.bill[0].labtests
       if(this.bill[0].subtotal)
       {
         this.subtotal = this.bill[0].subtotal
