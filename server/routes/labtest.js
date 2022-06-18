@@ -13,6 +13,12 @@ router.post('/labtest/add', async (req, res) => {
             doctor_name,
         } = req.body;
 
+        let labtests = Labtest.find({labtest: labtest})
+        if(labtests)
+        {
+            res.status(400).send('labtest already exists')
+        }
+
         labtests = await Labtest.create({
             labtest: labtest,
             charges: charges,

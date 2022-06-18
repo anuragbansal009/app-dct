@@ -120,21 +120,6 @@
       </ng-container>
 
 
-      <ng-container matColumnDef="services">
-        <th mat-header-cell *matHeaderCellDef mat-sort-header> Services </th>
-        <td mat-cell *matCellDef="let row">
-          <div>
-            {{row.services[0].service}}
-          </div>
-          <!-- <ng-container *ngIf="row.status !== 'Empty'">
-            <li *ngFor="let item of serviceitems">
-              {{item.service}}
-            </li>
-          </ng-container> -->
-        </td>
-      </ng-container>
-
-
       <ng-container matColumnDef="update">
         <th mat-header-cell *matHeaderCellDef> Update </th>
         <td mat-cell *matCellDef="let row"> <button (click)="updateEmployee(row.allocateid)" mat-icon-button

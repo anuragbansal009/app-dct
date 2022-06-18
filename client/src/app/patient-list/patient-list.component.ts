@@ -75,8 +75,7 @@ export class PatientListComponent implements AfterViewInit {
     this.http.post('http://localhost:5000/api/patient/filter', { date: now }).subscribe((res) => {
 
       this.list = res
-      this.serviceitems = this.list[0].services
-      this.labtestitems = this.list[0].labtests
+      
       this.list.forEach((element: { slotdate: any; time: any; }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
         element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
@@ -95,8 +94,6 @@ export class PatientListComponent implements AfterViewInit {
 
 
       this.list = res
-      this.serviceitems = this.list[0].services
-      this.labtestitems = this.list[0].labtests
       console.log(this.labtestitems)
       this.list.forEach((element: { slotdate: any; time: any; }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');

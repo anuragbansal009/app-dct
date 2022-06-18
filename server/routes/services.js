@@ -13,6 +13,12 @@ router.post('/services/add', async (req, res) => {
             doctor_name,
         } = req.body;
 
+        let services = Services.find({service: service})
+        if(services)
+        {
+            res.status(400).send('service already exists')
+        }
+
         services = await Services.create({
             service: service,
             charges: charges,

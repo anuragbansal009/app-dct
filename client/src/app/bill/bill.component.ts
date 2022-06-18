@@ -52,7 +52,7 @@ export class BillComponent implements OnInit {
   inputpaymentmode: any
   inputsubtotal: any
   inputbalance: any = 0
-  inputpayment: any
+  inputpayment: any = 0
   
   labcharges: any = null
   bill: any;
@@ -225,6 +225,7 @@ export class BillComponent implements OnInit {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });
+      window.location.reload();
       this.router.navigate(['doctordashboard']);
     })
 
