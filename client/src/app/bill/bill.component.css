@@ -1,10 +1,29 @@
-.form {
+/* .form {
     min-width: 750px;
     max-width: 1000px;
     width: 100%;
     min-height: 250px;
     height: 100%;
-}
+} */
+@media screen and (max-width: 1300px) {
+    .form {
+      /* min-width: 1000px; */
+      /* max-width: 1500px; */
+      width: 100%;
+      min-height: 250px;
+      height: 100%;
+    }
+  }
+  
+  @media screen and (min-width: 1301px) {
+      .form {
+        min-width: 1000px;
+        max-width: 1500px;
+        width: 100%;
+        min-height: 250px;
+        height: 100%;
+      }
+    }
 
 .form-element {
     padding: 5px 0px 25px 2px;

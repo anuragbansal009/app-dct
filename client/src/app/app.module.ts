@@ -4,6 +4,7 @@ import { MaterialModule } from 'src/material.module';
 import { CoreUIModule } from 'src/coreui.module';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AdminRegistrationModule} from './admin-registration/admin-registration.module';
 import { DoctorRegistrationModule } from './doctor-registration/doctor-registration.module';
@@ -46,6 +47,7 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     BilSummaryModule,
     BrowserAnimationsModule,
     MaterialModule,
+    FlexLayoutModule,
     CoreUIModule,
     AdminRegistrationModule,
     DoctorRegistrationModule,

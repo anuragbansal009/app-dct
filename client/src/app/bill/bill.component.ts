@@ -182,7 +182,7 @@ export class BillComponent implements OnInit {
   }
 
   billdetails() {
-
+    console.log("temp", this.id)
     this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
 
     this.bill = res

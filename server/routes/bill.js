@@ -246,6 +246,16 @@ router.get('/patient/billsummary', async (req, res) => {
     }
 })
 
+router.post('/patient/getbill/:id', async (req, res) => {
+    try {
+        let patient = await Patient.findById(req.params.id);
+        console.log(patient)
+    }
+    catch(err) {
+        console.log(err.message);
+    }
+})
+
 
 
 module.exports = router

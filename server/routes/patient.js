@@ -239,7 +239,7 @@ router.post('/patient/filter', async (req, res) => {
         
     })
 
-    console.log(alldates.length)
+    // console.log(alldates.length)
 
     if(alldates.length == 0)
     {
@@ -248,10 +248,10 @@ router.post('/patient/filter', async (req, res) => {
     else{
         for(var i=0; i<alldates.length; i++)
         {
-            console.log(alldates[i])
+            // console.log(alldates[i])
             if(alldates[i] !== undefined)
             {
-                console.log(alldates[i])
+                // console.log(alldates[i])
                 patients = await Patient.find({slotdate: alldates[i]})
                 res.json(patients)
                 break

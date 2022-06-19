@@ -1,31 +1,41 @@
-.form {
-    min-width: 1000px;
-    max-width: 1500px;
+@media screen and (max-width: 1300px) {
+  .form {
+    /* min-width: 1000px; */
+    /* max-width: 1500px; */
     width: 100%;
+  }
 }
 
+@media screen and (min-width: 1301px) {
+    .form {
+      min-width: 1000px;
+      max-width: 1500px;
+      width: 100%;
+    }
+  }
+
 .form-element {
-    padding: 5px 0px 25px 2px;
-    width: 100%;
+  padding: 5px 0px 25px 2px;
+  width: 100%;
 }
 
 .button {
-    width: 100%;
+  width: 100%;
 }
 
 .heading {
-    font-size: 3rem;
-    font-weight: 300;
-    line-height: 1.2;
+  font-size: 3rem;
+  font-weight: 300;
+  line-height: 1.2;
 }
-.homepage{
-    align-items: center;
+.homepage {
+  align-items: center;
 }
 .mat-radio-button ~ .mat-radio-button {
-    margin-left: 16px;
-  }
+  margin-left: 16px;
+}
 
-  .vitals{
-    text-align: center;
-    border: 1px lightgrey solid;
-  }
+.vitals {
+  text-align: center;
+  border: 1px lightgrey solid;
+}

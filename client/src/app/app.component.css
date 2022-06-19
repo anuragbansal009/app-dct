@@ -18,6 +18,9 @@ a {
   padding: 20px;
 }
 
-/* .offcanvas {
-  background-color: #424242;
-} */
+.sidebarTitle {
+  margin-bottom: 0 !important;
+  line-height: 1.5 !important;
+  font-size: 1.25rem !important;
+  font-weight: bold !important;
+}

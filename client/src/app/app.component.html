@@ -2,11 +2,50 @@
 <!-- <app-admin-registration></app-admin-registration> -->
 <!-- <app-doctor-registration></app-doctor-registration> -->
 <mat-drawer-container class="example-container" autosize>
+  <!-- <div style="height: 100vh;"> 
+    <mat-toolbar color="primary" *ngIf="nav.visible">
+        <div fxShow="true" fxHide.gt-sm="true">
+          <button mat-icon-button (click)="sidenav.toggle()">
+            <mat-icon>menu</mat-icon>
+          </button>
+        </div>
+        <a mat-button class="companyName" routerLink="/">
+          <span>Site name</span>
+        </a>
+        <span class="example-spacer"></span>
+        <div fxShow="true" fxHide.lt-md="true">
+          <a mat-button routerLink="/about-us">About us</a>
+          <a mat-button routerLink="/prices">Prices</a>
+          <a mat-button routerLink="/start-page">Start page</a>
+          <a mat-button routerLink="/offer">Offer</a>
+          <a mat-button routerLink="/contact">Contact</a>
+        </div>
+      </mat-toolbar>
+      <mat-sidenav-container fxFlexFill class="example-container">
+        <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
+          <div fxLayout="column">
+            <a mat-button routerLink="/about-us">About us</a>
+            <a mat-button routerLink="/prices">Prices</a>
+            <a mat-button routerLink="/start-page">Start page</a>
+            <a mat-button routerLink="/offer">Offer</a>
+            <a mat-button routerLink="/contact">Contact</a>
+          </div>
+        </mat-sidenav>
+        <mat-sidenav-content fxFlexFill>
+          Awesome content
+        </mat-sidenav-content>
+      </mat-sidenav-container>
+    </div> -->
+
   <mat-toolbar color="primary" *ngIf="nav.visible">
-    <button mat-icon-button class="example-icon" aria-label="Sidebar" data-bs-toggle="offcanvas"
-      data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
-      <mat-icon>menu</mat-icon>
-    </button>
+    <div fxShow="true" fxHide.gt-sm="true">
+      <button mat-icon-button class="example-icon" aria-label="Sidebar" data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+        <mat-icon>menu</mat-icon>
+      </button>
+    </div>
+
+
     <span><a onclick="location.href='/doctordashboard'">Front Desk App - DCT</a></span>
     <span class="example-spacer"></span>
     <!-- <a href="/doctorlogin"> -->
@@ -22,42 +61,44 @@
     <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleAddLabtest()" matTooltip="Add Labtests">
       <mat-icon>science</mat-icon>
     </button> -->
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Patient Registration" (click)="openPatientRegistration()" matTooltip="Patient Registration">
-      <mat-icon>how_to_reg</mat-icon>
-    </button>
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Services" (click)="openAddServices()" matTooltip="Add Services">
-      <mat-icon>medical_services</mat-icon>
-    </button>
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Labtests" (click)="openAddLabtest()" matTooltip="Add Labtests">
-      <mat-icon>science</mat-icon>
-    </button>
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Calendar" (click)="openDialog()" matTooltip="Calendar">
-      <mat-icon>calendar_month</mat-icon>
-    </button>
+    <div fxShow="true" fxHide.lt-md="true">
+      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Patient Registration"
+        (click)="openPatientRegistration()" matTooltip="Patient Registration">
+        <mat-icon>how_to_reg</mat-icon>
+      </button>
+      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Services"
+        (click)="openAddServices()" matTooltip="Add Services">
+        <mat-icon>medical_services</mat-icon>
+      </button>
+      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Labtests"
+        (click)="openAddLabtest()" matTooltip="Add Labtests">
+        <mat-icon>science</mat-icon>
+      </button>
+      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Calendar" (click)="openDialog()"
+        matTooltip="Calendar">
+        <mat-icon>calendar_month</mat-icon>
+      </button>
 
-    <button mat-icon-button class="example-icon" aria-label="Login" onclick="location.href='/doctorlogin'"  matTooltip="Logout">
-      <mat-icon>login</mat-icon>
-    </button>
+      <button mat-icon-button class="example-icon" aria-label="Login" onclick="location.href='/doctorlogin'"
+        matTooltip="Logout">
+        <mat-icon>login</mat-icon>
+      </button>
+    </div>
     <!-- </a> -->
   </mat-toolbar>
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Sidebar</h5>
+      <h5 class="offcanvas-title sidebarTitle" id="offcanvasExampleLabel">Front Desk App - DCT</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
-      <div>
-        Sample text
-      </div>
-      <div class="dropdown mt-3">
-        <mat-form-field appearance="fill">
-          <mat-label>Dropdown Select</mat-label>
-          <mat-select>
-            <mat-option value="one">First option</mat-option>
-            <mat-option value="two">Second option</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
+      <mat-nav-list>
+        <a (click)="openPatientRegistration()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">how_to_reg</mat-icon>Patient Registration</a>
+        <a (click)="openAddServices()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">medical_services</mat-icon>Add Services</a>
+        <a (click)="openAddLabtest()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">science</mat-icon>Add Labtests</a>
+        <a (click)="openDialog()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">calendar_month</mat-icon>Calendar</a>
+        <a onclick="location.href='/doctorlogin'" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">login</mat-icon>Logout</a>
+      </mat-nav-list>
     </div>
   </div>
 </mat-drawer-container>

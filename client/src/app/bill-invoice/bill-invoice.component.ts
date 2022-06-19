@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { NgxPrinterService } from 'ngx-printer';
 import { Subscription, Observable } from 'rxjs';
 import { PrintItem } from 'ngx-printer';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-bill-invoice',
@@ -9,64 +11,57 @@ import { PrintItem } from 'ngx-printer';
   styleUrls: ['./bill-invoice.component.css']
 })
 export class BillInvoiceComponent implements OnInit {
-
   hospitalName: string = 'Frozen Hospital & Research';
   hospitalSubtext: string = 'Advanced Treatment Center with 24/7 availability';
   hospitalAddress: string = '21st Street, New York City, New York, NY, 100001';
-  patientName: string = 'John Doe';
-  patientMobileNumber: string = '+91-9876543210';
-  patientId: string = 'P-001';
-  referredBy: string = 'Dr. John Doe';
-  billDate: string = '2020-01-01';
-  billNumber: string = 'B-001';
-  billStatus: string = 'PAID';
-  services: any[] = [
-    {
-      serviceName: 'Consultation',
-      servicePrice: 1000,
-      serviceNetPrice: 1000,
-    },
-    {
-      serviceName: 'Blood Test',
-      servicePrice: 100,
-      serviceNetPrice: 100,
-    },
-    {
-      serviceName: 'BP Test',
-      servicePrice: 100,
-      serviceNetPrice: 200,
-    },
-    {
-      serviceName: 'X-Ray',
-      servicePrice: 100,
-      serviceNetPrice: 300,
-    },
-    {
-      serviceName: 'ECG',
-      servicePrice: 100,
-      serviceNetPrice: 400,
-    },
-    {
-      serviceName: 'Ultrasound',
-      servicePrice: 500,
-      serviceNetPrice: 500,
-    }
-  ];
-  paymentMode: string = 'CASH';
-  amountInWords: string = 'TWO THOUSAND RUPEES ONLY';
+  patientName: any;
+  patientMobileNumber: any;
+  patientId: any;
+  referredBy: any;
+  billDate: any;
+  billNumber: any;
+  billStatus: any;
+  services: any[] = [];
+  paymentMode: any;
+  amountInWords: any;
   billedAmount: number = 0;
   temp: any = this.services.forEach(serviceNetPrice => {
     this.billedAmount = this.billedAmount + serviceNetPrice.serviceNetPrice;
   });
   discountedAmount: any = 300;
-  finalAmount = this.billedAmount - this.discountedAmount;
+  balanceAmount: any
+  finalAmount: any
   recievedAmount: any = 2000;
-  balanceAmount: any = this.finalAmount - this.recievedAmount;
+  id: any;
 
   printWindowSubscription: Subscription;
   $printItems: Observable<PrintItem[]>;
 
-  constructor(private printerService: NgxPrinterService) { 
+  list: any;
+  interval: any = 1000 * 60 * 60 * 24;
+  status: any;
+  show: boolean = false;
+  tempS: any
+
+  a: any = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
+
+  b: any = ['', '', 'twenty','thirty','forty','fifty', 'sixty','seventy','eighty','ninety'];
+
+  n: any
+
+  inWords (num: any) {
+    if ((num = num.toString()).length > 9) return 'overflow';
+    this.n = ('000000000' + num).substr(-9).match(/^(\d{2})(\d{2})(\d{2})(\d{1})(\d{2})$/);
+    if (!this.n) return; var str = '';
+    str += (this.n[1] != 0) ? (this.a[Number(this.n[1])] || this.b[this.n[1][0]] + ' ' + this.a[this.n[1][1]]) + 'crore ' : '';
+    str += (this.n[2] != 0) ? (this.a[Number(this.n[2])] || this.b[this.n[2][0]] + ' ' + this.a[this.n[2][1]]) + 'lakh ' : '';
+    str += (this.n[3] != 0) ? (this.a[Number(this.n[3])] || this.b[this.n[3][0]] + ' ' + this.a[this.n[3][1]]) + 'thousand ' : '';
+    str += (this.n[4] != 0) ? (this.a[Number(this.n[4])] || this.b[this.n[4][0]] + ' ' + this.a[this.n[4][1]]) + 'hundred ' : '';
+    str += (this.n[5] != 0) ? ((str != '') ? 'and ' : '') + (this.a[Number(this.n[5])] || this.b[this.n[5][0]] + ' ' + this.a[this.n[5][1]]) + 'rupees only ' : '';
+    return str;
+}
+
+  constructor(private printerService: NgxPrinterService, @Inject(MAT_DIALOG_DATA) public data: { id: any, status: any }, private http: HttpClient) {
     this.printWindowSubscription = this.printerService.$printWindowOpen.subscribe(
       val => {
         console.log('Print window is open:', val);
@@ -83,5 +78,52 @@ export class BillInvoiceComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    this.id = this.data.id;
+    this.status = this.data.status;
+
+    this.getData();
+
   }
+
+  getData() {
+    this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
+      this.list = res
+      console.log(this.list[0])
+      this.patientName = this.list[0].name;
+      this.patientMobileNumber = '+91-' + this.list[0].mobile;
+      this.patientId = this.list[0].allocateid;
+      this.referredBy = 'Dr. ' + this.list[0].doctor_name;
+      this.billDate = Math.floor(Date.now() / this.interval) * this.interval
+      this.billNumber = this.list[0].allocateid;
+      this.billStatus = this.status;
+      this.list[0].labcharges.forEach((element: { service: any; charges: any; gst: any }) => {
+        this.tempS = {
+          serviceName: element.service,
+          servicePrice: element.charges,
+          serviceNetPrice: element.charges * 1.18,
+        }
+        this.services.push(this.tempS);
+      });
+      this.list[0].labtests.forEach((element: { labtest: any; charges: any; gst: any }) => {
+        this.tempS = {
+          serviceName: element.labtest,
+          servicePrice: element.charges,
+          serviceNetPrice: element.charges * 1.18,
+        }
+        this.services.push(this.tempS);
+      });
+      this.billedAmount = this.list[0].subtotal
+      this.recievedAmount = this.list[0].payment
+      this.discountedAmount = this.list[0].discount
+      if(this.discountedAmount == null || this.discountedAmount == 0){
+        this.discountedAmount = 0
+      }
+      this.finalAmount = this.billedAmount - this.discountedAmount;
+      this.balanceAmount = this.finalAmount - this.recievedAmount;
+      this.paymentMode = this.list[0].paymentmode
+      this.amountInWords = this.inWords(this.finalAmount)
+    })
+  }
+
 }

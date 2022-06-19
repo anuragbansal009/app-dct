@@ -11,6 +11,7 @@ import { BillComponent } from '../bill/bill.component';
 import { DatePipe } from '@angular/common';
 import { VitalsComponent } from '../vitals/vitals.component';
 import { DateAdapter } from '@angular/material/core';
+import { BillInvoiceComponent } from '../bill-invoice/bill-invoice.component';
 
 export interface PeriodicElement {
   name: string;
@@ -51,6 +52,8 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
   date: any;
+  interval: any = 1000 * 60 * 60 * 24; 
+  todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
 
   displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'update', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
@@ -165,8 +168,15 @@ export class PatientListComponent implements AfterViewInit {
     });
   }
 
-  handleprint(id: number) {
-    this.router.navigate(['billinvoice']);
+  handleprint(id: number, status: any) {
+    const dialogRef = this.dialog.open(BillInvoiceComponent, {
+      data: { id: id, status: status }, 
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      // this.getallpatients();
+    });
+    // this.router.navigate(['billinvoice']);
   }
 
   handleclick() {
