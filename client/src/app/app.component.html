@@ -62,26 +62,25 @@
       <mat-icon>science</mat-icon>
     </button> -->
     <div fxShow="true" fxHide.lt-md="true">
-      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Patient Registration"
-        (click)="openPatientRegistration()" matTooltip="Patient Registration">
-        <mat-icon>how_to_reg</mat-icon>
+      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Patient Registration"
+        (click)="openPatientRegistration()" matTooltip="Patient Registration" matTooltipClass="h6" class="toolbarButton">
+        <mat-icon class="toolbarIcon">how_to_reg</mat-icon>
       </button>
       <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Services"
-        (click)="openAddServices()" matTooltip="Add Services">
-        <mat-icon>medical_services</mat-icon>
+        (click)="openAddServices()" matTooltip="Add Services" matTooltipClass="h6" class="toolbarButton">
+        <mat-icon class="toolbarIcon">medical_services</mat-icon>
       </button>
       <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Labtests"
-        (click)="openAddLabtest()" matTooltip="Add Labtests">
-        <mat-icon>science</mat-icon>
+        (click)="openAddLabtest()" matTooltip="Add Labtests" matTooltipClass="h6" class="toolbarButton">
+        <mat-icon class="toolbarIcon">science</mat-icon>
       </button>
       <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Calendar" (click)="openDialog()"
-        matTooltip="Calendar">
-        <mat-icon>calendar_month</mat-icon>
+        matTooltip="Calendar" matTooltipClass="h6" class="toolbarButton">
+        <mat-icon class="toolbarIcon">calendar_month</mat-icon>
       </button>
-
       <button mat-icon-button class="example-icon" aria-label="Login" onclick="location.href='/doctorlogin'"
-        matTooltip="Logout">
-        <mat-icon>login</mat-icon>
+        matTooltip="Logout" matTooltipClass="h6" class="toolbarButton">
+        <mat-icon class="toolbarIcon">login</mat-icon>
       </button>
     </div>
     <!-- </a> -->
@@ -93,11 +92,21 @@
     </div>
     <div class="offcanvas-body">
       <mat-nav-list>
-        <a (click)="openPatientRegistration()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">how_to_reg</mat-icon>Patient Registration</a>
-        <a (click)="openAddServices()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">medical_services</mat-icon>Add Services</a>
-        <a (click)="openAddLabtest()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">science</mat-icon>Add Labtests</a>
-        <a (click)="openDialog()" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">calendar_month</mat-icon>Calendar</a>
-        <a onclick="location.href='/doctorlogin'" data-bs-dismiss="offcanvas" mat-list-item><mat-icon style="margin-right: 10px">login</mat-icon>Logout</a>
+        <a (click)="openPatientRegistration()" data-bs-dismiss="offcanvas" mat-list-item>
+          <mat-icon style="margin-right: 10px">how_to_reg</mat-icon>Patient Registration
+        </a>
+        <a (click)="openAddServices()" data-bs-dismiss="offcanvas" mat-list-item>
+          <mat-icon style="margin-right: 10px">medical_services</mat-icon>Add Services
+        </a>
+        <a (click)="openAddLabtest()" data-bs-dismiss="offcanvas" mat-list-item>
+          <mat-icon style="margin-right: 10px">science</mat-icon>Add Labtests
+        </a>
+        <a (click)="openDialog()" data-bs-dismiss="offcanvas" mat-list-item>
+          <mat-icon style="margin-right: 10px">calendar_month</mat-icon>Calendar
+        </a>
+        <a onclick="location.href='/doctorlogin'" data-bs-dismiss="offcanvas" mat-list-item>
+          <mat-icon style="margin-right: 10px">login</mat-icon>Logout
+        </a>
       </mat-nav-list>
     </div>
   </div>

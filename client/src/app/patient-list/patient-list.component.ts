@@ -75,7 +75,7 @@ export class PatientListComponent implements AfterViewInit {
 
   getallpatients() {
     const now = Date.now(); // Unix timestamp in milliseconds
-    console.log(now);
+    // console.log(now);
     this.date = document.getElementById('filterdate');
     this.date = new Date(this.date.value).valueOf();
     this.http.post('http://localhost:5000/api/patient/filter', { date: now }).subscribe((res) => {
@@ -84,7 +84,7 @@ export class PatientListComponent implements AfterViewInit {
       
       this.list.forEach((element: { slotdate: any; time: any; }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
-        element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
+        element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');
       });
       this.dataSource = new MatTableDataSource(this.list);
       this.dataSource.paginator = this.paginator;

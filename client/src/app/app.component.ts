@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
 import { NavbarService } from './navbar.service';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -192,9 +192,11 @@ export class CalendarComponent {
     ])
   ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewChecked {
   title = 'Front Desk App - DCT';
-  constructor(public dialog: MatDialog, public nav: NavbarService, private http: HttpClient, public datepipe: DatePipe, public docDash: DoctorDashboardComponent) { }
+  constructor(public dialog: MatDialog, public nav: NavbarService, private http: HttpClient, public datepipe: DatePipe, public docDash: DoctorDashboardComponent, private cdref: ChangeDetectorRef) {
+    this.nav.calIcon = false;
+  }
 
   showCalendar() {
     console.log(this.nav.showCal)
@@ -262,12 +264,16 @@ export class AppComponent implements OnInit {
   enddate: any;
   colorSet: any;
 
+  ngAfterViewChecked() {
+    this.cdref.detectChanges();
+  }
+
   ngOnInit() {
     this.http.get('http://localhost:5000/api/patient/get').subscribe((res) => {
       this.lists = res;
       this.lists.forEach((element: { slotdate: any; time: any; name: any; doctor_name: any; }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'yyyy-MM-dd');
-        element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
+        element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');
         this.enddate = new Date(element.slotdate + " " + element.time);
         if (element.doctor_name == "gulshan") {
           this.colorSet = colors.green
@@ -283,7 +289,7 @@ export class AppComponent implements OnInit {
         }
         this.temp = {
           start: new Date(element.slotdate + " " + element.time),
-          end: new Date(this.enddate.getTime() + (60*60*1000)),
+          end: new Date(this.enddate.getTime() + (60 * 60 * 1000)),
           title: `<strong>` + element.time + `</strong>` + " " + element.name + " - " + element.doctor_name,
           color: this.colorSet,
           draggable: true,
