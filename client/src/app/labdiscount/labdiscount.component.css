@@ -1,0 +1,15 @@
+@media screen and (min-width: 770px) {
+    .form {
+      min-width: 500px;
+      /* max-width: 1500px; */
+      width: 100%;
+    }
+  }
+  
+  @media screen and (max-width: 769px) {
+    .form {
+      /* min-width: 1000px; */
+      /* max-width: 1500px; */
+      width: 100%;
+    }
+  }

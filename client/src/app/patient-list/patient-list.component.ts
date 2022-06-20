@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, OnInit, Inject, TemplateRef } from '@angular/core';
+import { OnInit, Component, ViewChild, Inject, TemplateRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatTable } from '@angular/material/table'
 import { Router } from '@angular/router';
@@ -37,7 +37,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   styleUrls: ['./patient-list.component.css'],
   providers: [DatePipe]
 })
-export class PatientListComponent implements AfterViewInit {
+export class PatientListComponent implements OnInit {
 
 
   serviceitems: any
@@ -52,8 +52,9 @@ export class PatientListComponent implements AfterViewInit {
   len: any;
   tableCreate: boolean = false;
   date: any;
-  interval: any = 1000 * 60 * 60 * 24; 
+  interval: any = 1000 * 60 * 60 * 24;
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
+  now: any = Date.now();
 
   displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'update', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
@@ -67,21 +68,19 @@ export class PatientListComponent implements AfterViewInit {
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
 
-  ngAfterViewInit() {
+  ngOnInit() {
     // this.dataSource.paginator = this.paginator;
     this.getallpatients();
-
   }
 
   getallpatients() {
-    const now = Date.now(); // Unix timestamp in milliseconds
     // console.log(now);
     this.date = document.getElementById('filterdate');
     this.date = new Date(this.date.value).valueOf();
-    this.http.post('http://localhost:5000/api/patient/filter', { date: now }).subscribe((res) => {
+    this.http.post('http://localhost:5000/api/patient/filter', { date: this.now }).subscribe((res) => {
 
       this.list = res
-      
+
       this.list.forEach((element: { slotdate: any; time: any; }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
         element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');
@@ -95,8 +94,9 @@ export class PatientListComponent implements AfterViewInit {
 
   filterallpatients(event: any) {
 
-    this.date =  new Date(event.value).valueOf();
+    this.date = new Date(event.value).valueOf();
     this.date = this.date + 19800000;
+    this.now = this.date;
     this.http.post('http://localhost:5000/api/patient/filter', { date: this.date }).subscribe({
       next: res => {
         this.list = res
@@ -168,7 +168,7 @@ export class PatientListComponent implements AfterViewInit {
 
   handleprint(id: number, status: any) {
     const dialogRef = this.dialog.open(BillInvoiceComponent, {
-      data: { id: id, status: status }, 
+      data: { id: id, status: status },
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

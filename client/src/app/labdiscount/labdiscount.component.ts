@@ -33,20 +33,21 @@ export class LabdiscountComponent implements OnInit {
   labtests: any;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public patient: { id: any },
+    @Inject(MAT_DIALOG_DATA) public patient: { id: any, labtests: any },
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router) { }
+    
 
   ngOnInit(): void {
 
     this.id = this.patient.id;
-    this.alllabtests()
+    this.labtests = this.patient.labtests;
+    // this.alllabtests()
 
-    console.log(this.id)
     this.formGroup = this.formBuilder.group({
       labtest: [],
       discount: [],
@@ -55,18 +56,14 @@ export class LabdiscountComponent implements OnInit {
 
   alllabtests() {
     this.http.post('http://localhost:5000/api/labtest/get', { id: this.id }).subscribe((res) => {
-
       this.labtests = res
     })
 
   }
 
   onSubmit(post: any) {
-
     this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, { discount: post }).subscribe((res: any) => {
-      console.log('res')
     })
-
   }
 
 

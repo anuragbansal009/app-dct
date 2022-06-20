@@ -67,6 +67,11 @@ export class BillComponent implements OnInit {
   patientcharges: any;
   subtotal: any = 0;
   subtotal2: any = 0;
+  result: any = [];
+  temp1: any = 0
+  temp2: any = 0
+  count: any = 0
+  discountString: string = 'Discount'
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: any },
@@ -153,11 +158,15 @@ export class BillComponent implements OnInit {
   }
 
   handleDiscount() {
+    // console.log(this.formGroup.value.labtests)
     const dialogRef = this.dialog.open(LabdiscountComponent, {
-      data: { id: this.id }
+      data: { id: this.id, labtests: this.formGroup.value.labtests }
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
+      this.result.push(result);
+      console.log(this.result)
+      this.labdiscount()
     });
   }
 
@@ -221,24 +230,52 @@ export class BillComponent implements OnInit {
 
 
   //---------- indivisual discount ----------------//
-  
-  labdiscount(post: any)
-  {
-    this.alllabtests = post.labtests
-    this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
-      this.discountdata = res
-      this.discount = this.discountdata[0].discount
+
+  labdiscount() {
+    
+    if (this.count == 0) {
+      this.discountString = ''
+      this.temp1 = this.subtotal
+      this.temp2 = this.inputbalance
+      this.alllabtests = this.formGroup.value.labtests
+      console.log(this.alllabtests)
+      // this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
+      //   this.discountdata = res
+      //   this.discount = this.discountdata[0].discount
+      this.discount = this.result
       this.alllabtests.forEach((labtest: any) => {
-        this.discount.forEach((element:any) => {
-          if(labtest.labtest == element.labtest) {
-            this.subtotal = this.subtotal - (labtest.charges - labtest.charges*(element.discount/100) )
-            this.inputbalance = this.inputbalance - (labtest.charges - labtest.charges*(element.discount/100) )
+        this.discount.forEach((element: any) => {
+          if (labtest.labtest == element.labtest) {
+            this.discountString = this.discountString + ' ' + element.labtest + ' (' + element.discount + '%)'
+            console.log(this.discountString)
+            this.subtotal = this.subtotal - (labtest.charges * (element.discount / 100))
+            this.inputbalance = this.inputbalance - (labtest.charges * (element.discount / 100))
+            console.log(labtest.labtest, this.inputbalance)
           }
-          
         });
       })
+      this.count = 1
+    }
+    else {
+      this.discountString = ''
+      this.subtotal = this.temp1
+      this.inputbalance = this.temp2
+      this.alllabtests = this.formGroup.value.labtests
+      console.log(this.alllabtests)
+      this.discount = this.result
+      this.alllabtests.forEach((labtest: any) => {
+        this.discount.forEach((element: any) => {
+          if (labtest.labtest == element.labtest) {
+            this.discountString = element.labtest + '(' + element.discount + '%)' + ' ' + this.discountString 
+            console.log(this.discountString)
 
-    })
+            this.subtotal = this.subtotal - (labtest.charges * (element.discount / 100))
+            this.inputbalance = this.inputbalance - (labtest.charges * (element.discount / 100))
+            console.log(labtest.labtest, this.inputbalance)
+          }
+        });
+      })
+    }
   }
 
   //---------- indivisual discount ----------------//
@@ -247,15 +284,12 @@ export class BillComponent implements OnInit {
   onSubmit(post: any) {
 
     post.subtotal = this.subtotal
-    this.labdiscount(post)
-    
-    if(this.inputbalance !== 0)
-    {
+    // this.labdiscount(post)
+    if (this.inputbalance !== 0) {
       post.payment = post.payment + this.inputpayment
     }
-    
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,post).subscribe((res) => {
-      console.log(res)
+    console.log(post)
+    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });
