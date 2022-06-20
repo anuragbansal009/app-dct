@@ -23,6 +23,10 @@ router.post('/patient/create', [
 
 ], async (req, res) => {
 
+    let followupdate
+    let recentdate
+    let patientdate
+
     const errors = validationResult(req);
 
     if (!errors.isEmpty()) {
@@ -31,9 +35,13 @@ router.post('/patient/create', [
 
     try {
 
-        let patient = await Patient.findOne({ name: req.body.name });
+        let patient = await Patient.find({ mobile: req.body.mobile, name: req.body.name, doctor_name: req.body.doctor_name });
+
 
         let doctor = await Doctor.findOne({ username: req.body.doctor_name });
+
+        len = patient.length;
+
 
         const {
             name,
@@ -46,30 +54,71 @@ router.post('/patient/create', [
             doctor_name,
             slotdate,
             time,
+            followup,
         } = req.body;
+
+        if (len !== 0) {
+
+            recentdate = patient[len - 1].slotdate
+            recentdate = new Date(`${recentdate}`).getTime();
+
+            followupdate = recentdate + 86400000 * (doctor.followup)
+            patientdate = new Date(`${slotdate}`).getTime();
+
+        }
+
 
         lastPatient = await database.collection('patients').findOne({}, { sort: { _id: -1 } });
 
         position = lastPatient.position + 1
         allocateid = doctor.allocateid.concat(String(position))
 
-        patient = await Patient.create({
+        if(patientdate < followupdate)
+        {
+            patient = await Patient.create({
 
-            name: name,
-            gender: gender,
-            age: age,
-            mobile: mobile,
-            bloodgroup: bloodgroup,
-            city: city,
-            pin: pin,
-            doctor_name: doctor_name,
-            allocateid: allocateid,
-            position: position,
-            slotdate: slotdate,
-            time: time,
-            status: "Unpaid"
+                name: name,
+                gender: gender,
+                age: age,
+                mobile: mobile,
+                bloodgroup: bloodgroup,
+                city: city,
+                pin: pin,
+                doctor_name: doctor_name,
+                allocateid: allocateid,
+                position: position,
+                slotdate: slotdate,
+                time: time,
+                status: "Unpaid",
+                followup: true
+    
+            })
 
-        })
+        }
+        else
+        {
+            patient = await Patient.create({
+
+                name: name,
+                gender: gender,
+                age: age,
+                mobile: mobile,
+                bloodgroup: bloodgroup,
+                city: city,
+                pin: pin,
+                doctor_name: doctor_name,
+                allocateid: allocateid,
+                position: position,
+                slotdate: slotdate,
+                time: time,
+                status: "Unpaid",
+                followup: false
+    
+            })
+
+        }
+
+        
 
         res.json(patient)
 
@@ -115,16 +164,15 @@ router.post('/patient/getid', async (req, res) => {
 router.post('/patient/getallocateid', async (req, res) => {
     try {
 
-        const {allocateid} = req.body
+        const { allocateid } = req.body
 
         const patient = await Patient.find({ allocateid: allocateid })
 
-        if(patient)
-        {
+        if (patient) {
             res.json(patient)
 
         }
-        else{
+        else {
             res.json("Not found")
         }
 
@@ -197,7 +245,7 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
                 allocateid: req.params.id
             },
             {
-               $set: newPatient 
+                $set: newPatient
             }
         )
 
@@ -206,10 +254,10 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
                 allocateid: req.params.id
             },
             {
-               $set: newPatient 
+                $set: newPatient
             }
         )
-        
+
         res.json(patient);
 
     } catch (err) {
@@ -225,38 +273,34 @@ router.post('/patient/filter', async (req, res) => {
 
     let patients = []
 
-    const {date} = req.body;
+    const { date } = req.body;
 
     let allpatients = await Patient.find()
 
     allpatients.forEach(async (patient, i) => {
 
         const t2 = new Date(`${patient.slotdate}`).getTime();
-        if(t2 > (date - 86400000) && t2 < date )
-        {
+        if (t2 > (date - 86400000) && t2 < date) {
             alldates[i] = patient.slotdate
         }
-        
+
     })
 
     // console.log(alldates.length)
 
-    if(alldates.length == 0)
-    {
+    if (alldates.length == 0) {
         res.json([])
     }
-    else{
-        for(var i=0; i<alldates.length; i++)
-        {
+    else {
+        for (var i = 0; i < alldates.length; i++) {
             // console.log(alldates[i])
-            if(alldates[i] !== undefined)
-            {
+            if (alldates[i] !== undefined) {
                 // console.log(alldates[i])
-                patients = await Patient.find({slotdate: alldates[i]})
+                patients = await Patient.find({ slotdate: alldates[i] })
                 res.json(patients)
                 break
             }
-            
+
         }
     }
 

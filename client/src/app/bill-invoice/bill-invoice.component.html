@@ -160,7 +160,6 @@
                 <th style="width: 5%">#</th>
                 <th style="width: 65%">Service Particulars</th>
                 <th class="text-end" style="width: 15%">Price</th>
-                <th class="text-end" style="width: 15%">Net Price</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -168,7 +167,6 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ service.serviceName }}</td>
                 <td class="text-end">{{ service.servicePrice | number: '1.2-2'}}</td>
-                <td class="text-end">{{ service.serviceNetPrice | number: '1.2-2'}}</td>
               </tr>
             </tbody>
           </table>

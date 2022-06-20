@@ -56,7 +56,7 @@ export class PatientListComponent implements OnInit {
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
 
-  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'update', 'status', 'print'];
+  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime','followup', 'update', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe, private dateAdapter: DateAdapter<Date>) {

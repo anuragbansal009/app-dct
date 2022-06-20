@@ -61,6 +61,10 @@ const PatientSchema = new Schema({
         type: String,
         required: true
     },
+    followup: {
+        type: Boolean,
+        default: false
+    },
     dor: {
         type: String,
         defualt: Date.now(),

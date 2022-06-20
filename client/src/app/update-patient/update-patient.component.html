@@ -55,6 +55,7 @@
                     <div class="col-md-4">
                         <mat-form-field appearance="outline" class="form-element">
                             <mat-label>Age</mat-label>
+                            <span matSuffix>Years</span>
                             <input matInput placeholder="Age" value={{inputage}} formControlName="age">
                             <mat-error *ngIf="formGroup.controls['age'].touched">
                                 {{ titleAlert }}
