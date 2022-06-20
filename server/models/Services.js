@@ -15,6 +15,9 @@ const ServicesSchema = new Schema({
         type: Number,
         required: true,
     },
+    gst: {
+        type: Number,
+    },
 
 
 })

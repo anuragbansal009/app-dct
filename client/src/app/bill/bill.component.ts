@@ -11,9 +11,9 @@ import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { IDropdownSettings } from 'ng-multiselect-dropdown';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
+import { LabdiscountComponent } from '../labdiscount/labdiscount.component';
 
 @Component({
   selector: 'app-bill',
@@ -26,9 +26,9 @@ export class BillComponent implements OnInit {
   dropdowntestlist = [];
   selectedservice = [];
   selectedlabtest = [];
-  dropdownSettings!:IDropdownSettings;
-  dropdownTests!:IDropdownSettings;
-  
+  dropdownSettings!: IDropdownSettings;
+  dropdownTests!: IDropdownSettings;
+
   color = 'primary';
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
@@ -53,7 +53,10 @@ export class BillComponent implements OnInit {
   inputsubtotal: any
   inputbalance: any = 0
   inputpayment: any = 0
-  
+  discountdata: any;
+  discount: any;
+  alllabtests: any;
+
   labcharges: any = null
   bill: any;
   services: any;
@@ -63,9 +66,10 @@ export class BillComponent implements OnInit {
 
   patientcharges: any;
   subtotal: any = 0;
+  subtotal2: any = 0;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {id: any},
+    @Inject(MAT_DIALOG_DATA) public data: { id: any },
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -100,7 +104,7 @@ export class BillComponent implements OnInit {
     this.billdetails()
 
     this.patientdetails()
-    
+
     this.serviceDetails()
 
     this.LabDetails()
@@ -113,7 +117,7 @@ export class BillComponent implements OnInit {
       allocateid: [this.allocateid],
       labcharges: [null],
       labtests: [null],
-      discount: [null],
+      discount: [],
       payment: [null],
       paymentmode: [null],
       subtotal: [null],
@@ -135,31 +139,38 @@ export class BillComponent implements OnInit {
   }
 
   onUnselectAll(item: any) {
-    
+
     console.log('unselect all')
   }
 
   onSelectAll(items: any) {
-    
+
     this.patientcharges = items
-    this.patientcharges.forEach((charges:any) => {
+    this.patientcharges.forEach((charges: any) => {
       this.subtotal = charges.charges + this.subtotal
     });
 
   }
 
-  serviceDetails()
-  {
-    this.http.post('http://localhost:5000/api/services/get', {id: this.id}).subscribe((res) => {
+  handleDiscount() {
+    const dialogRef = this.dialog.open(LabdiscountComponent, {
+      data: { id: this.id }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  serviceDetails() {
+    this.http.post('http://localhost:5000/api/services/get', { id: this.id }).subscribe((res) => {
       this.services = res;
       this.dropdownList = this.services
     });
 
   }
 
-  LabDetails()
-  {
-    this.http.post('http://localhost:5000/api/labtest/get', {id: this.id}).subscribe((res) => {
+  LabDetails() {
+    this.http.post('http://localhost:5000/api/labtest/get', { id: this.id }).subscribe((res) => {
       this.testlist = res;
       this.dropdowntestlist = this.testlist
     });
@@ -182,50 +193,72 @@ export class BillComponent implements OnInit {
   }
 
   billdetails() {
-    console.log("temp", this.id)
     this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
 
-    this.bill = res
-    if(this.bill.length !== 0)
-    {
-      console.log(this.bill[0].labcharges)
-      this.selectedservice = this.bill[0].labcharges
-      this.selectedlabtest = this.bill[0].labtests
-      if(this.bill[0].subtotal)
-      {
-        this.subtotal = this.bill[0].subtotal
-        if(this.bill[0].payment)
-        {
-          this.inputpayment = this.bill[0].payment
-          this.inputbalance = this.bill[0].subtotal - this.bill[0].payment
+      this.bill = res
+      if (this.bill.length !== 0) {
+
+        this.selectedservice = this.bill[0].labcharges
+        this.selectedlabtest = this.bill[0].labtests
+        if (this.bill[0].subtotal) {
+          this.subtotal = this.bill[0].subtotal
+          if (this.bill[0].payment) {
+            this.inputpayment = this.bill[0].payment
+            this.inputbalance = this.bill[0].subtotal - this.bill[0].payment
+          }
+          else {
+            this.inputbalance = this.bill[0].subtotal
+          }
         }
-        else{
-          this.inputbalance = this.bill[0].subtotal
+        if (this.bill[0].paymentmode) {
+          this.inputpaymentmode = this.bill[0].paymentmode
         }
       }
-      if(this.bill[0].paymentmode)
-      {
-        this.inputpaymentmode = this.bill[0].paymentmode
-      }
-    }
 
     })
 
   }
 
+
+  //---------- indivisual discount ----------------//
+  
+  labdiscount(post: any)
+  {
+    this.alllabtests = post.labtests
+    this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
+      this.discountdata = res
+      this.discount = this.discountdata[0].discount
+      this.alllabtests.forEach((labtest: any) => {
+        this.discount.forEach((element:any) => {
+          if(labtest.labtest == element.labtest) {
+            this.subtotal = this.subtotal - (labtest.charges - labtest.charges*(element.discount/100) )
+            this.inputbalance = this.inputbalance - (labtest.charges - labtest.charges*(element.discount/100) )
+          }
+          
+        });
+      })
+
+    })
+  }
+
+  //---------- indivisual discount ----------------//
+
+
   onSubmit(post: any) {
 
-    console.log('post', post)
     post.subtotal = this.subtotal
+    this.labdiscount(post)
+    
     if(this.inputbalance !== 0)
     {
       post.payment = post.payment + this.inputpayment
     }
+    
     this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`,post).subscribe((res) => {
+      console.log(res)
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });
-      window.location.reload();
       this.router.navigate(['doctordashboard']);
     })
 

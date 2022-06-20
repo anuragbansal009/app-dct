@@ -195,7 +195,7 @@
                         </div>
 
                         <div class="row mt-4 mx-auto">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <mat-form-field appearance="outline" class="form-element">
                                     <mat-label>Payment Mode</mat-label>
                                     <mat-select placeholder="Payment Mode" value="{{inputpaymentmode}}"
@@ -209,12 +209,19 @@
                                 </mat-form-field>
                             </div>
 
-
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <mat-form-field appearance="outline" class="form-element">
                                     <mat-label>Payment</mat-label>
                                     <input matInput type="number" placeholder="Payment" formControlName="payment">
                                 </mat-form-field>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="my-2" style="border: 1px solid lightgray; border-radius: 5px; padding: 5px;">
+                                    <div (click)="handleDiscount()" class="vitals btn dropdown-toggle" mat-raised-button
+                                    color="primary">Discount</div>
+                                </div>
+                                
                             </div>
 
                         </div>

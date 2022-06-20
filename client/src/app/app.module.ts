@@ -24,6 +24,7 @@ import { BillInvoiceModule } from './bill-invoice/bill-invoice.module';
 import { AddLabtestModule } from './add-labtest/add-labtest.module';
 import { UpdateBillModule } from './update-bill/update-bill.module';
 import { VitalsModule } from './vitals/vitals.module';
+import { LabdiscountModule } from './labdiscount/labdiscount.module';
 import { NavbarService } from './navbar.service';
 import { CalendarComponent } from './app.component';
 import {
@@ -44,6 +45,7 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserModule,
     AppRoutingModule,
     ForgotModule,
+    LabdiscountModule,
     BilSummaryModule,
     BrowserAnimationsModule,
     MaterialModule,

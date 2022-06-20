@@ -94,9 +94,7 @@ export class PatientListComponent implements AfterViewInit {
 
 
   filterallpatients(event: any) {
-    // this.date = document.getElementById('filterdate');
-    // console.log(this.date)
-    // this.date = new Date(this.date.value).valueOf();
+
     this.date =  new Date(event.value).valueOf();
     this.date = this.date + 19800000;
     this.http.post('http://localhost:5000/api/patient/filter', { date: this.date }).subscribe({

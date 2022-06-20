@@ -48,8 +48,6 @@ export class VitalsComponent implements OnInit {
 
     this.id = this.patientVital.id;
 
-    console.log("asas", this.id);
-
     this.formGroup = this.formBuilder.group({
       weight: [],
       height: [],
