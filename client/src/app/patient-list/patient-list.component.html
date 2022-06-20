@@ -67,7 +67,7 @@
         <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
         <mat-icon matSuffix>search</mat-icon>
       </mat-form-field>
-    </div>  
+    </div>
     <div class="col-md-3 col-sm-12 text-start">
       <mat-form-field appearance="outline" class="form-element">
         <mat-label>Slot Date</mat-label>
@@ -160,8 +160,7 @@
           <button *ngIf="row.status == 'Paid'" (click)="handleprint(row._id, 'Paid')" mat-raised-button class="print">
             Print
           </button>
-          <button *ngIf="row.status == 'Pending'" (click)="handleprint(row._id, 'Pending')" disabled="true"
-            mat-raised-button>
+          <button class="print" *ngIf="row.status == 'Pending'" (click)="handleprint(row._id, 'Pending')" mat-raised-button>
             Print
           </button>
           <button *ngIf="row.status == 'Unpaid'" (click)="handleprint(row._id, 'Unpaid')" disabled="true"
@@ -186,7 +185,7 @@
 
 
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users" ></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 
 </div>

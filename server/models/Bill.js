@@ -24,7 +24,7 @@ const BillSchema = new Schema({
         type: Array,
     },
     discount: {
-        type: Number,
+        type: Array,
     },
     payment: {
         type: Number,

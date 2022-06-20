@@ -26,6 +26,7 @@ export class AddServicesComponent implements OnInit {
   patientid:any;
   patientdata:any;
   services: any;
+  inputgst: any = 0;
 
   constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) { }
 
@@ -39,6 +40,7 @@ export class AddServicesComponent implements OnInit {
       service: [null, Validators.required],
       charges: [null, Validators.required],
       doctor_name: [null, Validators.required],
+      gst: [this.inputgst],
     });
   }
 
@@ -60,6 +62,13 @@ export class AddServicesComponent implements OnInit {
     this.showSuccess = false;
     this.showError = false;
     console.log(post);
+    if(post.gst !== 0)
+    {
+      post.charges = post.charges *(post.gst / 100);
+    }
+    else{
+      post.charges = post.charges
+    }
     this.http.post(environment.servicesAdd, post).subscribe({
       next: res => {
         console.log('Service Added')
