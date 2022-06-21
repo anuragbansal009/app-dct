@@ -110,166 +110,176 @@
     </mat-dialog-actions>
 
     <!-- <h1 class="display-3 text-center heading my-3">Patient Bill</h1> -->
-    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Patient Bill</h1>
+    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Billing</h1>
 
     <hr>
+    <mat-tab-group dynamicHeight mat-align-tabs="center">
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">science</mat-icon>
+                Labtest Print
+            </ng-template>
+            <div *ngIf="!post" novalidate>
+                <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
 
-    <div *ngIf="!post" novalidate>
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
-
-            <div class="container-fluid">
-                <mat-dialog-content>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <mat-list role="list">
-                                <mat-list-item role="listitem">
-                                    <strong matline>Name:&nbsp;</strong>
-                                    <span matline>{{inputname}}</span>
-                                </mat-list-item>
-                                <mat-list-item role="listitem">
-                                    <strong matline>Gender:&nbsp;</strong>
-                                    <span matline>{{inputgender}}</span>
-                                </mat-list-item>
-                            </mat-list>
-                        </div>
-                        <div class="col-md-6">
-                            <mat-list role="list">
-                                <mat-list-item role="listitem">
-                                    <strong matline>Age:&nbsp;</strong>
-                                    <span matline>{{inputage}}</span>
-                                </mat-list-item>
-                                <mat-list-item role="listitem">
-                                    <strong matline>Doctor Name:&nbsp;</strong>
-                                    <span matline>{{inputdoctor}}</span>
-                                </mat-list-item>
-                            </mat-list>
-                        </div>
-                    </div>
-
-                    <div class="row hidden">
-
-                        <div class="col-md-12">
-                            <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Name</mat-label>
-                                <input matInput placeholder="Name" value={{inputname}} formControlName="name">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-4">
-                            <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Gender</mat-label>
-                                <input matInput placeholder="Gender" value={{inputgender}} formControlName="gender">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-4">
-                            <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Age</mat-label>
-                                <input matInput type="number" placeholder="Age" value={{inputage}}
-                                    formControlName="age">
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-4">
-                            <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Doctor Name</mat-label>
-                                <input matInput placeholder="Doctor Name" value={{inputdoctor}}
-                                    formControlName="doctor_name">
-
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row my-3">
-
-                        <div class="col-md-6">
-                            <ng-multiselect-dropdown [placeholder]="'Services'" [settings]="dropdownSettings"
-                                [data]="dropdownList" formControlName="labcharges" [(ngModel)]="selectedservice"
-                                (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
-                                (onSelectAll)="onSelectAll($event)">
-                            </ng-multiselect-dropdown>
-                        </div>
-
-                        <div class="col-md-6">
-                            <ng-multiselect-dropdown [placeholder]="'LabTests'" [settings]="dropdownTests"
-                                [data]="dropdowntestlist" formControlName="labtests" [(ngModel)]="selectedlabtest"
-                                (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
-                                (onSelectAll)="onSelectAll($event)" (onUnselectAll)="onUnselectAll($event)">
-                            </ng-multiselect-dropdown>
-                        </div>
-
-                        <div class="row mt-4 mx-auto">
-                            <div class="col-md-4">
-                                <mat-form-field appearance="outline" class="form-element">
-                                    <mat-label>Payment Mode</mat-label>
-                                    <mat-select placeholder="Payment Mode" value="{{inputpaymentmode}}"
-                                        formControlName="paymentmode">
-                                        <mat-option value="Cash">Cash</mat-option>
-                                        <mat-option value="Card">Card</mat-option>
-                                    </mat-select>
-                                    <mat-error>
-                                        {{ titleAlert }}
-                                    </mat-error>
-                                </mat-form-field>
-                            </div>
-
-                            <div class="col-md-4">
-                                <mat-form-field appearance="outline" class="form-element">
-                                    <mat-label>Payment</mat-label>
-                                    <input matInput type="number" placeholder="Payment" formControlName="payment">
-                                </mat-form-field>
-                            </div>
-
-                            <div class="col-md-4">
-                                <div class="my-2" style="border: 1px solid lightgray; border-radius: 5px; padding: 5px;">
-                                    <div (click)="handleDiscount()" class="vitals btn dropdown-toggle" mat-raised-button
-                                    color="primary">{{ discountString }}</div>
+                    <div class="container-fluid">
+                        <mat-dialog-content>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <mat-list role="list">
+                                        <mat-list-item role="listitem">
+                                            <strong matline>Name:&nbsp;</strong>
+                                            <span matline>{{inputname}}</span>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem">
+                                            <strong matline>Gender:&nbsp;</strong>
+                                            <span matline>{{inputgender}}</span>
+                                        </mat-list-item>
+                                    </mat-list>
                                 </div>
-                                
+                                <div class="col-md-6">
+                                    <mat-list role="list">
+                                        <mat-list-item role="listitem">
+                                            <strong matline>Age:&nbsp;</strong>
+                                            <span matline>{{inputage}}</span>
+                                        </mat-list-item>
+                                        <mat-list-item role="listitem">
+                                            <strong matline>Doctor Name:&nbsp;</strong>
+                                            <span matline>{{inputdoctor}}</span>
+                                        </mat-list-item>
+                                    </mat-list>
+                                </div>
                             </div>
 
-                        </div>
-                        <div class="row hidden">
-                            <div class="col-md-4">
-                                <mat-form-field appearance="outline" class="form-element">
-                                    <mat-label>Sub Total</mat-label>
-                                    <input type="number" matInput placeholder="SubTotal" value="{{subtotal}}"
-                                        formControlName="subtotal">
-                                </mat-form-field>
-                            </div>
-                            <div class="col-md-4">
-                                <mat-form-field appearance="outline" class="form-element">
-                                    <mat-label>Balance</mat-label>
-                                    <input type="number" matInput placeholder="Balance" value="{{inputbalance}}"
-                                        formControlName="subtotal">
-                                </mat-form-field>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 text-center">
-                                <h1 class="display-3"><strong>Sub Total: </strong><span>{{subtotal}}</span></h1>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <h1 class="display-3"><strong>Pending Amount: </strong><span>{{inputbalance}}</span>
-                                </h1>
-                            </div>
-                        </div>
-                    </div>
-                </mat-dialog-content>
-                <mat-dialog-actions class="text-center mx-auto mt-2">
-                    <div class="row text-center mx-auto" style="width: 100%;">
-                        <div class="col-md-6 mx-auto">
-                            <div class="form-element">
-                                <button mat-raised-button color="primary" type="submit" class="button"
-                                    [mat-dialog-close]="true">Save</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="alert alert-success" role="alert" *ngIf="showSuccess">
-                        User Created Successfully
-                    </div>
-                    <div class="alert alert-danger" role="alert" *ngIf="showError">
-                        {{ errorString }}
-                    </div>
-                </mat-dialog-actions>
+                            <div class="row hidden">
 
-                <!-- <div class="row text-center mx-auto" style="width: 100%;">
+                                <div class="col-md-12">
+                                    <mat-form-field appearance="outline" class="form-element">
+                                        <mat-label>Name</mat-label>
+                                        <input matInput placeholder="Name" value={{inputname}} formControlName="name">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline" class="form-element">
+                                        <mat-label>Gender</mat-label>
+                                        <input matInput placeholder="Gender" value={{inputgender}}
+                                            formControlName="gender">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline" class="form-element">
+                                        <mat-label>Age</mat-label>
+                                        <input matInput type="number" placeholder="Age" value={{inputage}}
+                                            formControlName="age">
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-md-4">
+                                    <mat-form-field appearance="outline" class="form-element">
+                                        <mat-label>Doctor Name</mat-label>
+                                        <input matInput placeholder="Doctor Name" value={{inputdoctor}}
+                                            formControlName="doctor_name">
+
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="row my-3">
+
+                                <div class="col-md-6">
+                                    <ng-multiselect-dropdown [placeholder]="'Services'" [settings]="dropdownSettings"
+                                        [data]="dropdownList" formControlName="labcharges" [(ngModel)]="selectedservice"
+                                        (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
+                                        (onSelectAll)="onSelectAll($event)">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <ng-multiselect-dropdown [placeholder]="'LabTests'" [settings]="dropdownTests"
+                                        [data]="dropdowntestlist" formControlName="labtests"
+                                        [(ngModel)]="selectedlabtest" (onSelect)="onItemSelect($event)"
+                                        (onDeSelect)="onItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                                        (onUnselectAll)="onUnselectAll($event)">
+                                    </ng-multiselect-dropdown>
+                                </div>
+
+                                <div class="row mt-4 mx-auto">
+                                    <div class="col-md-4">
+                                        <mat-form-field appearance="outline" class="form-element">
+                                            <mat-label>Payment Mode</mat-label>
+                                            <mat-select placeholder="Payment Mode" value="{{inputpaymentmode}}"
+                                                formControlName="paymentmode">
+                                                <mat-option value="Cash">Cash</mat-option>
+                                                <mat-option value="Card">Card</mat-option>
+                                            </mat-select>
+                                            <mat-error>
+                                                {{ titleAlert }}
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <mat-form-field appearance="outline" class="form-element">
+                                            <mat-label>Payment</mat-label>
+                                            <input matInput type="number" placeholder="Payment"
+                                                formControlName="payment">
+                                        </mat-form-field>
+                                    </div>
+
+                                    <div class="col-md-4">
+                                        <div class="my-2"
+                                            style="border: 1px solid lightgray; border-radius: 5px; padding: 5px;">
+                                            <div (click)="handleDiscount()" class="vitals btn dropdown-toggle"
+                                                mat-raised-button color="primary">{{ discountString }}</div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                                <div class="row hidden">
+                                    <div class="col-md-4">
+                                        <mat-form-field appearance="outline" class="form-element">
+                                            <mat-label>Sub Total</mat-label>
+                                            <input type="number" matInput placeholder="SubTotal" value="{{subtotal}}"
+                                                formControlName="subtotal">
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <mat-form-field appearance="outline" class="form-element">
+                                            <mat-label>Balance</mat-label>
+                                            <input type="number" matInput placeholder="Balance" value="{{inputbalance}}"
+                                                formControlName="subtotal">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 text-center">
+                                        <h1 class="display-3"><strong>Sub Total: </strong><span>{{subtotal}}</span></h1>
+                                    </div>
+                                    <div class="col-md-6 text-center">
+                                        <h1 class="display-3"><strong>Pending Amount:
+                                            </strong><span>{{inputbalance}}</span>
+                                        </h1>
+                                    </div>
+                                </div>
+                            </div>
+                        </mat-dialog-content>
+                        <mat-dialog-actions class="text-center mx-auto mt-2">
+                            <div class="row text-center mx-auto" style="width: 100%;">
+                                <div class="col-md-6 mx-auto">
+                                    <div class="form-element">
+                                        <button mat-raised-button color="primary" type="submit" class="button"
+                                            [mat-dialog-close]="true">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+                                User Created Successfully
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="showError">
+                                {{ errorString }}
+                            </div>
+                        </mat-dialog-actions>
+
+                        <!-- <div class="row text-center mx-auto" style="width: 100%;">
                     <div class="col-md-6">
                         <div class="form-element">
                             <button mat-raised-button color="primary" type="submit" class="button">Submit</button>
@@ -288,10 +298,33 @@
                 <div class="alert alert-danger" role="alert" *ngIf="showError">
                     {{ errorString }}
                 </div>  -->
+                    </div>
+                </form>
+
+
             </div>
-        </form>
-
-
-    </div>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">medical_services</mat-icon>
+                Service Print
+            </ng-template>
+            Service Print
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">undo</mat-icon>
+                Refund
+            </ng-template>
+            Refund
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">payments</mat-icon>
+                Bill Transactions
+            </ng-template>
+            Bill Transactions
+        </mat-tab>
+    </mat-tab-group>
 
 </div>
