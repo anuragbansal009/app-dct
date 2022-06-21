@@ -43,3 +43,7 @@
 .hidden {
     display: none;
 }
+
+.example-tab-icon {
+    margin-right: 5px;
+}

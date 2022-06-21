@@ -10,9 +10,10 @@ import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatPaginatorModule} from '@angular/material/paginator';
 import {MatDialogModule} from '@angular/material/dialog';
+import { YesNoPipe } from './yes-no.pipe';
 
 @NgModule({
-    declarations: [PatientListComponent],
+    declarations: [PatientListComponent, YesNoPipe],
     imports: [
         BrowserAnimationsModule,
         BrowserModule,

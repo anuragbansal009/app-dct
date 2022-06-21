@@ -24,3 +24,8 @@ body {
 .mat-sort-header-arrow {
   color: white !important;
 }
+
+.mat-tooltip {
+  white-space: pre-line !important;
+}
+

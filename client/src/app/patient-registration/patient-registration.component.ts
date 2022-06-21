@@ -113,14 +113,15 @@ export class PatientRegistrationComponent implements OnInit {
 
         // this.router.navigate([`bill/${this.patientid}`]);
 
-        let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;
-        element.click();
-
         const dialogRef = this.dialog.open(BillComponent, {
           data: { id: this.patientid },
         });
         dialogRef.afterClosed().subscribe(result => {
           console.log(`Dialog result: ${result}`);
+          if (result == true) {
+            let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;
+            element.click();
+          }
         });
         // this.router.navigate(['doctordashboard']);
 

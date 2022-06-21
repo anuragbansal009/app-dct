@@ -14,6 +14,32 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
+  selector: 'add-fields',
+  templateUrl: './add-fields.html',
+  styleUrls: ['./add-fields.css']
+})
+
+export class AddFieldsComponent implements OnInit {
+
+  post: any = '';
+  addfieldsformGroup: any = FormGroup;
+
+  constructor(private formBuilder: FormBuilder,) { }
+
+  ngOnInit(): void {
+    this.addfieldsformGroup = this.formBuilder.group({
+      fieldname: [],
+      units: []
+    });
+  }
+
+  onSubmit(post: any) {
+    console.log(post);
+  }
+}
+
+
+@Component({
   selector: 'app-vitals',
   templateUrl: './vitals.component.html',
   styleUrls: ['./vitals.component.css']
@@ -34,9 +60,10 @@ export class VitalsComponent implements OnInit {
   height: any
   weightAdded: boolean = false;
   heightAdded: boolean = false;
+  inputs: any = [];
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public patientVital: {id: any},
+    @Inject(MAT_DIALOG_DATA) public patientVital: { id: any },
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -47,7 +74,6 @@ export class VitalsComponent implements OnInit {
   ngOnInit(): void {
 
     this.id = this.patientVital.id;
-
     this.formGroup = this.formBuilder.group({
       weight: [],
       height: [],
@@ -55,6 +81,7 @@ export class VitalsComponent implements OnInit {
       sbp: [],
       dbp: [],
       pulse: [],
+      fields: this.formBuilder.group({}),
     });
   }
 
@@ -80,12 +107,28 @@ export class VitalsComponent implements OnInit {
     }
   }
 
-  onSubmit(post: any) {
-    
-    this.http.post(`http://localhost:5000/api/patient/updatepatient/${this.id}`, {vitals: post}).subscribe((res:any) => {
-      console.log('res')
-    })
-    
+  addField() {
+    const dialogRef = this.dialog.open(AddFieldsComponent);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      if (result) {
+        this.inputs.push(result.fieldname + '(' + result.units + ')');
+        this.formGroup.controls.fields.addControl(result.fieldname + '(' + result.units + ')', new FormControl(''));
+      } 
+    });
   }
 
+  temp() {
+    return new this.formGroup({
+      fieldname: new FormControl(''),
+      units: new FormControl(''),
+    });
+  }
+
+  onSubmit(post: any) {
+    // console.log(post)
+    this.http.post(`http://localhost:5000/api/patient/updatepatient/${this.id}`, {vitals: post}).subscribe((res:any) => {
+      console.log(res)
+    })
+  }
 }
