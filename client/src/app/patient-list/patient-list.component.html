@@ -61,22 +61,41 @@
 <div class="container-fluid mt-4 col-sm-12">
   <!-- <h1 class="display-3 text-center heading my-3">Patient List</h1> -->
   <div class="row mx-auto justify-content-md-center" style="text-align: center;">
-    <div class="col-md-3 col-sm-12 text-end">
-      <mat-form-field class="mx-4 form-field" appearance="outline">
+    <div class="col-md-3 col-sm-12 text-end wrapper">
+      <div class="search_box" style="width: 100%">
+        <div class="search_btn" style="margin-right: 15px">
+          <mat-icon>search</mat-icon>
+        </div>
+        <input type="text" class="input_search" placeholder="Search" (keyup)="applyFilter($event)" style="width: 250px">
+      </div>
+      <!-- <mat-form-field class="mx-4 form-field" appearance="outline">
         <mat-label>Search</mat-label>
         <input matInput (keyup)="applyFilter($event)" placeholder="Search" #input>
         <mat-icon matSuffix>search</mat-icon>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
-    <div class="col-md-3 col-sm-12 text-start">
-      <mat-form-field appearance="outline" class="form-element">
+    <div class="col-md-3 col-sm-12 text-start wrapper">
+      <!-- <mat-form-field> -->
+        <div class="search_box">
+          <input matInput [matDatepicker]="picker" placeholder="Slot Date" id="filterdate"
+            (dateChange)="filterallpatients($event)" [defaultValue]="todayDate | date: 'dd/MM/yyyy'"
+            class="input_search">
+          <div class="search_btn" style="margin-left: 15px;">
+            <mat-datepicker-toggle matSuffix [for]="picker" style="color: white !important"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+      <!-- </mat-form-field> -->
+
+
+      <!-- <mat-form-field appearance="outline" class="form-element">
         <mat-label>Slot Date</mat-label>
         <input matInput [matDatepicker]="picker" placeholder="Slot Date" id="filterdate"
           (dateChange)="filterallpatients($event)" [defaultValue]="todayDate | date: 'dd/MM/yyyy'">
         <mat-hint>DD/MM/YYYY</mat-hint>
         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
         <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+      </mat-form-field> -->
     </div>
     <!-- <input type="date" id="filterdate" (change)="filterallpatients()"> -->
   </div>
@@ -98,7 +117,8 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Vitals </th>
         <td mat-cell *matCellDef="let row">
           <div class="vitals btn dropdown-toggle" mat-raised-button (click)="handlevitals(row.allocateid)"
-            color="primary">Vitals</div>
+            color="primary" #tooltip="matTooltip" matTooltip="{{row.vitalTooltip}}" [matTooltipPosition]="'right'">
+            Vitals</div>
         </td>
       </ng-container>
 
@@ -130,7 +150,12 @@
 
       <ng-container matColumnDef="followup">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Follow Up </th>
-        <td mat-cell *matCellDef="let row"> {{row.followup}} </td>
+        <td mat-cell *matCellDef="let row">
+          <!-- {{row.followup | yesNo }}  -->
+          <mat-icon *ngIf="row.followup == false" class="redcolor">close</mat-icon>
+          <mat-icon *ngIf="row.followup == true" class="greencolor">check</mat-icon>
+
+        </td>
       </ng-container>
 
 
@@ -165,7 +190,8 @@
           <button *ngIf="row.status == 'Paid'" (click)="handleprint(row._id, 'Paid')" mat-raised-button class="print">
             Print
           </button>
-          <button class="print" *ngIf="row.status == 'Pending'" (click)="handleprint(row._id, 'Pending')" mat-raised-button>
+          <button class="print" *ngIf="row.status == 'Pending'" (click)="handleprint(row._id, 'Pending')"
+            mat-raised-button>
             Print
           </button>
           <button *ngIf="row.status == 'Unpaid'" (click)="handleprint(row._id, 'Unpaid')" disabled="true"

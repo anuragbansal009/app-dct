@@ -39,7 +39,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 })
 export class PatientListComponent implements OnInit {
 
-
+  message: string = "firstLine\nSecondLine";
   serviceitems: any
   labtestitems: any
   bill: any;
@@ -56,7 +56,7 @@ export class PatientListComponent implements OnInit {
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
 
-  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime','followup', 'update', 'status', 'print'];
+  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'update', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe, private dateAdapter: DateAdapter<Date>) {
@@ -80,11 +80,29 @@ export class PatientListComponent implements OnInit {
     this.http.post('http://localhost:5000/api/patient/filter', { date: this.now }).subscribe((res) => {
 
       this.list = res
-
-      this.list.forEach((element: { slotdate: any; time: any; }) => {
+      this.list.forEach((element: { slotdate: any; time: any; vitals: any; vitalTooltip: any }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
         element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');
+        element.vitalTooltip = "";
+        if (element.vitals[0]) {
+          if (element.vitals[0].weight) {
+            element.vitalTooltip = element.vitalTooltip + "Weight: " + element.vitals[0].weight + " Kg" + "\n"
+          }
+          if (element.vitals[0].height) {
+            element.vitalTooltip = element.vitalTooltip + "Height: " + element.vitals[0].height + " cm" + "\n"
+          }
+          if (element.vitals[0].fewer) {
+            element.vitalTooltip = element.vitalTooltip + "Fever: " + element.vitals[0].fewer + " F" + "\n"
+          }
+          if (element.vitals[0].sbp && element.vitals[0].dbp) {
+            element.vitalTooltip = element.vitalTooltip + "Blood Pressure: " + element.vitals[0].sbp + "/" + element.vitals[0].dbp + " mmHg" + "\n"
+          }
+          if (element.vitals[0].pulse) {
+            element.vitalTooltip = element.vitalTooltip + "Pulse: " + element.vitals[0].pulse + " bpm" + "\n"
+          }
+        }
       });
+      console.log(this.list)
       this.dataSource = new MatTableDataSource(this.list);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort

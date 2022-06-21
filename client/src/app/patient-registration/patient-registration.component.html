@@ -3,7 +3,7 @@
     <!-- <h1 class="display-3 text-center heading my-3">Patient Registration</h1> -->
     <mat-dialog-actions style=" margin-top: -20px">
         <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-            <button mat-icon-button mat-dialog-close>
+            <button mat-icon-button mat-dialog-close class="closebutton">
                 <mat-icon>close</mat-icon>
             </button>
         </span>
@@ -145,7 +145,7 @@
                 <mat-dialog-actions>
                     <div class="form-element">
                         <button mat-raised-button color="primary" type="submit" class="button"
-                            [mat-dialog-close]="true">Submit</button>
+                            >Submit</button>
                     </div>
                 </mat-dialog-actions>
                 <div class="alert alert-success" role="alert" *ngIf="showSuccess">
