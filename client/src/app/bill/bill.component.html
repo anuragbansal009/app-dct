@@ -179,6 +179,7 @@
                     <div class="row my-3">
 
                         <div class="col-md-6">
+                            <div class="my-2">Services</div>
                             <ng-multiselect-dropdown [placeholder]="'Services'" [settings]="dropdownSettings"
                                 [data]="dropdownList" formControlName="labcharges" [(ngModel)]="selectedservice"
                                 (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
@@ -187,6 +188,7 @@
                         </div>
 
                         <div class="col-md-6">
+                            <div class="my-2">LabTests</div>
                             <ng-multiselect-dropdown [placeholder]="'LabTests'" [settings]="dropdownTests"
                                 [data]="dropdowntestlist" formControlName="labtests" [(ngModel)]="selectedlabtest"
                                 (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
