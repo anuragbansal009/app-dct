@@ -21,4 +21,12 @@ export const environment = {
   servicesGet: 'http://localhost:5000/api/services/get',
   labtestAdd: 'http://localhost:5000/api/labtest/add',
   labtestGet: 'http://localhost:5000/api/labtest/get',
+  patientsGet: 'http://localhost:5000/api/patient/get',
+  patientBillSummary: 'http://localhost:5000/api/patient/billsummary',
+  patientGetid: 'http://localhost:5000/api/patient/getid',
+  billGetId: 'http://localhost:5000/api/bill/getid',
+  patientBill: 'http://localhost:5000/api/patient/bill/',
+  getAllocateId: 'http://localhost:5000/api/patient/getallocateid',
+  patientFilter: 'http://localhost:5000/api/patient/filter',
+  updatePatient: 'http://localhost:5000/api/patient/updatepatient/'
 };

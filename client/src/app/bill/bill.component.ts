@@ -305,7 +305,7 @@ export class BillComponent implements OnInit {
   }
 
   serviceDetails() {
-    this.http.post('http://localhost:5000/api/services/get', { id: this.id }).subscribe((res) => {
+    this.http.post(environment.servicesGet, { id: this.id }).subscribe((res) => {
       this.services = res;
       this.dropdownList = this.services
     });
@@ -313,7 +313,7 @@ export class BillComponent implements OnInit {
   }
 
   LabDetails() {
-    this.http.post('http://localhost:5000/api/labtest/get', { id: this.id }).subscribe((res) => {
+    this.http.post(environment.labtestGet, { id: this.id }).subscribe((res) => {
       this.testlist = res;
       this.dropdowntestlist = this.testlist
     });
@@ -322,7 +322,7 @@ export class BillComponent implements OnInit {
 
   patientdetails() {
 
-    this.http.post('http://localhost:5000/api/patient/getid', { _id: this.id }).subscribe((res) => {
+    this.http.post(environment.patientGetid, { _id: this.id }).subscribe((res) => {
       this.patient = res
 
 
@@ -337,7 +337,7 @@ export class BillComponent implements OnInit {
   }
 
   billdetails() {
-    this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
+    this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
 
       this.bill = res
       if (this.bill.length !== 0) {
@@ -373,9 +373,6 @@ export class BillComponent implements OnInit {
       this.temp1 = this.subtotal
       this.temp2 = this.inputbalance
       this.alllabtests = this.formGroup.value.labtests
-      // this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
-      //   this.discountdata = res
-      //   this.discount = this.discountdata[0].discount
       this.discount = this.result
       this.alllabtests.forEach((labtest: any) => {
         this.discount.forEach((element: any) => {
@@ -467,7 +464,7 @@ export class BillComponent implements OnInit {
 
     post.payment = post.subtotal
 
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, post).subscribe((res) => {
+    this.http.post(environment.patientBill + this.id, post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
       });

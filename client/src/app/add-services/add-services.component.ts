@@ -49,15 +49,6 @@ export class AddServicesComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
-  // handleService()
-  // { 
-  //   this.http.post('http://localhost:5000/api/services/get', {doctor_name: "doctor"}).subscribe((res)=>{
-  //     console.log(res)
-  //     this.services = res
-  //   })
-  // }
-
-
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;

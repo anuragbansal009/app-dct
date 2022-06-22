@@ -13,6 +13,7 @@ import { VitalsComponent } from '../vitals/vitals.component';
 import { DateAdapter } from '@angular/material/core';
 import { BillInvoiceComponent } from '../bill-invoice/bill-invoice.component';
 import { PatientDetailsComponent } from '../patient-details/patient-details.component';
+import { environment } from 'src/environments/environment';
 
 export interface PeriodicElement {
   name: string;
@@ -78,7 +79,7 @@ export class PatientListComponent implements OnInit {
     // console.log(now);
     this.date = document.getElementById('filterdate');
     this.date = new Date(this.date.value).valueOf();
-    this.http.post('http://localhost:5000/api/patient/filter', { date: this.now }).subscribe((res) => {
+    this.http.post(environment.patientFilter, { date: this.now }).subscribe((res) => {
 
       this.list = res
       this.list.forEach((element: { slotdate: any; time: any; vitals: any; vitalTooltip: any }) => {
@@ -116,7 +117,7 @@ export class PatientListComponent implements OnInit {
     this.date = new Date(event.value).valueOf();
     this.date = this.date + 19800000;
     this.now = this.date;
-    this.http.post('http://localhost:5000/api/patient/filter', { date: this.date }).subscribe({
+    this.http.post(environment.patientFilter, { date: this.date }).subscribe({
       next: res => {
         this.list = res
         if (this.list.length == 0) {
