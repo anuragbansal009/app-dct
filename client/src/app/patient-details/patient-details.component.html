@@ -1,0 +1,92 @@
+<div>
+
+    <!-- <h1 class="display-3 text-center heading my-3">Patient Registration</h1> -->
+    <mat-dialog-actions style=" margin-top: -20px">
+        <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+            <button mat-icon-button mat-dialog-close class="closebutton">
+                <mat-icon>close</mat-icon>
+            </button>
+        </span>
+    </mat-dialog-actions>
+    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Patient Details
+    </h1>
+
+    <hr>
+    <div>
+
+        <div class="container-fluid">
+            <mat-dialog-content style="text-align: center;">
+                <div class="row ">
+                    <div class="col-md-6">
+                        <div>Name : {{name}}</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>ID : {{allocateid}}</div>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row my-3">
+
+                    <div class="col-md-6">
+                        <div>Gender : {{gender}}</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>Age : {{age}} years</div>
+                    </div>
+
+                </div>
+                <hr>
+                <div class="row my-3">
+
+                    <div class="col-md-6">
+                        <div>Mobile Number : {{mobile}}</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>Doctor : Dr.{{doctor}}</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row my-3">
+
+                    <div class="col-md-6">
+                        <div>Pin : {{pin}}</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>City : {{city}}</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row my-3">
+
+                    <div class="col-md-6">
+                        <div>Bloodgroup : {{bloodgroup}}</div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>Bill Status : {{status}}</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row my-3">
+                    <div class="col-md-12">
+                        <div>Appointment Date : {{date}}</div>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+
+                    <div class="col-md-12">
+                        <div>Appointment Time : {{time}}</div>
+                    </div>
+                </div>
+            </mat-dialog-content>
+        </div>
+
+    </div>
+
+</div>

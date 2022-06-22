@@ -14,6 +14,8 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LabdiscountComponent } from '../labdiscount/labdiscount.component';
+import { ServicediscountComponent } from '../servicediscount/servicediscount.component';
+
 
 @Component({
   selector: 'app-bill',
@@ -55,7 +57,9 @@ export class BillComponent implements OnInit {
   inputpayment: any = 0
   discountdata: any;
   discount: any;
+  sdiscount: any;
   alllabtests: any;
+  allservices: any;
 
   labcharges: any = null
   bill: any;
@@ -66,12 +70,16 @@ export class BillComponent implements OnInit {
 
   patientcharges: any;
   subtotal: any = 0;
-  subtotal2: any = 0;
   result: any = [];
+  serviceresult: any = [];
   temp1: any = 0
   temp2: any = 0
   count: any = 0
-  discountString: string = 'Discount'
+  stemp1: any = 0
+  stemp2: any = 0
+  scount: any = 0
+  discountString: string = 'Lab Discount'
+  servicediscountString: string = 'Service Discount'
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: any },
@@ -170,6 +178,19 @@ export class BillComponent implements OnInit {
     });
   }
 
+  handleServiceDiscount() {
+    // console.log(this.formGroup.value.labtests)
+    const dialogRef = this.dialog.open(ServicediscountComponent, {
+      data: { id: this.id, labcharges: this.formGroup.value.labcharges }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.serviceresult.push(result);
+      console.log(this.serviceresult)
+      this.serviceDiscount()
+    });
+  }
+
   serviceDetails() {
     this.http.post('http://localhost:5000/api/services/get', { id: this.id }).subscribe((res) => {
       this.services = res;
@@ -238,7 +259,6 @@ export class BillComponent implements OnInit {
       this.temp1 = this.subtotal
       this.temp2 = this.inputbalance
       this.alllabtests = this.formGroup.value.labtests
-      console.log(this.alllabtests)
       // this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
       //   this.discountdata = res
       //   this.discount = this.discountdata[0].discount
@@ -247,10 +267,8 @@ export class BillComponent implements OnInit {
         this.discount.forEach((element: any) => {
           if (labtest.labtest == element.labtest) {
             this.discountString = this.discountString + ' ' + element.labtest + ' (' + element.discount + '%)'
-            console.log(this.discountString)
             this.subtotal = this.subtotal - (labtest.charges * (element.discount / 100))
             this.inputbalance = this.inputbalance - (labtest.charges * (element.discount / 100))
-            console.log(labtest.labtest, this.inputbalance)
           }
         });
       })
@@ -278,17 +296,58 @@ export class BillComponent implements OnInit {
     }
   }
 
+  serviceDiscount() {
+    
+    if (this.scount == 0) {
+      this.servicediscountString = ''
+      this.stemp1 = this.subtotal
+      this.stemp2 = this.inputbalance
+      this.allservices = this.formGroup.value.labcharges
+
+      this.sdiscount = this.serviceresult
+      this.allservices.forEach((service: any) => {
+        this.sdiscount.forEach((element: any) => {
+          if (service.service == element.service) {
+            this.servicediscountString = this.servicediscountString + ' ' + element.service + ' (' + element.discount + '%)'
+            this.subtotal = this.subtotal - (service.charges * (element.discount / 100))
+            this.inputbalance = this.inputbalance - (service.charges * (element.discount / 100))
+          }
+        });
+      })
+      this.scount = 1
+    }
+    else {
+      this.servicediscountString = ''
+      this.subtotal = this.stemp1
+      this.inputbalance = this.stemp2
+      this.allservices = this.formGroup.value.labcharges
+
+      this.sdiscount = this.serviceresult
+      this.allservices.forEach((service: any) => {
+        this.sdiscount.forEach((element: any) => {
+          if (service.service == element.service) {
+            this.servicediscountString = element.service + '(' + element.discount + '%)' + ' ' + this.servicediscountString 
+
+            this.subtotal = this.subtotal - (service.charges * (element.discount / 100))
+            this.inputbalance = this.inputbalance - (service.charges * (element.discount / 100))
+
+          }
+        });
+      })
+    }
+  }
+
   //---------- indivisual discount ----------------//
 
 
   onSubmit(post: any) {
 
     post.subtotal = this.subtotal
-    // this.labdiscount(post)
+
     if (this.inputbalance !== 0) {
       post.payment = post.payment + this.inputpayment
     }
-    console.log(post)
+
     this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,

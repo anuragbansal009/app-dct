@@ -12,6 +12,7 @@ import { DatePipe } from '@angular/common';
 import { VitalsComponent } from '../vitals/vitals.component';
 import { DateAdapter } from '@angular/material/core';
 import { BillInvoiceComponent } from '../bill-invoice/bill-invoice.component';
+import { PatientDetailsComponent } from '../patient-details/patient-details.component';
 
 export interface PeriodicElement {
   name: string;
@@ -193,6 +194,18 @@ export class PatientListComponent implements OnInit {
       // this.getallpatients();
     });
     // this.router.navigate(['billinvoice']);
+  }
+
+  handledetails(id: number) 
+  {
+    const dialogRef = this.dialog.open(PatientDetailsComponent, {
+      data: { id: id },
+      width: '70%'
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      // this.getallpatients();
+    });
   }
 
   handleclick() {

@@ -76,15 +76,14 @@
     </div>
     <div class="col-md-3 col-sm-12 text-start wrapper">
       <!-- <mat-form-field> -->
-        <div class="search_box">
-          <input matInput [matDatepicker]="picker" placeholder="Slot Date" id="filterdate"
-            (dateChange)="filterallpatients($event)" [defaultValue]="todayDate | date: 'dd/MM/yyyy'"
-            class="input_search">
-          <div class="search_btn" style="margin-left: 15px;">
-            <mat-datepicker-toggle matSuffix [for]="picker" style="color: white !important"></mat-datepicker-toggle>
-            <mat-datepicker #picker></mat-datepicker>
-          </div>
+      <div class="search_box">
+        <input matInput [matDatepicker]="picker" placeholder="Slot Date" id="filterdate"
+          (dateChange)="filterallpatients($event)" [defaultValue]="todayDate | date: 'dd/MM/yyyy'" class="input_search">
+        <div class="search_btn" style="margin-left: 15px;">
+          <mat-datepicker-toggle matSuffix [for]="picker" style="color: white !important"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
         </div>
+      </div>
       <!-- </mat-form-field> -->
 
 
@@ -105,8 +104,9 @@
 
       <ng-container matColumnDef="allocateid">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient ID </th>
-        <td mat-cell *matCellDef="let row"> {{row.allocateid}} </td>
+        <td class="allocateid" mat-cell *matCellDef="let row" (click)="handledetails(row.allocateid)"> {{row.allocateid}} </td>
       </ng-container>
+
       <!-- Progress Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </th>

@@ -25,6 +25,7 @@ import { AddLabtestModule } from './add-labtest/add-labtest.module';
 import { UpdateBillModule } from './update-bill/update-bill.module';
 import { VitalsModule } from './vitals/vitals.module';
 import { LabdiscountModule } from './labdiscount/labdiscount.module';
+import { ServicediscountModule } from './servicediscount/servicediscount.module';
 import { NavbarService } from './navbar.service';
 import { CalendarComponent } from './app.component';
 import {
@@ -36,16 +37,19 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
+import { PatientDetailsModule } from './patient-details/patient-details.module';
+import { ServicediscountComponent } from './servicediscount/servicediscount.component';
 
 @NgModule({
   declarations: [
-    AppComponent, CalendarComponent
+    AppComponent, CalendarComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     ForgotModule,
     LabdiscountModule,
+    ServicediscountModule,
     BilSummaryModule,
     BrowserAnimationsModule,
     MaterialModule,
@@ -59,6 +63,7 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
     BillModule,
     VitalsModule,
     PatientListModule,
+    PatientDetailsModule,
     DoctorLoginModule,
     UpdatePatientModule,
     DoctorHomepageModule,

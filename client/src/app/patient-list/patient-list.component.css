@@ -130,3 +130,8 @@ th {
 	justify-content: center;
 	align-items: center;
 }
+
+.allocateid:hover{
+  background-color: darkgray;
+  cursor: pointer;
+}
