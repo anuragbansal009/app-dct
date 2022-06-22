@@ -109,8 +109,10 @@
         </span>
     </mat-dialog-actions>
 
+    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Billing</h1>
+
     <hr>
-    <mat-tab-group dynamicHeight mat-align-tabs="center">
+    <mat-tab-group dynamicHeight>
         <mat-tab >
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">science</mat-icon>
@@ -323,25 +325,120 @@
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">medical_services</mat-icon>
-                Appointment
+                Service Print
             </ng-template>
-            Service Print
-        </mat-tab>
-        
-        <mat-tab>
-            <ng-template mat-tab-label>
-                <mat-icon class="example-tab-icon">payments</mat-icon>
-                Bills
-            </ng-template>
-            Bill Transactions
-        </mat-tab>
+            <div *ngIf="!post" novalidate>
+                <form class="form mx-auto" [formGroup]="addingServices" (ngSubmit)="handleAdd(addingServices.value)">
+                    <div class="container-fluid">
+                        <mat-dialog-content>
+                            <div class="row">
+                                <div class="col-md-8 col-sm-8">
+                                    <div class="row text-center mt-2 headingRow">
+                                        <div class="col-md-3 col-sm-12">
+                                            <strong>Service Name</strong>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <strong>Unit Price</strong>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <strong>Discount</strong>
+                                        </div>
+                                    </div>
+                                    <div class="row text-center mt-2" *ngFor="let row of serviceArr; let i = index;">
+                                        <div class="col-md-3 col-sm-12">
+                                            {{ row.service }}
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            {{ row.charges }}
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            {{ row.discount }}
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <button mat-icon-button type="button" (click)="deleteService(i)" style="margin-top: -20px">
+                                                <mat-icon class="redcolor">delete</mat-icon>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-3 col-sm-12">
+                                            <mat-form-field appearance="fill" class="form-element">
+                                                <mat-label>Service Name</mat-label>
+                                                <mat-select formControlName="service"
+                                                    (selectionChange)="priceValue($event)" [(ngModel)]="tempValue">
+                                                    <mat-option *ngFor="let row of dropdownList" [value]="row.service">
+                                                        {{row.service}}
+                                                    </mat-option>
+                                                    <mat-option *ngFor="let row of dropdowntestlist"
+                                                        [value]="row.labtest">
+                                                        {{row.labtest}}
+                                                    </mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <mat-form-field appearance="fill" class="form-element">
+                                                <mat-label>Unit Price</mat-label>
+                                                <input type="number" matInput placeholder="Unit Price"
+                                                    value="{{selectedValue}}" formControlName="charges">
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <mat-form-field appearance="fill" class="form-element">
+                                                <mat-label>Discount</mat-label>
+                                                <input type="number" matInput placeholder="Discount"
+                                                    formControlName="discount" value="{{discountValue}}">
+                                                <span matSuffix>%</span>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="col-md-3 col-sm-12">
+                                            <button mat-raised-button color="primary" type="submit" class="button"
+                                                style="margin-top: 16px">Add</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <hr> -->
+                                <!-- <mat-divider [vertical]="true"></mat-divider> -->
+                                <div class="col-md-4 col-sm-4 text-center" style="border-left:1px solid #C8C8C8;">
+                                    <span>Overview</span>
+                                </div>
+                            </div>
+                        </mat-dialog-content>
+                        <mat-dialog-actions class="text-center mx-auto my-2">
+                            <div class="row text-center mx-auto" style="width: 100%;">
+                                <div class="col-md-6 mx-auto">
+                                    <div class="form-element">
+                                        <button mat-raised-button color="primary" type="submit" class="button"
+                                            [mat-dialog-close]="true">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+                                User Created Successfully
+                            </div>
+                            <div class="alert alert-danger" role="alert" *ngIf="showError">
+                                {{ errorString }}
+                            </div>
+                        </mat-dialog-actions>
+                    </div>
+                </form>
 
+
+            </div>
+        </mat-tab>
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">undo</mat-icon>
                 Refund
             </ng-template>
             Refund
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">payments</mat-icon>
+                Bill Transactions
+            </ng-template>
+            Bill Transactions
         </mat-tab>
     </mat-tab-group>
 

@@ -24,8 +24,8 @@ import { ServicediscountComponent } from '../servicediscount/servicediscount.com
 })
 export class BillComponent implements OnInit {
 
-  dropdownList = [];
-  dropdowntestlist = [];
+  dropdownList: any = [];
+  dropdowntestlist: any = [];
   selectedservice = [];
   selectedlabtest = [];
   dropdownSettings!: IDropdownSettings;
@@ -33,6 +33,7 @@ export class BillComponent implements OnInit {
 
   color = 'primary';
   formGroup: any = FormGroup;
+  addingServices: any = FormGroup;
   titleAlert: string = 'This field is required';
   post: any = '';
   showSuccess: boolean = false;
@@ -80,6 +81,16 @@ export class BillComponent implements OnInit {
   scount: any = 0
   discountString: string = 'Lab Discount'
   servicediscountString: string = 'Service Discount'
+  serviceArr: any = [];
+  selectedValue: any;
+  tempValue: any = '';
+  discountValue: any = null
+  tempArr: any = {}
+  serviceSubtotal: any = 0
+  serviceInputBalance: any = 0
+  labtestSubtotal: any = 0
+  labtestInputBalance: any = 0
+  discountArr: any = []
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: any },
@@ -135,6 +146,11 @@ export class BillComponent implements OnInit {
       paymentmode: [null],
       subtotal: [null],
     });
+    this.addingServices = this.formBuilder.group({
+      service: [null],
+      charges: [null],
+      discount: [null],
+    });
 
   }
 
@@ -163,6 +179,79 @@ export class BillComponent implements OnInit {
       this.subtotal = charges.charges + this.subtotal
     });
 
+  }
+
+  handleAdd(post: any) {
+    if (post.service == null || post.service == '') {
+      this.snackBar.open('Please Select a Service', 'Close', {
+        duration: 3000,
+      });
+    }
+    else {
+      if (post.charges == null) {
+        post.charges = this.selectedValue
+      }
+      if (post.discount == null) {
+        post.discount = 0
+      }
+      this.serviceArr.push(post)
+    }
+    this.tempValue = ''
+    this.selectedValue = null
+    this.discountValue = 0
+
+    this.priceCalculate()
+
+  }
+
+  priceCalculate() {
+    this.serviceArr.forEach((event: { charges: any; discount: any; service: any}) => {
+      console.log(this.serviceArr)
+      this.dropdownList.forEach((element: { service: any; charges: any }) => {
+        console.log(this.dropdownList)
+        if (event.service == element.service) {
+          this.serviceSubtotal = 0
+          this.tempArr.service = element.service
+          this.tempArr.discount = event.discount
+          this.discountArr.push(this.tempArr)
+          this.serviceSubtotal = this.serviceSubtotal + event.charges - (event.charges * (event.discount / 100))
+          this.serviceInputBalance = this.serviceInputBalance + event.charges - (event.charges * (event.discount / 100))
+        }
+      });
+    });
+
+      this.serviceArr.forEach((event: { charges: any; discount: any; service: any}) => {
+        this.dropdowntestlist.forEach((element: { labtest: any; charges: any }) => {
+          if (element.labtest == event.service) {
+            this.tempArr.labtest = event.service
+            this.tempArr.discount = event.discount
+            this.discountArr.push(this.tempArr)
+            this.labtestSubtotal = this.labtestSubtotal + event.charges - (event.charges * (event.discount / 100))
+            this.labtestInputBalance = this.labtestInputBalance + event.charges - (event.charges * (event.discount / 100))
+          }
+        });
+      });
+      console.log("tempArr", this.discountArr)
+      console.log("s sub", this.serviceSubtotal)
+      console.log("s ib", this.serviceInputBalance)
+  }
+
+  deleteService(i: any) {
+    console.log(i)
+    this.serviceArr.splice(i, 1)
+  }
+
+  priceValue(event: any) {
+    this.dropdownList.forEach((element: { service: any; charges: any }) => {
+      if (element.service == event.value) {
+        this.selectedValue = element.charges
+      }
+    });
+    this.dropdowntestlist.forEach((element: { labtest: any; charges: any }) => {
+      if (element.labtest == event.value) {
+        this.selectedValue = element.charges
+      }
+    });
   }
 
   handleDiscount() {
@@ -253,7 +342,7 @@ export class BillComponent implements OnInit {
   //---------- indivisual discount ----------------//
 
   labdiscount() {
-    
+
     if (this.count == 0) {
       this.discountString = ''
       this.temp1 = this.subtotal
@@ -284,7 +373,7 @@ export class BillComponent implements OnInit {
       this.alllabtests.forEach((labtest: any) => {
         this.discount.forEach((element: any) => {
           if (labtest.labtest == element.labtest) {
-            this.discountString = element.labtest + '(' + element.discount + '%)' + ' ' + this.discountString 
+            this.discountString = element.labtest + '(' + element.discount + '%)' + ' ' + this.discountString
             console.log(this.discountString)
 
             this.subtotal = this.subtotal - (labtest.charges * (element.discount / 100))
@@ -297,7 +386,7 @@ export class BillComponent implements OnInit {
   }
 
   serviceDiscount() {
-    
+
     if (this.scount == 0) {
       this.servicediscountString = ''
       this.stemp1 = this.subtotal
@@ -326,7 +415,7 @@ export class BillComponent implements OnInit {
       this.allservices.forEach((service: any) => {
         this.sdiscount.forEach((element: any) => {
           if (service.service == element.service) {
-            this.servicediscountString = element.service + '(' + element.discount + '%)' + ' ' + this.servicediscountString 
+            this.servicediscountString = element.service + '(' + element.discount + '%)' + ' ' + this.servicediscountString
 
             this.subtotal = this.subtotal - (service.charges * (element.discount / 100))
             this.inputbalance = this.inputbalance - (service.charges * (element.discount / 100))
@@ -348,12 +437,14 @@ export class BillComponent implements OnInit {
       post.payment = post.payment + this.inputpayment
     }
 
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, post).subscribe((res) => {
-      this.snackBar.open('Bill Made Successfully', 'Close', {
-        duration: 3000,
-      });
-      this.router.navigate(['doctordashboard']);
-    })
+    console.log(post)
+
+    // this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, post).subscribe((res) => {
+    //   this.snackBar.open('Bill Made Successfully', 'Close', {
+    //     duration: 3000,
+    //   });
+    //   this.router.navigate(['doctordashboard']);
+    // })
 
   }
 
