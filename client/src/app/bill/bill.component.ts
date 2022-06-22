@@ -62,10 +62,10 @@ export class BillComponent implements OnInit {
   alllabtests: any;
   allservices: any;
 
-  labcharges: any = null
+  labcharges: any = [];
   bill: any;
   services: any;
-  labtests: any;
+  labtests: any = [];
   testlist: any;
   // data: any;
 
@@ -204,41 +204,62 @@ export class BillComponent implements OnInit {
 
   }
 
+  servicesArray: any = []
+  labtestArray: any = []
+  tempArr2: any = {}
+  
   priceCalculate() {
+    this.temp2 = this.inputbalance
+    this.serviceInputBalance = 0
+    this.serviceSubtotal = 0  
+    console.log(this.serviceArr)
     this.serviceArr.forEach((event: { charges: any; discount: any; service: any}) => {
-      console.log(this.serviceArr)
       this.dropdownList.forEach((element: { service: any; charges: any }) => {
-        console.log(this.dropdownList)
         if (event.service == element.service) {
-          this.serviceSubtotal = 0
+          this.tempArr = {}
+          this.tempArr2 = {}
+          this.tempArr2.service = element.service
+          this.tempArr2.charges = event.charges
           this.tempArr.service = element.service
           this.tempArr.discount = event.discount
-          this.discountArr.push(this.tempArr)
           this.serviceSubtotal = this.serviceSubtotal + event.charges - (event.charges * (event.discount / 100))
           this.serviceInputBalance = this.serviceInputBalance + event.charges - (event.charges * (event.discount / 100))
         }
       });
     });
 
-      this.serviceArr.forEach((event: { charges: any; discount: any; service: any}) => {
-        this.dropdowntestlist.forEach((element: { labtest: any; charges: any }) => {
-          if (element.labtest == event.service) {
+    this.serviceArr.forEach((event: { charges: any; discount: any; service: any}) => {
+      this.dropdowntestlist.forEach((element: { labtest: any; charges: any }) => {
+        if (element.labtest == event.service) {
+            this.labtestSubtotal = 0
+            this.tempArr = {}
+            this.tempArr2 = {}
+            this.tempArr2.service = element.labtest
+            this.tempArr2.charges = event.charges
             this.tempArr.labtest = event.service
             this.tempArr.discount = event.discount
-            this.discountArr.push(this.tempArr)
             this.labtestSubtotal = this.labtestSubtotal + event.charges - (event.charges * (event.discount / 100))
             this.labtestInputBalance = this.labtestInputBalance + event.charges - (event.charges * (event.discount / 100))
           }
         });
       });
-      console.log("tempArr", this.discountArr)
-      console.log("s sub", this.serviceSubtotal)
-      console.log("s ib", this.serviceInputBalance)
+      this.subtotal = this.serviceSubtotal + this.labtestSubtotal
+      this.inputbalance = this.inputbalance + this.serviceInputBalance + this.labtestInputBalance
+
+      if(this.tempArr.service) {
+        this.servicesArray.push(this.tempArr)
+        this.labcharges.push(this.tempArr2)
+      }
+      else {
+        this.labtestArray.push(this.tempArr)
+        this.labtests.push(this.tempArr2)
+      }
+
   }
 
   deleteService(i: any) {
-    console.log(i)
     this.serviceArr.splice(i, 1)
+    this.priceCalculate()
   }
 
   priceValue(event: any) {
@@ -437,14 +458,14 @@ export class BillComponent implements OnInit {
       post.payment = post.payment + this.inputpayment
     }
 
-    console.log(post)
+    post.payment = post.subtotal
 
-    // this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, post).subscribe((res) => {
-    //   this.snackBar.open('Bill Made Successfully', 'Close', {
-    //     duration: 3000,
-    //   });
-    //   this.router.navigate(['doctordashboard']);
-    // })
+    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, post).subscribe((res) => {
+      this.snackBar.open('Bill Made Successfully', 'Close', {
+        duration: 3000,
+      });
+      this.router.navigate(['doctordashboard']);
+    })
 
   }
 

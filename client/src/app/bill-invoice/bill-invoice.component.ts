@@ -42,6 +42,7 @@ export class BillInvoiceComponent implements OnInit {
   status: any;
   show: boolean = false;
   tempS: any
+  discount: any;
 
   a: any = ['','one ','two ','three ','four ', 'five ','six ','seven ','eight ','nine ','ten ','eleven ','twelve ','thirteen ','fourteen ','fifteen ','sixteen ','seventeen ','eighteen ','nineteen '];
 
@@ -86,6 +87,8 @@ export class BillInvoiceComponent implements OnInit {
 
   }
 
+  temp3: any
+
   getData() {
     this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
       this.list = res
@@ -98,17 +101,33 @@ export class BillInvoiceComponent implements OnInit {
       this.billNumber = this.list[0].allocateid;
       this.billStatus = this.status;
       this.list[0].labcharges.forEach((element: { service: any; charges: any; gst: any }) => {
+        this.temp3 = 0
+        this.list[0].discount.forEach((element2: { service: any; discount: any; }) => {
+          if(element2.service == element.service) {
+            this.temp3 = element2.discount
+          }
+        });
         this.tempS = {
           serviceName: element.service,
           servicePrice: element.charges,
+          serviceDiscount: this.temp3,
           serviceNetPrice: element.charges * 1.18,
         }
         this.services.push(this.tempS);
       });
+
+      console.log(this.services)
       this.list[0].labtests.forEach((element: { labtest: any; charges: any; gst: any }) => {
+        this.temp3 = 0
+        this.list[0].discount.forEach((element2: { service: any; discount: any; }) => {
+          if(element2.service == element.labtest) {
+            this.temp3 = element2.discount
+          }
+        });
         this.tempS = {
           serviceName: element.labtest,
           servicePrice: element.charges,
+          serviceDiscount: this.temp3,
           serviceNetPrice: element.charges * 1.18,
         }
         this.services.push(this.tempS);
@@ -119,7 +138,8 @@ export class BillInvoiceComponent implements OnInit {
       if(this.discountedAmount == null || this.discountedAmount == 0){
         this.discountedAmount = 0
       }
-      this.finalAmount = this.billedAmount - this.discountedAmount;
+      this.finalAmount = this.billedAmount;
+      // this.finalAmount = this.billedAmount - this.discountedAmount;
       this.balanceAmount = this.finalAmount - this.recievedAmount;
       this.paymentMode = this.list[0].paymentmode
       this.amountInWords = this.inWords(this.finalAmount)

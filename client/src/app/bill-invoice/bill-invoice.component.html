@@ -160,6 +160,7 @@
                 <th style="width: 5%">#</th>
                 <th style="width: 65%">Service Particulars</th>
                 <th class="text-end" style="width: 15%">Price</th>
+                <th class="text-end" style="width: 15%">Discount</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -167,6 +168,7 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ service.serviceName }}</td>
                 <td class="text-end">{{ service.servicePrice | number: '1.2-2'}}</td>
+                <td class="text-end">{{ service.servicePrice - (service.servicePrice * (100 - service.serviceDiscount)/100) | number: '1.2-2'}}</td>
               </tr>
             </tbody>
           </table>
@@ -214,7 +216,7 @@
                         </h4>
                       </td>
                     </tr>
-                    <tr>
+                    <!-- <tr>
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
@@ -227,7 +229,7 @@
                           : {{ discountedAmount }}
                         </h4>
                       </td>
-                    </tr>
+                    </tr> -->
                     <tr>
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
