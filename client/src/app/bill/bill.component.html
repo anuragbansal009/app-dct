@@ -109,8 +109,6 @@
         </span>
     </mat-dialog-actions>
 
-    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Billing</h1>
-
     <hr>
     <mat-tab-group dynamicHeight>
         <!-- <mat-tab>
@@ -304,7 +302,7 @@
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">medical_services</mat-icon>
-                Service Print
+                Billing
             </ng-template>
             <div *ngIf="!post" novalidate>
                 <form class="form mx-auto" [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)">
@@ -427,6 +425,7 @@
                                                     <span matSuffix>%</span>
                                                 </mat-form-field>
                                             </div>
+
                                             <div class="col-md-3 col-sm-12">
                                                 <button mat-raised-button color="primary" type="button" class="button"
                                                     style="margin-top: 16px"
@@ -440,17 +439,35 @@
                                 <div class="col-md-4 col-sm-4 text-center" style="border-left:1px solid #C8C8C8;">
                                     <table class="table table-borderless" style="text-align: left">
                                         <tbody>
+
+                                            <tr>
+                                                <td scope="row" valign=middle>
+                                                    <strong>Follow Up</strong>
+                                                </td>
+                                                <td>
+                                                    <!-- <button mat-icon-button color="primary">
+                                                        <mat-icon class="greencolor" *ngIf="serviceSubtotal != 0">print
+                                                        </mat-icon>
+                                                        <mat-icon class="redcolor" *ngIf="serviceSubtotal == 0">print
+                                                        </mat-icon>
+                                                    </button> -->
+                                                    <mat-icon *ngIf="followup == false" class="redcolor">close
+                                                    </mat-icon>
+                                                    <mat-icon *ngIf="followup == true" class="greencolor">check
+                                                    </mat-icon>
+                                                </td>
+                                            </tr>
                                             <tr>
                                                 <td scope="row" valign=middle>
                                                     <strong>Service Charge</strong>
                                                 </td>
                                                 <td>:
-                                                    <button mat-icon-button color="primary">
+                                                    <!-- <button mat-icon-button color="primary">
                                                         <mat-icon class="greencolor" *ngIf="serviceSubtotal != 0">print
                                                         </mat-icon>
                                                         <mat-icon class="redcolor" *ngIf="serviceSubtotal == 0">print
                                                         </mat-icon>
-                                                    </button>
+                                                    </button> -->
                                                     {{ serviceSubtotal }}
                                                 </td>
                                             </tr>
@@ -460,12 +477,12 @@
                                                 </td>
                                                 <td>
                                                     :
-                                                    <button mat-icon-button color="primary">
+                                                    <!-- <button mat-icon-button color="primary">
                                                         <mat-icon class="greencolor" *ngIf="labtestSubtotal != 0">print
                                                         </mat-icon>
                                                         <mat-icon class="redcolor" *ngIf="labtestSubtotal == 0">print
                                                         </mat-icon>
-                                                    </button>
+                                                    </button> -->
                                                     {{ labtestSubtotal }}
                                                 </td>
                                             </tr>
@@ -498,8 +515,10 @@
                                                             {{ titleAlert }}
                                                         </mat-error>
                                                     </mat-form-field>
+
                                                 </td>
                                             </tr>
+
                                             <tr>
                                                 <td colspan="2" align="center">
                                                     <mat-dialog-actions style="display: block">
@@ -546,7 +565,7 @@
         <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">payments</mat-icon>
-                Bill Transactions
+                Bills
             </ng-template>
             Bill Transactions
         </mat-tab>

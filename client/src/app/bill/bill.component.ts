@@ -67,6 +67,7 @@ export class BillComponent implements OnInit {
   services: any;
   labtests: any = [];
   testlist: any;
+  followup: any;
   // data: any;
 
   patientcharges: any;
@@ -145,6 +146,7 @@ export class BillComponent implements OnInit {
       payment: [null],
       paymentmode: [null],
       subtotal: [null],
+      followup: [this.followup],
     });
     this.addingServices = this.formBuilder.group({
       service: [null],
@@ -195,6 +197,7 @@ export class BillComponent implements OnInit {
         post.discount = 0
       }
       this.serviceArr.push(post)
+      console.log('array',this.serviceArr)
     }
     this.tempValue = ''
     this.selectedValue = null
@@ -328,6 +331,7 @@ export class BillComponent implements OnInit {
       this.inputage = this.patient[0].age
       this.inputdoctor = this.patient[0].doctor_name
       this.allocateid = this.patient[0].allocateid
+      this.followup = this.patient[0].followup
 
     })
   }
@@ -453,6 +457,8 @@ export class BillComponent implements OnInit {
   onSubmit(post: any) {
 
     post.subtotal = this.subtotal
+    post.labcharges = this.servicesArray
+    post.labtests = this.labtestArray
 
     if (this.inputbalance !== 0) {
       post.payment = post.payment + this.inputpayment
