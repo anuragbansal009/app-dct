@@ -453,12 +453,13 @@ export class BillComponent implements OnInit {
 
   //---------- indivisual discount ----------------//
 
-
+  refundAmount: any
   onSubmit(post: any) {
 
     post.subtotal = this.subtotal
     post.labcharges = this.servicesArray
     post.labtests = this.labtestArray
+    post.discount = this.serviceArr
 
     if (this.inputbalance !== 0) {
       post.payment = post.payment + this.inputpayment

@@ -9,6 +9,7 @@
   .form {
     /* min-width: 1000px; */
     /* max-width: 1500px; */
+    min-width: 1150px;
     width: 100%;
     min-height: 250px;
     /* max-height: 400px !important; */
@@ -18,7 +19,7 @@
 
 @media screen and (min-width: 1301px) {
   .form {
-    min-width: 1000px;
+    min-width: 1150px;
     max-width: 1500px;
     width: 100%;
     min-height: 400px;
