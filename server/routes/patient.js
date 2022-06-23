@@ -16,6 +16,9 @@ MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, res) => {
     database = res.db('hospital')
 })
 
+
+
+
 router.post('/patient/create', [
 
     body('name', 'Enter a valid user name').isLength({ min: 4 }),
@@ -73,8 +76,7 @@ router.post('/patient/create', [
         position = lastPatient.position + 1
         allocateid = doctor.allocateid.concat(String(position))
 
-        if(patientdate < followupdate)
-        {
+        if (patientdate < followupdate) {
             patient = await Patient.create({
 
                 name: name,
@@ -91,12 +93,11 @@ router.post('/patient/create', [
                 time: time,
                 status: "Unpaid",
                 followup: true
-    
+
             })
 
         }
-        else
-        {
+        else {
             patient = await Patient.create({
 
                 name: name,
@@ -113,12 +114,12 @@ router.post('/patient/create', [
                 time: time,
                 status: "Unpaid",
                 followup: false
-    
+
             })
 
         }
 
-        
+
 
         res.json(patient)
 
@@ -308,6 +309,23 @@ router.post('/patient/filter', async (req, res) => {
 
 
 })
+
+router.post('/patient/getmobile', async (req, res) => {
+
+    // lastPatient = await database.collection('patients').findOne({}, { sort: { _id: -1 } });
+    let patients = await Patient.find(
+        {
+            "$or":[
+                {name: {$regex: req.body.name}}
+            ]
+        }
+    )
+
+    res.json(patients)
+
+
+})
+
 
 module.exports = router
 

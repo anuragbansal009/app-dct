@@ -258,8 +258,8 @@ router.post('/patient/getbill/:id', async (req, res) => {
 
 router.post('/patient/patientbills', async (req, res) => {
     try {
-        let patient = await Patient.find({name: req.body.name, mobile: req.body.mobile});
-        res.json(patient)
+        let bill = await Bill.find({name: req.body.name, mobile: req.body.mobile});
+        res.json(bill)
     }
     catch(err) {
         console.log(err.message);

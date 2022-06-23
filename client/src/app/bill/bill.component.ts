@@ -63,6 +63,7 @@ export class BillComponent implements OnInit {
   alllabtests: any;
   allservices: any;
 
+  patientservices: any;
   labcharges: any = [];
   bill: any;
   services: any;
@@ -189,8 +190,9 @@ export class BillComponent implements OnInit {
   {
     console.log(this.inputage)
     this.http.post('http://localhost:5000/api/patient/patientbills', { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
-      console.log(res)
+      console.log('mohan',res)
       this.patientbills = res
+      // this.patientservices = 
 
     })
   }
@@ -209,7 +211,6 @@ export class BillComponent implements OnInit {
         post.discount = 0
       }
       this.serviceArr.push(post)
-      console.log('array',this.serviceArr)
     }
     this.tempValue = ''
     this.selectedValue = null
@@ -471,8 +472,6 @@ export class BillComponent implements OnInit {
   onSubmit(post: any) {
 
     post.subtotal = this.subtotal
-    post.labcharges = this.servicesArray
-    post.labtests = this.labtestArray
     post.discount = this.serviceArr
 
     if (this.inputbalance !== 0) {

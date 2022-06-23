@@ -560,7 +560,7 @@
                 <mat-icon class="example-tab-icon">undo</mat-icon>
                 Refund
             </ng-template>
-            <div class="container-fluid">
+            <!-- <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 col-sm-12 mt-2">
                         <mat-form-field appearance="outline" class="form-element">
@@ -580,7 +580,27 @@
                         </mat-dialog-actions>
                     </div>
                 </div>
-            </div>
+            </div> -->
+            <!-- <table>
+                <tr>
+                    <th>Name</th>
+                    <th>Services</th>
+                    <th>Discount</th>
+                    <th>Charges</th>
+                    <th>Refund</th>
+                </tr>
+                <tr *ngFor="let patient of patientbills">
+                    <td  *ngFor="let service of patient.discount">
+                        <div>
+                            {{service.service}}<br>
+                        </div>
+                    </td>
+                    <td>{{patient.name}}</td>
+                    <td>{{patient.name}}</td>
+                    <td>{{patient.name}}</td>
+                    <td>{{patient.name}}</td>
+                </tr>
+            </table> -->
         </mat-tab>
         <!-- <mat-tab>
             <ng-template mat-tab-label>
