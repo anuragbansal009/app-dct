@@ -48,6 +48,7 @@ export class BillComponent implements OnInit {
   itemn!: string
 
   inputname: any
+  inputmobile: any
   inputgender: any
   inputage: any
   inputdoctor: any
@@ -68,6 +69,7 @@ export class BillComponent implements OnInit {
   labtests: any = [];
   testlist: any;
   followup: any;
+  patientbills: any;
   // data: any;
 
   patientcharges: any;
@@ -181,6 +183,16 @@ export class BillComponent implements OnInit {
       this.subtotal = charges.charges + this.subtotal
     });
 
+  }
+
+  patientBills()
+  {
+    console.log(this.inputage)
+    this.http.post('http://localhost:5000/api/patient/patientbills', { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
+      console.log(res)
+      this.patientbills = res
+
+    })
   }
 
   handleAdd(post: any) {
@@ -327,13 +339,18 @@ export class BillComponent implements OnInit {
 
 
       this.inputname = this.patient[0].name
+      this.inputmobile = this.patient[0].mobile
       this.inputgender = this.patient[0].gender
       this.inputage = this.patient[0].age
       this.inputdoctor = this.patient[0].doctor_name
       this.allocateid = this.patient[0].allocateid
       this.followup = this.patient[0].followup
 
+      this.patientBills()
+
     })
+
+    
   }
 
   billdetails() {
