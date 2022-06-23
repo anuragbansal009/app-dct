@@ -4,6 +4,7 @@ import { Subscription, Observable } from 'rxjs';
 import { PrintItem } from 'ngx-printer';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-bill-invoice',
@@ -90,7 +91,7 @@ export class BillInvoiceComponent implements OnInit {
   temp3: any
 
   getData() {
-    this.http.post('http://localhost:5000/api/bill/getid', { _id: this.id }).subscribe((res) => {
+    this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
       this.list = res
       console.log(this.list[0])
       this.patientName = this.list[0].name;

@@ -55,7 +55,7 @@ export class UpdatePatientComponent implements OnInit {
 
     this.id = this.data.id;
 
-    this.http.post('http://localhost:5000/api/patient/getallocateid', { allocateid: this.id }).subscribe((res) => {
+    this.http.post(environment.getAllocateId, { allocateid: this.id }).subscribe((res) => {
       this.patient = res
 
       this.inputname = this.patient[0].name
@@ -127,7 +127,7 @@ export class UpdatePatientComponent implements OnInit {
     this.showSuccess = false;
     this.showError = false;
     console.log(post);
-    this.http.post(`http://localhost:5000/api/patient/updatepatient/${this.id}`, post).subscribe({
+    this.http.post(environment.updatePatient + this.id, post).subscribe({
       next: res => {
         console.log('Patient Updated')
         this.snackBar.open('Patient Updated Successfully', 'Close', {

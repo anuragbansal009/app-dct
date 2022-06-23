@@ -60,7 +60,7 @@ export class UpdateBillComponent implements OnInit {
     
     this.id = this.route.snapshot.params['id'];
 
-    this.http.post('http://localhost:5000/api/patient/getid', {_id: this.id}).subscribe((res)=>{
+    this.http.post(environment.patientGetid, {_id: this.id}).subscribe((res)=>{
     this.patient = res
 
     console.log(this.patient)
@@ -128,7 +128,7 @@ export class UpdateBillComponent implements OnInit {
   
   onSubmit(post: any) {
 
-    this.http.post('http://localhost:5000/api/patient/bill', {name: post.name, allocateid: post.allocateid, medicines: post.medicines, labcharges: post.labcharges, nextvisit: post.nextvisit, advice: post.advice}).subscribe((res)=>{
+    this.http.post(environment.patientBill, {name: post.name, allocateid: post.allocateid, medicines: post.medicines, labcharges: post.labcharges, nextvisit: post.nextvisit, advice: post.advice}).subscribe((res)=>{
       console.log(res);
     })
     this.router.navigate(['doctordashboard']);

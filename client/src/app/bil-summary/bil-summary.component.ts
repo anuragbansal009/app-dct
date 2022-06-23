@@ -6,6 +6,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatDialog } from '@angular/material/dialog';
+import { environment } from 'src/environments/environment';
 
 export interface PeriodicElement {
   name: string;
@@ -60,7 +61,7 @@ export class BilSummaryComponent implements AfterViewInit {
 
   getallpatients()
   {
-    this.http.get('http://localhost:5000/api/patient/billsummary').subscribe((res) => {
+    this.http.get(environment.patientBillSummary).subscribe((res) => {
 
       this.list = res
       console.log(this.list)

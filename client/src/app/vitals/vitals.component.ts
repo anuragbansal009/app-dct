@@ -127,7 +127,7 @@ export class VitalsComponent implements OnInit {
 
   onSubmit(post: any) {
     // console.log(post)
-    this.http.post(`http://localhost:5000/api/patient/updatepatient/${this.id}`, {vitals: post}).subscribe((res:any) => {
+    this.http.post(environment.updatePatient + this.id, {vitals: post}).subscribe((res:any) => {
       console.log(res)
     })
   }

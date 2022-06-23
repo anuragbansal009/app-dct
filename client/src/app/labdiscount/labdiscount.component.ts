@@ -55,14 +55,14 @@ export class LabdiscountComponent implements OnInit {
   }
 
   alllabtests() {
-    this.http.post('http://localhost:5000/api/labtest/get', { id: this.id }).subscribe((res) => {
+    this.http.post(environment.labtestGet, { id: this.id }).subscribe((res) => {
       this.labtests = res
     })
 
   }
 
   onSubmit(post: any) {
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, { discount: post }).subscribe((res: any) => {
+    this.http.post(environment.patientBill +  this.id, { discount: post }).subscribe((res: any) => {
     })
   }
 

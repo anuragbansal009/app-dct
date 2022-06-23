@@ -55,7 +55,7 @@ export class ServicediscountComponent implements OnInit {
   }
 
   allservices() {
-    this.http.post('http://localhost:5000/api/services/get', { id: this.id }).subscribe((res) => {
+    this.http.post(environment.servicesGet, { id: this.id }).subscribe((res) => {
       this.labcharges = res
       console.log(this.labcharges)
     })
@@ -63,7 +63,7 @@ export class ServicediscountComponent implements OnInit {
   }
 
   onSubmit(post: any) {
-    this.http.post(`http://localhost:5000/api/patient/bill/${this.id}`, { discount: post }).subscribe((res: any) => {
+    this.http.post(environment.patientBill + this.id, { discount: post }).subscribe((res: any) => {
     })
   }
 

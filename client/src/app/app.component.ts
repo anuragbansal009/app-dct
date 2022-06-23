@@ -26,6 +26,7 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
 import { AddServicesComponent } from './add-services/add-services.component';
 import { AddLabtestComponent } from './add-labtest/add-labtest.component';
+import { environment } from 'src/environments/environment';
 
 const colors: any = {
   red: {
@@ -269,7 +270,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-    this.http.get('http://localhost:5000/api/patient/get').subscribe((res) => {
+    this.http.get(environment.patientsGet).subscribe((res) => {
       this.lists = res;
       this.lists.forEach((element: { slotdate: any; time: any; name: any; doctor_name: any; }) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'yyyy-MM-dd');

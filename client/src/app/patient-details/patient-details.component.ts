@@ -62,7 +62,7 @@ export class PatientDetailsComponent implements OnInit {
 
     this.id = this.patient.id;
 
-    this.http.post('http://localhost:5000/api/patient/getallocateid', { allocateid : this.id}).subscribe((res)=>{
+    this.http.post(environment.getAllocateId, { allocateid : this.id}).subscribe((res)=>{
 
       this.patinentData = res;
       console.log(this.patinentData)
