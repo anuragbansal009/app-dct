@@ -146,6 +146,7 @@ export class BillComponent implements OnInit {
       labcharges: [null],
       labtests: [null],
       discount: [],
+      totalDiscount: [null],
       payment: [null],
       paymentmode: [null],
       subtotal: [null],
@@ -156,6 +157,8 @@ export class BillComponent implements OnInit {
       charges: [null],
       discount: [null],
     });
+
+    this.patientBills()
 
   }
 
@@ -186,14 +189,11 @@ export class BillComponent implements OnInit {
 
   }
 
-  patientBills()
-  {
+  patientBills() {
     console.log(this.inputage)
     this.http.post('http://localhost:5000/api/patient/patientbills', { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       console.log('mohan',res)
       this.patientbills = res
-      // this.patientservices = 
-
     })
   }
 
@@ -211,6 +211,7 @@ export class BillComponent implements OnInit {
         post.discount = 0
       }
       this.serviceArr.push(post)
+      console.log('array', this.serviceArr)
     }
     this.tempValue = ''
     this.selectedValue = null
@@ -223,13 +224,13 @@ export class BillComponent implements OnInit {
   servicesArray: any = []
   labtestArray: any = []
   tempArr2: any = {}
-  
+
   priceCalculate() {
     this.temp2 = this.inputbalance
     this.serviceInputBalance = 0
-    this.serviceSubtotal = 0  
+    this.serviceSubtotal = 0
     console.log(this.serviceArr)
-    this.serviceArr.forEach((event: { charges: any; discount: any; service: any}) => {
+    this.serviceArr.forEach((event: { charges: any; discount: any; service: any }) => {
       this.dropdownList.forEach((element: { service: any; charges: any }) => {
         if (event.service == element.service) {
           this.tempArr = {}
@@ -244,33 +245,54 @@ export class BillComponent implements OnInit {
       });
     });
 
-    this.serviceArr.forEach((event: { charges: any; discount: any; service: any}) => {
+    this.serviceArr.forEach((event: { charges: any; discount: any; service: any }) => {
       this.dropdowntestlist.forEach((element: { labtest: any; charges: any }) => {
         if (element.labtest == event.service) {
-            this.labtestSubtotal = 0
-            this.tempArr = {}
-            this.tempArr2 = {}
-            this.tempArr2.service = element.labtest
-            this.tempArr2.charges = event.charges
-            this.tempArr.labtest = event.service
-            this.tempArr.discount = event.discount
-            this.labtestSubtotal = this.labtestSubtotal + event.charges - (event.charges * (event.discount / 100))
-            this.labtestInputBalance = this.labtestInputBalance + event.charges - (event.charges * (event.discount / 100))
-          }
-        });
+          this.labtestSubtotal = 0
+          this.tempArr = {}
+          this.tempArr2 = {}
+          this.tempArr2.service = element.labtest
+          this.tempArr2.charges = event.charges
+          this.tempArr.labtest = event.service
+          this.tempArr.discount = event.discount
+          this.labtestSubtotal = this.labtestSubtotal + event.charges - (event.charges * (event.discount / 100))
+          this.labtestInputBalance = this.labtestInputBalance + event.charges - (event.charges * (event.discount / 100))
+        }
       });
-      this.subtotal = this.serviceSubtotal + this.labtestSubtotal
-      this.inputbalance = this.inputbalance + this.serviceInputBalance + this.labtestInputBalance
+    });
+    this.subtotal = this.serviceSubtotal + this.labtestSubtotal
+    this.inputbalance = this.inputbalance + this.serviceInputBalance + this.labtestInputBalance
 
-      if(this.tempArr.service) {
-        this.servicesArray.push(this.tempArr)
-        this.labcharges.push(this.tempArr2)
+    if (this.tempArr.service) {
+      this.servicesArray.push(this.tempArr)
+      this.labcharges.push(this.tempArr2)
+    }
+    else {
+      this.labtestArray.push(this.tempArr)
+      this.labtests.push(this.tempArr2)
+    }
+
+  }
+
+  subtotalTemp: any;
+  countVar: any = 0
+  showDiscountError: boolean = false
+
+  discountTot(event: any) {
+    // if (event > this.subtotalTemp) {
+    //   this.showDiscountError = true
+    // }
+    // else {
+      // this.showDiscountError = false
+      if (this.countVar == 0) {
+        this.subtotalTemp = this.subtotal
+        this.subtotal = this.subtotal - event
+        this.countVar += 1
       }
       else {
-        this.labtestArray.push(this.tempArr)
-        this.labtests.push(this.tempArr2)
+        this.subtotal = this.subtotalTemp - event
       }
-
+    // }
   }
 
   deleteService(i: any) {
@@ -348,10 +370,17 @@ export class BillComponent implements OnInit {
       this.followup = this.patient[0].followup
 
       this.patientBills()
-
     })
+  }
 
-    
+  refundReason: any
+
+  refundFunc() {
+    const temp = {
+      amount: this.refundAmount,
+      reason: this.refundReason
+    }
+    console.log(temp)
   }
 
   billdetails() {
@@ -477,8 +506,6 @@ export class BillComponent implements OnInit {
     if (this.inputbalance !== 0) {
       post.payment = post.payment + this.inputpayment
     }
-
-    post.payment = post.subtotal
 
     this.http.post(environment.patientBill + this.id, post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {

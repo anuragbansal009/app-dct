@@ -21,10 +21,15 @@ export class NavbarService {
 
   toggle() {
     this.visible = !this.visible;
+    console.log(this.visible)
   }
 
   showCalIcon() {
     this.calIcon = true;
+  }
+
+  hideCalIcon() {
+    this.calIcon = false
   }
 
 }

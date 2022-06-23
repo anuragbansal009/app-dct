@@ -179,6 +179,8 @@ export class PatientListComponent implements OnInit {
   handleBill(id: number) {
     // this.router.navigate(['bill', id]);
     const dialogRef = this.dialog.open(BillComponent, {
+      height: '560px',
+      width: '1400px',
       data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result => {

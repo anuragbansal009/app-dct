@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -13,6 +13,7 @@ import { DateAdapter } from '@angular/material/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { BillComponent } from '../bill/bill.component';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-patient-registration',
@@ -32,12 +33,32 @@ export class PatientRegistrationComponent implements OnInit {
   hide = true;
   patientid: any;
   patientdata: any;
+  storedDate: any;
+  storedTime: any;
 
-  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private snackBar: MatSnackBar, private router: Router, private http: HttpClient, private dateAdapter: DateAdapter<Date>) {
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: {date: Date},
+    private formBuilder: FormBuilder, 
+    public dialog: MatDialog, 
+    private snackBar: MatSnackBar,
+    private router: Router, 
+    private http: HttpClient, 
+    private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
 
   ngOnInit() {
+    if (this.data) {
+      // console.log(this.data.date)
+      this.storedDate = this.data.date
+      this.storedTime = this.data.date.toTimeString().split(' ')[0].split(':')[0] + ':' + this.data.date.toTimeString().split(' ')[0].split(':')[1]
+    }
+    else {
+      this.storedDate = new Date()
+      this.storedTime = this.storedDate.toTimeString().split(' ')[0].split(':')[0] + ':' + this.storedDate.toTimeString().split(' ')[0].split(':')[1]
+    }
+    this.storedDate = new Date(this.storedDate.toISOString().split('T')[0] + 'T18:30:00.000Z')
+    this.storedDate.setDate(this.storedDate.getDate()-1)
     this.createForm();
   }
 
@@ -47,13 +68,13 @@ export class PatientRegistrationComponent implements OnInit {
       gender: [null, Validators.required],
       age: [null, Validators.required],
       mobile: [null, Validators.required],
-      bloodgroup: [null, ],
+      bloodgroup: [null,],
       // allocate_id: [null, Validators.required],
-      city: [null, ],
+      city: [null,],
       pin: [null,],
       doctor_name: [null,],
-      slotdate: [' ', Validators.required],
-      time: [null, Validators.required],
+      slotdate: [this.storedDate, Validators.required],
+      time: [this.storedTime, Validators.required],
 
     });
   }
@@ -101,10 +122,43 @@ export class PatientRegistrationComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
+  options: string[] = ['One', 'Two', 'Three'];
+  list: any
+  genderVal: any
+  nameVal: any
+  ageVal: any
+  bgVal: any
+  cityVal: any
+  pinVal: any
+
+  clickAC(event: any) {
+    const val = this.list[event]
+    this.genderVal = val.gender
+    this.nameVal = val.name
+    this.ageVal = val.age
+    this.bgVal = val.bloodgroup
+    this.cityVal = val.city
+    this.pinVal = val.pin
+  }
+
+  patientGet(event: any) {
+    this.http.post(environment.patientsGet + 'Mobile', { "mobile": event }).subscribe({
+      next: res => {
+        console.log(res)
+        this.list = res
+      },
+      error: error => {
+        console.log(error)
+      }
+    });
+  }
+
+
+
   onSubmit(post: any) {
+    console.log(post)
     this.showSuccess = false;
     this.showError = false;
-
     this.http.post(this.patientRegistrationAPI, post).subscribe({
       next: res => {
         this.patientdata = res

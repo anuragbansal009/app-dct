@@ -146,6 +146,19 @@ router.get('/patient/get', async (req, res) => {
     }
 })
 
+
+router.post('/patient/getMobile', async (req, res) => {
+    try {
+        const {mobile} = req.body
+        const patient = await Patient.find({ mobile: mobile })
+        res.send(patient)
+    } catch (error) {
+        console.log(error)
+        res.status(500).send("Error occured");
+    }
+    
+})
+
 router.post('/patient/getid', async (req, res) => {
     try {
 

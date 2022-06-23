@@ -1,9 +1,9 @@
-import { Component, OnInit, AfterViewChecked, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, AfterViewChecked, ChangeDetectorRef, Inject } from '@angular/core';
 import { NavbarService } from './navbar.service';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
-import { DatePipe } from '@angular/common';
+import { DatePipe, DOCUMENT  } from '@angular/common';
 import {
   startOfDay,
   endOfDay,
@@ -27,6 +27,7 @@ import { PatientRegistrationComponent } from './patient-registration/patient-reg
 import { AddServicesComponent } from './add-services/add-services.component';
 import { AddLabtestComponent } from './add-labtest/add-labtest.component';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 
 const colors: any = {
   red: {
@@ -63,13 +64,19 @@ export class CalendarComponent {
 
   viewDate: Date = new Date();
 
+  clickedDate!: Date;
+
+  clickedColumn!: number;
+
   modalData!: {
     action: string;
     event: CalendarEvent;
   };
 
   openAddPatient() {
-    const dialogRef = this.dialog.open(PatientRegistrationComponent);
+    const dialogRef = this.dialog.open(PatientRegistrationComponent, {
+      data: { date: this.clickedDate }
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
@@ -99,6 +106,11 @@ export class CalendarComponent {
 
   activeDayIsOpen: boolean = true;
 
+  run() {
+    // console.log(this.clickedDate)
+    this.openAddPatient()
+    // console.log(this.clickedColumn)
+  }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -195,14 +207,15 @@ export class CalendarComponent {
 })
 export class AppComponent implements OnInit, AfterViewChecked {
   title = 'Front Desk App - DCT';
-  constructor(public dialog: MatDialog, public nav: NavbarService, private http: HttpClient, public datepipe: DatePipe, public docDash: DoctorDashboardComponent, private cdref: ChangeDetectorRef) {
+  constructor(@Inject(DOCUMENT) private document: Document, public dialog: MatDialog, public nav: NavbarService, private http: HttpClient, public datepipe: DatePipe, public docDash: DoctorDashboardComponent, private cdref: ChangeDetectorRef, private router: Router) {
     this.nav.calIcon = false;
   }
 
   showCalendar() {
-    console.log(this.nav.showCal)
     this.nav.showCal = !this.nav.showCal;
   }
+
+  logoUrl: string = environment.logoUrl
 
   isPatientRegistrationShowing = false;
   isPatientListShowing = false;
@@ -211,6 +224,9 @@ export class AppComponent implements OnInit, AfterViewChecked {
   isBillSummaryShowing = false;
   isAddServicesShowing = false;
   isAddLabtestShowing = false;
+  values: any = localStorage.getItem("currentDoctor");
+  authorized: boolean = false;
+  hospitalName: any;
 
   togglePatientRegistration() {
     this.isPatientRegistrationShowing = !this.isPatientRegistrationShowing;
@@ -269,34 +285,56 @@ export class AppComponent implements OnInit, AfterViewChecked {
     this.cdref.detectChanges();
   }
 
-  ngOnInit() {
-    this.http.get(environment.patientsGet).subscribe((res) => {
-      this.lists = res;
-      this.lists.forEach((element: { slotdate: any; time: any; name: any; doctor_name: any; }) => {
-        element.slotdate = this.datepipe.transform(element.slotdate, 'yyyy-MM-dd');
-        element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');
-        this.enddate = new Date(element.slotdate + " " + element.time);
-        if (element.doctor_name == "gulshan") {
-          this.colorSet = colors.green
-        }
-        else if (element.doctor_name == "dhirendra") {
-          this.colorSet = colors.red
-        }
-        else if (element.doctor_name == "doctor") {
-          this.colorSet = colors.blue
-        }
-        else {
-          this.colorSet = colors.yellow
-        }
-        this.temp = {
-          start: new Date(element.slotdate + " " + element.time),
-          end: new Date(this.enddate.getTime() + (60 * 60 * 1000)),
-          title: `<strong>` + element.time + `</strong>` + " " + element.name + " - " + element.doctor_name,
-          color: this.colorSet,
-          draggable: true,
-        }
-        eventList.push(this.temp);
-      });
-    });
+  titleCase(str: any) {
+    return str.replace(/(^|\s)\S/g, function (t: any) { return t.toUpperCase() });
   }
+
+  logout() {
+    localStorage.clear();
+    this.showCalendar();
+    this.document.location.href = environment.doctorLogin;
+    // this.router.navigate(['doctorlogin']);
+  }
+
+  ngOnInit() {
+    if (!this.values) {
+      this.authorized = false
+      this.hospitalName = 'Front Desk App - DCT'
+      this.document.location.href = environment.doctorLogin;
+    }
+    else {
+      this.values = JSON.parse(this.values).doctor
+      this.hospitalName = this.values.hospital_name
+      this.authorized = true
+      this.http.get(environment.patientsGet).subscribe((res) => {
+        this.lists = res;
+        this.lists.forEach((element: { slotdate: any; time: any; name: any; doctor_name: any; }) => {
+          element.slotdate = this.datepipe.transform(element.slotdate, 'yyyy-MM-dd');
+          element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');
+          this.enddate = new Date(element.slotdate + " " + element.time);
+          if (element.doctor_name == "gulshan") {
+            this.colorSet = colors.green
+          }
+          else if (element.doctor_name == "dhirendra") {
+            this.colorSet = colors.red
+          }
+          else if (element.doctor_name == "doctor") {
+            this.colorSet = colors.blue
+          }
+          else {
+            this.colorSet = colors.yellow
+          }
+          this.temp = {
+            start: new Date(element.slotdate + " " + element.time),
+            end: new Date(this.enddate.getTime() + (60 * 60 * 1000)),
+            title: `<strong>` + element.time + `</strong>` + " " + this.titleCase(element.name) + " - " + 'Dr. ' + this.titleCase(element.doctor_name),
+            color: this.colorSet,
+            draggable: true,
+          }
+          eventList.push(this.temp);
+        });
+      });
+    }
+  }
+
 }
