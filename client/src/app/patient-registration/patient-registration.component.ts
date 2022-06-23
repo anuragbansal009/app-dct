@@ -122,6 +122,39 @@ export class PatientRegistrationComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
+  options: string[] = ['One', 'Two', 'Three'];
+  list: any
+  genderVal: any
+  nameVal: any
+  ageVal: any
+  bgVal: any
+  cityVal: any
+  pinVal: any
+
+  clickAC(event: any) {
+    const val = this.list[event]
+    this.genderVal = val.gender
+    this.nameVal = val.name
+    this.ageVal = val.age
+    this.bgVal = val.bloodgroup
+    this.cityVal = val.city
+    this.pinVal = val.pin
+  }
+
+  patientGet(event: any) {
+    this.http.post(environment.patientsGet + 'Mobile', { "mobile": event }).subscribe({
+      next: res => {
+        console.log(res)
+        this.list = res
+      },
+      error: error => {
+        console.log(error)
+      }
+    });
+  }
+
+
+
   onSubmit(post: any) {
     console.log(post)
     this.showSuccess = false;
