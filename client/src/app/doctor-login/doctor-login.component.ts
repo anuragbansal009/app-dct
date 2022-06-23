@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, Inject } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -9,7 +9,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { RecaptchaComponent,RecaptchaErrorParameters, RecaptchaFormsModule } from 'ng-recaptcha';
 import { Router } from '@angular/router';
-
+import {DOCUMENT} from '@angular/common'
 @Component({
   selector: 'app-doctor-login',
   templateUrl: './doctor-login.component.html',
@@ -28,10 +28,18 @@ export class DoctorLoginComponent implements OnInit {
   recaptchaPublicKey: string = environment.recaptcha.siteKey;
 
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
+  constructor(@Inject(DOCUMENT) private document: Document, private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
+
+  values: any = localStorage.getItem("currentDoctor");
+  authorized: boolean = false;
 
   ngOnInit(): void {
-    this.createForm();
+    if (this.values) {
+      this.document.location.href = environment.doctorDashboard;
+    }
+    else {
+      this.createForm();
+    }
   }
 
   createForm() {
@@ -59,7 +67,7 @@ export class DoctorLoginComponent implements OnInit {
         this.user = res
         localStorage.setItem("currentDoctor", JSON.stringify(this.user));
         console.log("Login Successful");
-        this.router.navigate(['doctordashboard']);
+        this.document.location.href = environment.doctorDashboard;
       },
       error: error => {
         this.showError = true

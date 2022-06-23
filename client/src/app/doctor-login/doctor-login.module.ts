@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { MaterialModule } from '../../material.module';
+import { NavbarService } from '../navbar.service';
 
 @NgModule({
     declarations: [DoctorLoginComponent],
@@ -21,7 +22,7 @@ import { MaterialModule } from '../../material.module';
         RecaptchaModule
     ],
     exports: [DoctorLoginComponent],
-    providers: [],
+    providers: [NavbarService],
     bootstrap: [DoctorLoginComponent],
 })
 export class DoctorLoginModule { }

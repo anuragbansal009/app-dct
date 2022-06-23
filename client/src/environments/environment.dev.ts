@@ -2,6 +2,7 @@ export const environment = {
   production: false,
   title: 'App-DCT | Local',
   apiURL: 'http://localhost:5000/api',
+  logoUrl: 'https://www.freepnglogos.com/uploads/real-madrid-logo-png/real-madrid-logo-real-madrid-centenario-logo-png-transparent-svg-vector-bie-supply-16.png',
   adminRegistrationAPI: 'http://localhost:5000/api/admin',
   doctorRegistrationAPI: 'http://localhost:5000/api/doctor',
   getAllDoctors: 'http://localhost:5000/api/getdoctor',
@@ -28,5 +29,6 @@ export const environment = {
   patientBill: 'http://localhost:5000/api/patient/bill/',
   getAllocateId: 'http://localhost:5000/api/patient/getallocateid',
   patientFilter: 'http://localhost:5000/api/patient/filter',
-  updatePatient: 'http://localhost:5000/api/patient/updatepatient/'
+  updatePatient: 'http://localhost:5000/api/patient/updatepatient/',
+  doctorDashboard: 'http://localhost:4200/doctordashboard',
 };

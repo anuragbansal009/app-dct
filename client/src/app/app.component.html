@@ -2,41 +2,6 @@
 <!-- <app-admin-registration></app-admin-registration> -->
 <!-- <app-doctor-registration></app-doctor-registration> -->
 <mat-drawer-container class="example-container" autosize>
-  <!-- <div style="height: 100vh;"> 
-    <mat-toolbar color="primary" *ngIf="nav.visible">
-        <div fxShow="true" fxHide.gt-sm="true">
-          <button mat-icon-button (click)="sidenav.toggle()">
-            <mat-icon>menu</mat-icon>
-          </button>
-        </div>
-        <a mat-button class="companyName" routerLink="/">
-          <span>Site name</span>
-        </a>
-        <span class="example-spacer"></span>
-        <div fxShow="true" fxHide.lt-md="true">
-          <a mat-button routerLink="/about-us">About us</a>
-          <a mat-button routerLink="/prices">Prices</a>
-          <a mat-button routerLink="/start-page">Start page</a>
-          <a mat-button routerLink="/offer">Offer</a>
-          <a mat-button routerLink="/contact">Contact</a>
-        </div>
-      </mat-toolbar>
-      <mat-sidenav-container fxFlexFill class="example-container">
-        <mat-sidenav color="primary" #sidenav fxLayout="column" mode="over" opened="false" fxHide.gt-sm="true">
-          <div fxLayout="column">
-            <a mat-button routerLink="/about-us">About us</a>
-            <a mat-button routerLink="/prices">Prices</a>
-            <a mat-button routerLink="/start-page">Start page</a>
-            <a mat-button routerLink="/offer">Offer</a>
-            <a mat-button routerLink="/contact">Contact</a>
-          </div>
-        </mat-sidenav>
-        <mat-sidenav-content fxFlexFill>
-          Awesome content
-        </mat-sidenav-content>
-      </mat-sidenav-container>
-    </div> -->
-
   <mat-toolbar color="primary" *ngIf="nav.visible">
     <div fxShow="true" fxHide.gt-sm="true">
       <button mat-icon-button class="example-icon" aria-label="Sidebar" data-bs-toggle="offcanvas"
@@ -45,50 +10,37 @@
       </button>
     </div>
 
-   <img src="https://www.freepnglogos.com/uploads/real-madrid-logo-png/real-madrid-logo-real-madrid-centenario-logo-png-transparent-svg-vector-bie-supply-16.png" width="36px" height="36px">
+    <img src="{{logoUrl}}" width="36px" height="36px">
 
-    <span><a onclick="location.href='/doctordashboard'">Front Desk App - DCT</a></span>
+    <span><a onclick="location.href='/doctordashboard'">{{ hospitalName | titlecase }}</a></span>
     <span class="example-spacer"></span>
-    <!-- <a href="/doctorlogin"> -->
-    <!-- <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" (click)="togglePatientRegistration()" matTooltip="Patient Registration">
-      <mat-icon>how_to_reg</mat-icon>
-    </button>
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleBillSummary()" matTooltip="Bill Summary">
-      <mat-icon>receipt</mat-icon>
-    </button>
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleAddServices()" matTooltip="Add Services">
-      <mat-icon>medical_services</mat-icon>
-    </button>
-    <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Login" (click)="toggleAddLabtest()" matTooltip="Add Labtests">
-      <mat-icon>science</mat-icon>
-    </button> -->
     <div fxShow="true" fxHide.lt-md="true">
       <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Patient Registration"
-        (click)="openPatientRegistration()" matTooltip="Patient Registration" matTooltipClass="h6" class="toolbarButton">
+        (click)="openPatientRegistration()" matTooltip="Patient Registration" matTooltipClass="h6"
+        class="toolbarButton">
         <mat-icon class="toolbarIcon">how_to_reg</mat-icon>
       </button>
-      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Services"
+      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Add Services"
         (click)="openAddServices()" matTooltip="Add Services" matTooltipClass="h6" class="toolbarButton">
         <mat-icon class="toolbarIcon">medical_services</mat-icon>
       </button>
-      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Add Labtests"
+      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Add Labtests"
         (click)="openAddLabtest()" matTooltip="Add Labtests" matTooltipClass="h6" class="toolbarButton">
         <mat-icon class="toolbarIcon">science</mat-icon>
       </button>
-      <button *ngIf="nav.calIcon" mat-icon-button class="example-icon" aria-label="Calendar" (click)="openDialog()"
+      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Calendar" (click)="openDialog()"
         matTooltip="Calendar" matTooltipClass="h6" class="toolbarButton">
         <mat-icon class="toolbarIcon">calendar_month</mat-icon>
       </button>
-      <button mat-icon-button class="example-icon" aria-label="Login" onclick="location.href='/doctorlogin'"
+      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Logout" (click)="logout()"
         matTooltip="Logout" matTooltipClass="h6" class="toolbarButton">
-        <mat-icon class="toolbarIcon">login</mat-icon>
+        <mat-icon class="toolbarIcon">logout</mat-icon>
       </button>
     </div>
-    <!-- </a> -->
   </mat-toolbar>
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
-      <h5 class="offcanvas-title sidebarTitle" id="offcanvasExampleLabel">Front Desk App - DCT</h5>
+      <h5 class="offcanvas-title sidebarTitle" id="offcanvasExampleLabel">{{ hospitalName | titlecase }}</h5>
       <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body">
@@ -113,47 +65,47 @@
   </div>
 </mat-drawer-container>
 <!-- </div> -->
+<main *ngIf="authorized">
+  <div @slideOutIn
+    *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing || isAddLabtestShowing)">
+  </div>
 
-<div @slideOutIn
-  *ngIf="!(isPatientRegistrationShowing || isPatientListShowing || isBillSummaryShowing || isAddServicesShowing || isAddLabtestShowing)">
-</div>
+  <div @slideInOut *ngIf="isPatientRegistrationShowing" class="box">
+    <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+      <button (click)="togglePatientRegistration()" mat-icon-button class="closebutton">
+        <mat-icon>close</mat-icon>
+      </button>
+    </span>
+    <app-patient-registration></app-patient-registration>
+  </div>
 
-<div @slideInOut *ngIf="isPatientRegistrationShowing" class="box">
-  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-    <button (click)="togglePatientRegistration()" mat-icon-button class="closebutton">
-      <mat-icon>close</mat-icon>
-    </button>
-  </span>
-  <app-patient-registration></app-patient-registration>
-</div>
+  <div @slideInOut *ngIf="isBillSummaryShowing" class="box">
+    <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+      <button (click)="toggleBillSummary()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </span>
+    <app-bil-summary></app-bil-summary>
+  </div>
 
-<div @slideInOut *ngIf="isBillSummaryShowing" class="box">
-  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-    <button (click)="toggleBillSummary()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-  </span>
-  <app-bil-summary></app-bil-summary>
-</div>
+  <div @slideInOut *ngIf="isAddServicesShowing" class="box">
+    <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+      <button (click)="toggleAddServices()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </span>
+    <app-add-services></app-add-services>
+  </div>
 
-<div @slideInOut *ngIf="isAddServicesShowing" class="box">
-  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-    <button (click)="toggleAddServices()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-  </span>
-  <app-add-services></app-add-services>
-</div>
-
-<div @slideInOut *ngIf="isAddLabtestShowing" class="box">
-  <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-    <button (click)="toggleAddLabtest()" mat-icon-button>
-      <mat-icon>close</mat-icon>
-    </button>
-  </span>
-  <app-add-labtest></app-add-labtest>
-</div>
-
+  <div @slideInOut *ngIf="isAddLabtestShowing" class="box">
+    <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+      <button (click)="toggleAddLabtest()" mat-icon-button>
+        <mat-icon>close</mat-icon>
+      </button>
+    </span>
+    <app-add-labtest></app-add-labtest>
+  </div>
+</main>
 
 
 <router-outlet></router-outlet>

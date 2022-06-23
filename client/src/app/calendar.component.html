@@ -1,65 +1,77 @@
-<mat-dialog-content class="mat-typography" style="min-width: 1200px; width: 100%; max-width: 1800px; min-height: 600px;">
-    <div class="row">
-      <div class="col-md-12">
-        <c-card class="text-center mb-4">
-          <c-card-body>
-            <div class="row text-center">
-              <div class="col-md-4">
-                <div class="btn-group">
-                  <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
-                    (viewDateChange)="closeOpenMonthViewDay()">
-                    Previous
-                  </div>
-                  <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
-                    Today
-                  </div>
-                  <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
-                    (viewDateChange)="closeOpenMonthViewDay()">
-                    Next
-                  </div>
+<mat-dialog-content class="mat-typography"
+  style="min-width: 1200px; width: 100%; max-width: 1800px; min-height: 600px;">
+  <div class="row">
+    <div class="col-md-12">
+      <c-card class="text-center mb-4">
+        <c-card-body>
+          <!-- <div class="alert alert-info">
+            Click on a day or time slot on the view.
+            <strong *ngIf="clickedDate">
+              You clicked on this time: {{ clickedDate | date:'medium' }}
+            </strong>
+            <strong *ngIf="clickedColumn !== undefined">
+              You clicked on this column: {{ clickedColumn }}
+            </strong>
+          </div> -->
+          <div class="row text-center">
+            <div class="col-md-4">
+              <div class="btn-group">
+                <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+                  (viewDateChange)="closeOpenMonthViewDay()">
+                  Previous
                 </div>
-              </div>
-              <div class="col-md-4">
-                <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
-              </div>
-              <div class="col-md-4">
-                <div class="btn-group">
-                  <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
-                    [class.active]="view === CalendarView.Month">
-                    Month
-                  </div>
-                  <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
-                    [class.active]="view === CalendarView.Week">
-                    Week
-                  </div>
-                  <div class="btn btn-primary" (click)="setView(CalendarView.Day)"
-                    [class.active]="view === CalendarView.Day">
-                    Day
-                  </div>
+                <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+                  Today
+                </div>
+                <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+                  (viewDateChange)="closeOpenMonthViewDay()">
+                  Next
                 </div>
               </div>
             </div>
-            <br />
-            <div [ngSwitch]="view">
-              <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
-                [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
-                (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
-              </mwl-calendar-month-view>
-              <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
-                [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                (eventTimesChanged)="eventTimesChanged($event)">
-              </mwl-calendar-week-view>
-              <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
-                [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
-                (eventTimesChanged)="eventTimesChanged($event)">
-              </mwl-calendar-day-view>
+            <div class="col-md-4">
+              <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
             </div>
-          </c-card-body>
-        </c-card>
-      </div>
+            <div class="col-md-4">
+              <div class="btn-group">
+                <div class="btn btn-primary" (click)="setView(CalendarView.Month)"
+                  [class.active]="view === CalendarView.Month">
+                  Month
+                </div>
+                <div class="btn btn-primary" (click)="setView(CalendarView.Week)"
+                  [class.active]="view === CalendarView.Week">
+                  Week
+                </div>
+                <div class="btn btn-primary" (click)="setView(CalendarView.Day)"
+                  [class.active]="view === CalendarView.Day">
+                  Day
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div [ngSwitch]="view">
+            <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+              [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+              (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)"
+              (columnHeaderClicked)="clickedColumn = $event.isoDayNumber" (dayClicked)="clickedDate = $event.day.date">
+            </mwl-calendar-month-view>
+            <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events"
+              [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+              (eventTimesChanged)="eventTimesChanged($event)" (dayHeaderClicked)="clickedDate = $event.day.date; run()"
+              (hourSegmentClicked)="clickedDate = $event.date; run()">
+            </mwl-calendar-week-view>
+            <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events"
+              [refresh]="refresh" (eventClicked)="handleEvent('Clicked', $event.event)"
+              (eventTimesChanged)="eventTimesChanged($event)" (hourSegmentClicked)="clickedDate = $event.date; run()">
+            </mwl-calendar-day-view>
+          </div>
+        </c-card-body>
+      </c-card>
     </div>
-    </mat-dialog-content>
-    <mat-dialog-actions align="end">
-      <button mat-flat-button (click)="openAddPatient()" color="primary">Add Patient</button>
-      <button mat-flat-button mat-dialog-close color="warn">Close</button>
-    </mat-dialog-actions>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button (click)="openAddPatient()" color="primary">Add Patient</button>
+  <button mat-flat-button mat-dialog-close color="warn">Close</button>
+</mat-dialog-actions>
