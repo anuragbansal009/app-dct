@@ -249,7 +249,7 @@ router.get('/patient/billsummary', async (req, res) => {
 router.post('/patient/getbill/:id', async (req, res) => {
     try {
         let patient = await Patient.findById(req.params.id);
-        console.log(patient)
+        res.json(patient)
     }
     catch(err) {
         console.log(err.message);
@@ -259,7 +259,7 @@ router.post('/patient/getbill/:id', async (req, res) => {
 router.post('/patient/patientbills', async (req, res) => {
     try {
         let patient = await Patient.find({name: req.body.name, mobile: req.body.mobile});
-        console.log(patient)
+        res.json(patient)
     }
     catch(err) {
         console.log(err.message);
