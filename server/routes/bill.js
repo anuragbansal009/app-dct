@@ -6,7 +6,7 @@ const Doctor = require('../models/Doctor');
 const Bill = require('../models/Bill');
 
 router.post('/patient/bill/:id', async (req, res) => {
-
+    console.log(req.body)
 
     try {
 
@@ -18,6 +18,8 @@ router.post('/patient/bill/:id', async (req, res) => {
             labcharges,
             labtests,
             discount,
+            followup,
+            totalDiscount,
             payment,
             paymentmode,
             subtotal,
@@ -64,6 +66,12 @@ router.post('/patient/bill/:id', async (req, res) => {
             }
             if (subtotal) {
                 newBill.subtotal = subtotal;
+            }
+            if (totalDiscount) {
+                newBill.totalDiscount = totalDiscount;
+            }
+            if (followup) {
+                newBill.followup = followup;
             }
 
             let bill = await Bill.findOneAndUpdate(
@@ -140,6 +148,8 @@ router.post('/patient/bill/:id', async (req, res) => {
                         labcharges: labcharges,
                         labtests: labtests,
                         discount: discount,
+                        totalDiscount: totalDiscount,
+                        followup: followup,
                         payment: payment,
                         paymentmode: paymentmode,
                         subtotal: subtotal,

@@ -26,6 +26,12 @@ const BillSchema = new Schema({
     discount: {
         type: Array,
     },
+    totalDiscount: {
+        type: Number,
+    },
+    followup: {
+        type: Boolean
+    },
     payment: {
         type: Number,
     },
