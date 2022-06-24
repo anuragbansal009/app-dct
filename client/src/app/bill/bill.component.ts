@@ -95,6 +95,7 @@ export class BillComponent implements OnInit {
   labtestSubtotal: any = 0
   labtestInputBalance: any = 0
   discountArr: any = []
+  sArr: any = []
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: any },
@@ -406,8 +407,7 @@ export class BillComponent implements OnInit {
           this.inputpaymentmode = this.bill.at(-1).paymentmode
         }
         if (this.bill.at(-1).discount) {
-          this.serviceArr = this.bill.at(-1).discount
-          this.priceCalculate()
+          this.sArr = this.bill.at(-1).discount
         }
       }
     })

@@ -375,6 +375,23 @@
                                                 <strong>Discount</strong>
                                             </div>
                                         </div>
+                                        <div class="row text-center mt-2" *ngFor="let row of sArr; let i = index;">
+                                            <div class="col-md-3 col-sm-12">
+                                                {{ row.service }}
+                                            </div>
+                                            <div class="col-md-3 col-sm-12">
+                                                {{ row.charges }}
+                                            </div>
+                                            <div class="col-md-3 col-sm-12">
+                                                {{ row.discount }}
+                                            </div>
+                                            <div class="col-md-3 col-sm-12">
+                                                <button mat-icon-button disabled type="button" (click)="deleteService(i)"
+                                                    style="margin-top: -20px">
+                                                    <mat-icon>delete</mat-icon>
+                                                </button>
+                                            </div>
+                                        </div>
                                         <div class="row text-center mt-2"
                                             *ngFor="let row of serviceArr; let i = index;">
                                             <div class="col-md-3 col-sm-12">
@@ -421,8 +438,7 @@
                                                 <mat-form-field appearance="fill" class="form-element">
                                                     <mat-label>Discount</mat-label>
                                                     <input type="number" matInput placeholder="Discount"
-                                                        formControlName="discount" 
-                                                        [(ngModel)]="discountValue">
+                                                        formControlName="discount" [(ngModel)]="discountValue">
                                                     <span matSuffix>%</span>
                                                 </mat-form-field>
                                             </div>
@@ -502,9 +518,10 @@
                                                             formControlName="totalDiscount"
                                                             (ngModelChange)="discountTot($event)">
                                                     </mat-form-field>
-                                                    <div class="alert alert-danger" role="alert" style="margin-top: 10px; width: 90%;" *ngIf="showDiscountError">
+                                                    <div class="alert alert-danger" role="alert"
+                                                        style="margin-top: 10px; width: 90%;" *ngIf="showDiscountError">
                                                         Discount Can't be larger than total amount!
-                                                      </div>
+                                                    </div>
                                                 </td>
                                             </tr>
                                             <tr>
@@ -547,7 +564,8 @@
                                                         style="width: 90%; margin-bottom: -20px">
                                                         <mat-label>Payment</mat-label>
                                                         <input matInput type="number" placeholder="Payment"
-                                                            formControlName="payment" value="{{subtotal}}" [(ngModel)]="payment">
+                                                            formControlName="payment" value="{{subtotal}}"
+                                                            [(ngModel)]="payment">
                                                     </mat-form-field>
                                                 </td>
                                             </tr>
