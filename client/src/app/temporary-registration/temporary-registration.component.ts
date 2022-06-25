@@ -14,13 +14,12 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { BillComponent } from '../bill/bill.component';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-
 @Component({
-  selector: 'app-patient-registration',
-  templateUrl: './patient-registration.component.html',
-  styleUrls: ['./patient-registration.component.css']
+  selector: 'app-temporary-registration',
+  templateUrl: './temporary-registration.component.html',
+  styleUrls: ['./temporary-registration.component.css']
 })
-export class PatientRegistrationComponent implements OnInit {
+export class TemporaryRegistrationComponent implements OnInit {
 
   formGroup: any = FormGroup;
   titleAlert: string = 'This field is required';
@@ -49,7 +48,6 @@ export class PatientRegistrationComponent implements OnInit {
 
   ngOnInit() {
     if (this.data.date) {
-      // console.log(this.data.date)
       this.storedDate = this.data.date
       this.storedTime = this.data.date.toTimeString().split(' ')[0].split(':')[0] + ':' + this.data.date.toTimeString().split(' ')[0].split(':')[1]
     }
@@ -65,17 +63,10 @@ export class PatientRegistrationComponent implements OnInit {
   createForm() {
     this.formGroup = this.formBuilder.group({
       name: [null, Validators.required],
-      gender: [null, Validators.required],
-      age: [null, Validators.required],
       mobile: [null, Validators.required],
-      bloodgroup: [null,],
-      // allocate_id: [null, Validators.required],
-      city: [null,],
-      pin: [null,],
       doctor_name: [null,],
       slotdate: [this.storedDate, Validators.required],
       time: [this.storedTime, Validators.required],
-
     });
   }
 
@@ -202,4 +193,5 @@ export class PatientRegistrationComponent implements OnInit {
 
     })
   }
+
 }

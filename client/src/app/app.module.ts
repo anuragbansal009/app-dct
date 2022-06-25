@@ -39,6 +39,7 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { PatientDetailsModule } from './patient-details/patient-details.module';
 import { ServicediscountComponent } from './servicediscount/servicediscount.component';
+import { TemporaryRegistrationModule } from './temporary-registration/temporary-registration.module';
 
 @NgModule({
   declarations: [
@@ -76,7 +77,8 @@ import { ServicediscountComponent } from './servicediscount/servicediscount.comp
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
-    NgbPopoverModule    
+    NgbPopoverModule,
+    TemporaryRegistrationModule    
   ],
   providers: [NavbarService],
   bootstrap: [AppComponent]

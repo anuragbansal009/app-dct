@@ -262,8 +262,8 @@ export class BillComponent implements OnInit {
         }
       });
     });
-    this.subtotal = this.serviceSubtotal + this.labtestSubtotal
-    this.inputbalance = this.inputbalance + this.serviceInputBalance + this.labtestInputBalance
+    this.subtotal = this.serviceSubtotal + this.labtestSubtotal + this.prevDue
+    this.inputbalance = this.inputbalance + this.serviceInputBalance + this.labtestInputBalance + this.prevDue
 
     if (this.tempArr.service) {
       this.servicesArray.push(this.tempArr)
@@ -385,6 +385,8 @@ export class BillComponent implements OnInit {
     console.log(temp)
   }
 
+  prevDue: any;
+
   billdetails() {
     this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
 
@@ -397,10 +399,10 @@ export class BillComponent implements OnInit {
           this.subtotal = this.bill.at(-1).subtotal - this.bill.at(-1).payment
           if (this.bill.at(-1).payment) {
             this.inputpayment = this.bill.at(-1).payment
-            this.inputbalance = this.bill.at(-1).subtotal - this.bill.at(-1).payment
+            this.prevDue = this.bill.at(-1).subtotal - this.bill.at(-1).payment
           }
           else {
-            this.inputbalance = this.bill.at(-1).subtotal
+            this.prevDue = this.bill.at(-1).subtotal
           }
         }
         if (this.bill.at(-1).paymentmode) {

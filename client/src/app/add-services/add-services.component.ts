@@ -49,6 +49,43 @@ export class AddServicesComponent implements OnInit {
     this.router.navigate(['doctordashboard']);
   }
 
+  doctors: any;
+  selectedDoctor: any
+  servicesPreview: any
+
+  changePreview() {
+    console.log(this.selectedDoctor)
+    this.getServices()
+  }
+
+  editService(i: any) {
+    console.log(i)
+  }
+
+  getServices() {
+    this.http.post(environment.getServicesDoc, {doctor_name: this.selectedDoctor}).subscribe({
+      next: res => {
+        console.log(res)
+        this.servicesPreview = res
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
+  }
+
+  getAllDoctors() {
+    this.http.get(environment.getAllDoctors).subscribe({
+      next: res => {
+        console.log(res)
+        this.doctors = res
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
+  }
+
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;

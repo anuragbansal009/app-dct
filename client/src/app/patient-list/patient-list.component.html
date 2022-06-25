@@ -63,10 +63,10 @@
   <div class="row mx-auto justify-content-md-center" style="text-align: center;">
     <div class="col-md-3 col-sm-12 text-end wrapper">
       <div class="search_box" style="width: 100%">
-        <div class="search_btn" style="margin-right: 15px">
+        <input type="text" class="input_search" placeholder="Search" (keyup)="applyFilter($event)" style="width: 250px">
+        <div class="search_btn" style="margin-left: 15px">
           <mat-icon>search</mat-icon>
         </div>
-        <input type="text" class="input_search" placeholder="Search" (keyup)="applyFilter($event)" style="width: 250px">
       </div>
       <!-- <mat-form-field class="mx-4 form-field" appearance="outline">
         <mat-label>Search</mat-label>
@@ -118,7 +118,8 @@
         <td mat-cell *matCellDef="let row">
           <div class="vitals btn dropdown-toggle" mat-raised-button (click)="handlevitals(row.allocateid)"
             color="primary" #tooltip="matTooltip" matTooltip="{{row.vitalTooltip}}" [matTooltipPosition]="'right'">
-            <mat-icon>info</mat-icon></div>
+            <mat-icon *ngIf="row.vitalTooltip == ''">info</mat-icon>
+            <mat-icon *ngIf="row.vitalTooltip != ''" class="greencolor">info</mat-icon></div>
         </td>
       </ng-container>
 
@@ -171,14 +172,17 @@
       <ng-container matColumnDef="status">
         <th mat-header-cell *matHeaderCellDef class="text-center"> Status </th>
         <td mat-cell *matCellDef="let row" class="text-center">
-          <button *ngIf="row.status == 'Paid'" (click)="handleBill(row._id)" mat-raised-button class="success">
+          <button *ngIf="row.status == 'Paid' && row.age" (click)="handleBill(row._id)" mat-raised-button class="success">
             {{row.status}}
           </button>
-          <button *ngIf="row.status == 'Pending'" (click)="handleBill(row._id)" mat-raised-button class="warning">
+          <button *ngIf="row.status == 'Pending' && row.age" (click)="handleBill(row._id)" mat-raised-button class="warning">
             {{row.status}}
           </button>
-          <button *ngIf="row.status == 'Unpaid'" (click)="handleBill(row._id)" mat-raised-button color="warn">
+          <button *ngIf="row.status == 'Unpaid' && row.age" (click)="handleBill(row._id)" mat-raised-button color="warn">
             {{row.status}}
+          </button>
+          <button *ngIf="!row.age" (click)="handleBill(row._id)" mat-raised-button disabled color="warn">
+            Temporary
           </button>
         </td>
 
@@ -216,7 +220,7 @@
 
 
 
-    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+    <mat-paginator [pageSizeOptions]="[25, 50, 75, 100]" aria-label="Select page of users"></mat-paginator>
   </div>
 
 </div>

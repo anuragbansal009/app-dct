@@ -9,11 +9,9 @@ const PatientSchema = new Schema({
     },
     gender: {
         type: String,
-        required: true
     },
     age: {
         type: Number,
-        required: true
     },
     mobile: {
         type: Number,

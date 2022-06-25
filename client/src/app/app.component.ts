@@ -28,6 +28,7 @@ import { AddServicesComponent } from './add-services/add-services.component';
 import { AddLabtestComponent } from './add-labtest/add-labtest.component';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
+import { TemporaryRegistrationComponent } from './temporary-registration/temporary-registration.component'
 
 const colors: any = {
   red: {
@@ -106,9 +107,25 @@ export class CalendarComponent {
 
   activeDayIsOpen: boolean = true;
 
+  openAddTempPatient() {
+    const dialogRef = this.dialog.open(TemporaryRegistrationComponent, {
+      data: { date: this.clickedDate }
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
   run() {
     // console.log(this.clickedDate)
-    this.openAddPatient()
+    const todayDate = new Date()
+    if (this.clickedDate.getTime() - todayDate.getTime() >= 0)
+    {
+    this.openAddTempPatient()
+    }
+    else {
+      console.log("Choose New Date")
+    }
     // console.log(this.clickedColumn)
   }
 
@@ -263,14 +280,20 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   openAddServices() {
-    const dialogRef = this.dialog.open(AddServicesComponent);
+    const dialogRef = this.dialog.open(AddServicesComponent, {
+      height: '565px',
+      width: '600px',
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
   }
 
   openAddLabtest() {
-    const dialogRef = this.dialog.open(AddLabtestComponent);
+    const dialogRef = this.dialog.open(AddLabtestComponent, {
+      height: '475px',
+      width: '600px',
+    });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
@@ -300,7 +323,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (!this.values) {
       this.authorized = false
       this.hospitalName = 'Front Desk App - DCT'
-      this.document.location.href = environment.doctorLogin;
+      this.router.navigate(['doctorlogin']);
+      // this.document.location.href = environment.doctorLogin;
     }
     else {
       this.values = JSON.parse(this.values).doctor

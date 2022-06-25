@@ -62,4 +62,24 @@ router.post('/services/get', async (req, res) => {
     }
 })
 
+router.post('/services/getdoc', async (req, res) => {
+    serviceList = []
+    try {
+        console.log(req)
+        const allServices = await Services.find({doctor_name: req.body.doctor_name});
+
+        allServices.forEach((services, i) => {
+            serviceList[i] = {
+                service: services.service,
+                charges: services.charges,
+                doctor_name: services.doctor_name
+            }
+        })
+        res.json(serviceList);
+
+    } catch (error) {
+        res.status(500).send('Error occured')
+    }
+})
+
 module.exports = router
