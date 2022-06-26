@@ -85,6 +85,30 @@
                 </mat-error>
             </mat-form-field>
 
+            <mat-form-field appearance="outline" class="form-element">
+                <mat-label>ID</mat-label>
+                <input matInput placeholder="ID" formControlName="allocateid">
+                <mat-error *ngIf="formGroup.controls['allocateid'].touched">
+                    {{ titleAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-element">
+                <mat-label>Specialization</mat-label>
+                <input matInput placeholder="Specialization" formControlName="specialization">
+                <mat-error *ngIf="formGroup.controls['specialization'].touched">
+                    {{ titleAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-element">
+                <mat-label>Follow Up Days</mat-label>
+                <input matInput placeholder="Follow Up Days" formControlName="followup">
+                <mat-error *ngIf="formGroup.controls['followup'].touched">
+                    {{ titleAlert }}
+                </mat-error>
+            </mat-form-field>
+
             <div class="form-element">
                 <button mat-raised-button color="primary" type="submit" class="button"
                     [disabled]="!formGroup.valid">Register</button>

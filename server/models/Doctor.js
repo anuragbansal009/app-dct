@@ -37,12 +37,7 @@ const DoctorSchema = new Schema({
     },
     followup:{
         type: Number,
-        required: true
     },
-    consultation: {
-        type: String,
-        required: true,
-    }
 
 
 })

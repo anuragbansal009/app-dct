@@ -39,7 +39,10 @@ export class DoctorRegistrationComponent implements OnInit {
       password: [null, [Validators.required, this.checkPassword]],
       hospital_name: [null, Validators.required],
       designation: [null, Validators.required],
-      location: [null, Validators.required]
+      location: [null, Validators.required],
+      allocateid: [null, Validators.required],
+      specialization: [null, Validators.required],
+      followup: [null, Validators.required],
     });
   }
 

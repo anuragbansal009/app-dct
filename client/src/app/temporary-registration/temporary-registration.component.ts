@@ -34,6 +34,7 @@ export class TemporaryRegistrationComponent implements OnInit {
   patientdata: any;
   storedDate: any;
   storedTime: any;
+  doctors: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {date: Date},
@@ -47,6 +48,8 @@ export class TemporaryRegistrationComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.getAllDoctors()
     if (this.data.date) {
       this.storedDate = this.data.date
       this.storedTime = this.data.date.toTimeString().split(' ')[0].split(':')[0] + ':' + this.data.date.toTimeString().split(' ')[0].split(':')[1]
@@ -58,6 +61,18 @@ export class TemporaryRegistrationComponent implements OnInit {
     this.storedDate = new Date(this.storedDate.toISOString().split('T')[0] + 'T18:30:00.000Z')
     this.storedDate.setDate(this.storedDate.getDate()-1)
     this.createForm();
+  }
+
+  getAllDoctors() {
+    this.http.get(environment.getAllDoctors).subscribe({
+      next: res => {
+        console.log(res)
+        this.doctors = res
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
   }
 
   createForm() {
@@ -162,6 +177,7 @@ export class TemporaryRegistrationComponent implements OnInit {
           data: { id: this.patientid },
         });
         dialogRef.afterClosed().subscribe(result => {
+          window.location.reload();
           console.log(`Dialog result: ${result}`);
           if (result == true) {
             let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;

@@ -8,20 +8,6 @@ const nodemailer = require("nodemailer");
 require('dotenv').config()
 
 
-var transporter = nodemailer.createTransport({
-
-    service: 'gmail',
-    auth: {
-        user: 'gkang0084@gmail.com',
-        pass: 'rambo2001'
-    },
-
-    tls: {
-        rejectUnauthorized: false
-    }
-
-})
-
 router.post('/doctor', [
 
     body('name', 'Enter a valid user name').isLength({ min: 4 }),
@@ -49,7 +35,6 @@ router.post('/doctor', [
             hospital_name,
             designation,
             location,
-            consultation,
             allocateid,
             specialization,
             followup
@@ -66,7 +51,6 @@ router.post('/doctor', [
             hospital_name: hospital_name,
             designation: designation,
             location: location,
-            consultation: consultation,
             allocateid: allocateid,
             specialization: specialization,
             followup: followup
@@ -152,35 +136,6 @@ router.post('/forgot', async (req, res) => {
 
         var epoch_date = new Date(Date.now());
         var date = epoch_date.toLocaleString('en-GB', { hour12: false });
-
-        var mailOptions = {
-            from: 'gkang0084@gmail.com',
-            to: 'gkang0084@gmail.com',
-            subject: 'Front Desk Dashboard',
-            html: `<div style="font-family: Helvetica,Arial,sans-serif;line-height:2">
-                <div style="margin:50px auto;width:70%;padding:20px 0">
-                  <div style="border-bottom:1px solid #eee">
-                    <a href="" style="font-size:1.4em;color: #00466a;text-decoration:none;font-weight:600">Front Desk Dashboard</a>
-                  </div>
-                  <p style="font-size:1.1em">Security Alert,</p>
-                  <p>User with the username ${user[0].name} changed its password</p>
-                  <hr style="border:none;border-top:1px solid #eee" />
-                  <div style="float:right;padding:8px 0;color:black;font-size:1em;line-height:1;font-weight:300">
-                    <p>Date : ${date}</p>
-                  </div>
-                </div>
-              </div>`,
-
-        }
-
-        transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error)
-            }
-            else {
-                console.log('mail sent')
-            }
-        })
 
         if (newpassword == confirmpassword) {
             

@@ -41,6 +41,7 @@ export class UpdatePatientComponent implements OnInit {
   inputdoctor: any = ''
   inputdate: any = ''
   inputtime: any = ''
+  doctors: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {id: any},
@@ -54,6 +55,8 @@ export class UpdatePatientComponent implements OnInit {
   ngOnInit() {
 
     this.id = this.data.id;
+
+    this.alldoctors()
 
     this.http.post(environment.getAllocateId, { allocateid: this.id }).subscribe((res) => {
       this.patient = res
@@ -85,6 +88,14 @@ export class UpdatePatientComponent implements OnInit {
     });
 
     // this.createForm();
+  }
+
+  alldoctors()
+  {
+    this.http.get(environment.getAllDoctors).subscribe((res)=>{
+      this.doctors = res
+      console.log(this.doctors)
+    })
   }
 
   checkPassword(control: any) {

@@ -31,8 +31,9 @@ export class AddLabtestComponent implements OnInit {
   constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.createForm();
     this.getAllDoctors();
+    this.createForm();
+    
   }
 
   createForm() {

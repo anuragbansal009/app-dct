@@ -27,12 +27,22 @@ export class AddServicesComponent implements OnInit {
   patientdata:any;
   services: any;
   inputgst: any = 0;
+  everydoctor: any;
 
   constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
+    this.alldoctors()
     this.createForm();
     //this.handleService()
+  }
+
+  alldoctors()
+  {
+    this.http.get(environment.getAllDoctors).subscribe((res)=>{
+      this.everydoctor = res
+      console.log(this.everydoctor)
+    })
   }
 
   createForm() {

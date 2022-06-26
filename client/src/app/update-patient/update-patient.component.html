@@ -28,9 +28,7 @@
                         <mat-form-field appearance="outline" class="form-element">
                             <mat-label>Doctor Name</mat-label>
                             <mat-select placeholder="Doctor Name" formControlName="doctor_name" [(value)]="inputdoctor">
-                                <mat-option value="doctor">doctor</mat-option>
-                                <mat-option value="dhirendra">dhirendra</mat-option>
-                                <mat-option value="gulshan">gulshan</mat-option>
+                                <mat-option *ngFor = "let doctor of doctors" value="{{doctor}}">{{doctor}}</mat-option>
                             </mat-select>
                             <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
                                 {{ titleAlert }}

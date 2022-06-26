@@ -128,9 +128,7 @@
                                     <mat-form-field appearance="outline" class="form-element">
                                         <mat-label>Doctor Name</mat-label>
                                         <mat-select placeholder="Doctor Name" formControlName="doctor_name">
-                                            <mat-option value="doctor">doctor</mat-option>
-                                            <mat-option value="dhirendra">dhirendra</mat-option>
-                                            <mat-option value="gulshan">gulshan</mat-option>
+                                            <mat-option *ngFor = "let doctor of everydoctor" value="{{doctor}}">{{doctor}}</mat-option>
                                         </mat-select>
                                         <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
                                             {{ titleAlert }}
@@ -178,7 +176,7 @@
                                 width: 100%;">
                                     <mat-label>Select Doctor</mat-label>
                                     <mat-select [(ngModel)]="selectedDoctor" (ngModelChange)="changePreview()">
-                                        <mat-option *ngFor="let doc of doctors" [value]="doc">
+                                        <mat-option *ngFor="let doc of everydoctor" [value]="doc">
                                             Dr. {{doc | titlecase}}
                                         </mat-option>
                                     </mat-select>
@@ -199,9 +197,9 @@
                                     <th scope="row" valign=middle>{{i + 1}}</th>
                                     <td valign=middle>{{ row.service }}</td>
                                     <td valign=middle>{{ row.charges }}</td>
-                                    <td valign=middle><button mat-icon-button type="button" (click)="editService(i)">
+                                    <!-- <td valign=middle><button mat-icon-button type="button" (click)="editService(row.service)">
                                         <mat-icon>edit</mat-icon>
-                                    </button></td>
+                                    </button></td> -->
                                   </tr>
                                 </tbody>
                               </table>

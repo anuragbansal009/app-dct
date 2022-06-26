@@ -35,30 +35,37 @@ export class PatientRegistrationComponent implements OnInit {
   patientdata: any;
   storedDate: any;
   storedTime: any;
+  doctors: any;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {date: Date},
-    private formBuilder: FormBuilder, 
-    public dialog: MatDialog, 
+    @Inject(MAT_DIALOG_DATA) public data: { date: Date },
+    private formBuilder: FormBuilder,
+    public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router, 
-    private http: HttpClient, 
+    private router: Router,
+    private http: HttpClient,
     private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
   }
 
   ngOnInit() {
-    if (this.data.date) {
-      // console.log(this.data.date)
-      this.storedDate = this.data.date
-      this.storedTime = this.data.date.toTimeString().split(' ')[0].split(':')[0] + ':' + this.data.date.toTimeString().split(' ')[0].split(':')[1]
+
+
+    this.alldoctors()
+    if (this.data) {
+      if (this.data.date) {
+        // console.log(this.data.date)
+        this.storedDate = this.data.date
+        this.storedTime = this.data.date.toTimeString().split(' ')[0].split(':')[0] + ':' + this.data.date.toTimeString().split(' ')[0].split(':')[1]
+      }
     }
     else {
       this.storedDate = new Date()
       this.storedTime = this.storedDate.toTimeString().split(' ')[0].split(':')[0] + ':' + this.storedDate.toTimeString().split(' ')[0].split(':')[1]
     }
+
     this.storedDate = new Date(this.storedDate.toISOString().split('T')[0] + 'T18:30:00.000Z')
-    this.storedDate.setDate(this.storedDate.getDate()-1)
+    this.storedDate.setDate(this.storedDate.getDate() - 1)
     this.createForm();
   }
 
@@ -79,6 +86,12 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
+  alldoctors() {
+    this.http.get(environment.getAllDoctors).subscribe((res) => {
+      this.doctors = res
+      console.log(this.doctors)
+    })
+  }
   get name() {
     return this.formGroup.get('name') as FormControl;
   }
@@ -171,14 +184,16 @@ export class PatientRegistrationComponent implements OnInit {
           data: { id: this.patientid },
         });
         dialogRef.afterClosed().subscribe(result => {
+          window.location.reload();
           console.log(`Dialog result: ${result}`);
           if (result == true) {
             let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;
             element.click();
+            
           }
+          
         });
         // this.router.navigate(['doctordashboard']);
-
         this.snackBar.open('Patient Registered Successfully', 'Close', {
           duration: 3000,
         });
