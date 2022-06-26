@@ -412,6 +412,9 @@ export class BillComponent implements OnInit {
           this.sArr = this.bill.at(-1).discount
         }
       }
+      if(!this.prevDue){
+        this.prevDue = 0
+      }
     })
   }
 
