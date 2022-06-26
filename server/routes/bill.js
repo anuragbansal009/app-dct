@@ -6,7 +6,6 @@ const Doctor = require('../models/Doctor');
 const Bill = require('../models/Bill');
 
 router.post('/patient/bill/:id', async (req, res) => {
-    console.log(req.body)
 
     try {
 
@@ -55,7 +54,7 @@ router.post('/patient/bill/:id', async (req, res) => {
             if (labtests) {
                 newBill.labtests = labtests;
             }
-            if (discount) {
+            if (discount.length !== 0) {
                 newBill.discount = discount;
             }
             if (payment) {
@@ -86,6 +85,8 @@ router.post('/patient/bill/:id', async (req, res) => {
                 }
             )
 
+            console.log(bill)
+
             if (bill.payment == 0) {
                 findpatient = await Patient.findOneAndUpdate(
                     {
@@ -93,8 +94,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                     },
                     {
                         status: "Unpaid",
-                        labtests: bill.labtests,
-                        services: bill.labcharges,
                     }
                 )
             }
@@ -107,8 +106,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                     },
                     {
                         status: "Pending",
-                        labtests: bill.labtests,
-                        services: bill.labcharges,
                     }
                 )
             }
@@ -121,8 +118,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                     },
                     {
                         status: "Paid",
-                        labtests: bill.labtests,
-                        services: bill.labcharges,
                     }
                 )
 
@@ -153,7 +148,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                         payment: payment,
                         paymentmode: paymentmode,
                         subtotal: subtotal,
-                        _id: patient._id
+                        _id: req.params.id
 
                     })
 
@@ -164,8 +159,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                             },
                             {
                                 status: "Unpaid",
-                                labtests: bill.labtests,
-                                services: bill.labcharges,
                             }
                         )
                     }
@@ -177,8 +170,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                             },
                             {
                                 status: "Pending",
-                                labtests: bill.labtests,
-                                services: bill.labcharges,
                             }
                         )
                     }
@@ -191,8 +182,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                             },
                             {
                                 status: "Paid",
-                                labtests: bill.labtests,
-                                services: bill.labcharges,
                             }
                         )
 
