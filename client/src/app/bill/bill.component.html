@@ -357,11 +357,6 @@
                                                     value="{{inputbalance}}" formControlName="subtotal">
                                             </mat-form-field>
                                         </div>
-                                        <mat-form-field appearance="outline" class="form-element">
-                                            <mat-label>Payment</mat-label>
-                                            <input matInput type="number" placeholder="Payment"
-                                                formControlName="payment" value="{{subtotal}}">
-                                        </mat-form-field>
                                     </div>
                                     <form [formGroup]="addingServices">
                                         <div class="row text-center mt-2 headingRow">
@@ -567,7 +562,7 @@
                                                         style="width: 90%; margin-bottom: -20px">
                                                         <mat-label>Payment</mat-label>
                                                         <input matInput type="number" placeholder="Payment"
-                                                            formControlName="payment" value="{{subtotal}}"
+                                                            formControlName="payment"
                                                             [(ngModel)]="payment">
                                                     </mat-form-field>
                                                 </td>

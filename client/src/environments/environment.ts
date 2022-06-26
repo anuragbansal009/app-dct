@@ -35,7 +35,8 @@ export const environment = {
   patientFilter: 'http://localhost:5000/api/patient/filter',
   updatePatient: 'http://localhost:5000/api/patient/updatepatient/',
   doctorDashboard: 'http://localhost:4200/doctordashboard',
-  getServicesDoc: 'http://localhost:5000/api/services/getdoc'
+  getServicesDoc: 'http://localhost:5000/api/services/getdoc',
+  patientBills: 'http://localhost:5000/api/patient/patientbills'
 };
 
 
