@@ -64,3 +64,14 @@
   color: white;
   padding: 10px 0px 10px 0px;
 }
+
+.row {
+  --bs-gutter-x: 0 !important;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+.row>* {
+  padding-left: 0;
+  padding-right: 0;
+}

@@ -193,7 +193,7 @@ export class BillComponent implements OnInit {
 
   patientBills() {
     this.http.post(environment.patientBills, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
-      console.log('mohan',res)
+      console.log(res)
       this.patientbills = res
     })
   }
@@ -285,15 +285,15 @@ export class BillComponent implements OnInit {
     //   this.showDiscountError = true
     // }
     // else {
-      // this.showDiscountError = false
-      if (this.countVar == 0) {
-        this.subtotalTemp = this.subtotal
-        this.subtotal = this.subtotal - event
-        this.countVar += 1
-      }
-      else {
-        this.subtotal = this.subtotalTemp - event
-      }
+    // this.showDiscountError = false
+    if (this.countVar == 0) {
+      this.subtotalTemp = this.subtotal
+      this.subtotal = this.subtotal - event
+      this.countVar += 1
+    }
+    else {
+      this.subtotal = this.subtotalTemp - event
+    }
     // }
   }
 
@@ -375,11 +375,42 @@ export class BillComponent implements OnInit {
     })
   }
 
+  refundError: boolean = false;
+
+  refundAdd(i: any, j: any, event: any) {
+    this.refundError = false
+    const tempRef: any = []
+    const refAmount = parseInt((event.target as HTMLInputElement).value);
+    console.log(this.patientbills[i].discount[j])
+
+    tempRef.service = this.patientbills[i].discount[j].service
+    tempRef.charges = this.patientbills[i].discount[j].charges
+    tempRef.discount = this.patientbills[i].discount[j].discount
+    tempRef.refundAmount = refAmount
+
+    if (tempRef.charges - tempRef.discount < tempRef.refundAmount) {
+      this.refundError = true
+    }
+    else {
+      var count: any = 0
+      this.refundList.forEach((element: { service: any; charges: any; discount: any; refundAmount: any }) => {
+        if (tempRef.service == element.service) {
+          element.refundAmount = refAmount
+          count = 1
+        }
+      });
+      if (count == 0) {
+        this.refundList.push(tempRef)
+      }
+    }
+  }
+
+  refundList: any = [];
   refundReason: any
 
   refundFunc() {
     const temp = {
-      amount: this.refundAmount,
+      refunds: this.refundList,
       reason: this.refundReason
     }
     console.log(temp)
@@ -413,7 +444,7 @@ export class BillComponent implements OnInit {
         }
       }
       console.log(this.prevDue)
-      if(!this.prevDue){
+      if (!this.prevDue) {
         this.prevDue = 0
       }
     })
