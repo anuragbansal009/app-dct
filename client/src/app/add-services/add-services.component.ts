@@ -8,6 +8,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ServicesComponent } from '../services/services.component';
 
 @Component({
   selector: 'app-add-services',
@@ -23,13 +25,13 @@ export class AddServicesComponent implements OnInit {
   errorString: string = 'Error! Please Try Again';
 
   hide = true;
-  patientid:any;
-  patientdata:any;
+  patientid: any;
+  patientdata: any;
   services: any;
   inputgst: any = 0;
   everydoctor: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, public dialog: MatDialog, private router: Router, private http: HttpClient) { }
 
   ngOnInit(): void {
     this.alldoctors()
@@ -37,9 +39,8 @@ export class AddServicesComponent implements OnInit {
     //this.handleService()
   }
 
-  alldoctors()
-  {
-    this.http.get(environment.getAllDoctors).subscribe((res)=>{
+  alldoctors() {
+    this.http.get(environment.getAllDoctors).subscribe((res) => {
       this.everydoctor = res
       console.log(this.everydoctor)
     })
@@ -54,8 +55,7 @@ export class AddServicesComponent implements OnInit {
     });
   }
 
-  handleclick()
-  { 
+  handleclick() {
     this.router.navigate(['doctordashboard']);
   }
 
@@ -68,12 +68,29 @@ export class AddServicesComponent implements OnInit {
     this.getServices()
   }
 
-  editService(i: any) {
-    console.log(i)
+  editService(service: any, doctor: any) {
+    const dialogRef = this.dialog.open(ServicesComponent, {
+      data: { name: service, doctor: doctor },
+      width: '50%',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  deleteService(service: any, doctor: any) {
+    this.http.post(environment.deleteService, { service: service,doctor_name: doctor }).subscribe({
+      next: res => {
+        console.log(res)
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
   }
 
   getServices() {
-    this.http.post(environment.getServicesDoc, {doctor_name: this.selectedDoctor}).subscribe({
+    this.http.post(environment.getServicesDoc, { doctor_name: this.selectedDoctor }).subscribe({
       next: res => {
         console.log(res)
         this.servicesPreview = res
@@ -100,11 +117,10 @@ export class AddServicesComponent implements OnInit {
     this.showSuccess = false;
     this.showError = false;
     console.log(post);
-    if(post.gst !== 0)
-    {
-      post.charges = post.charges *(post.gst / 100);
+    if (post.gst !== 0) {
+      post.charges = post.charges * (post.gst / 100);
     }
-    else{
+    else {
       post.charges = post.charges
     }
     this.http.post(environment.servicesAdd, post).subscribe({

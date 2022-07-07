@@ -150,7 +150,7 @@
                             <mat-dialog-actions>
                             <div class="form-element">
                                 <button mat-raised-button color="primary" type="submit" class="button"
-                                    [disabled]="!formGroup.valid" [mat-dialog-close]="true">Submit</button>
+                                    [disabled]="!formGroup.valid">Submit</button>
                             </div>
                             </mat-dialog-actions>
                             <div class="alert alert-success" role="alert" *ngIf="showSuccess">
@@ -190,6 +190,8 @@
                                     <th scope="col">S.No.</th>
                                     <th scope="col">Service Name</th>
                                     <th scope="col">Charge</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
                                   </tr>
                                 </thead>
                                 <tbody>
@@ -197,9 +199,12 @@
                                     <th scope="row" valign=middle>{{i + 1}}</th>
                                     <td valign=middle>{{ row.service }}</td>
                                     <td valign=middle>{{ row.charges }}</td>
-                                    <!-- <td valign=middle><button mat-icon-button type="button" (click)="editService(row.service)">
+                                    <td valign=middle><button mat-icon-button type="button" (click)="editService(row.service, row.doctor_name)">
                                         <mat-icon>edit</mat-icon>
-                                    </button></td> -->
+                                    </button></td>
+                                    <td valign=middle><button mat-icon-button type="button" [mat-dialog-close]="true" (click)="deleteService(row.service, row.doctor_name)">
+                                        <mat-icon>delete</mat-icon>
+                                    </button></td>
                                   </tr>
                                 </tbody>
                               </table>

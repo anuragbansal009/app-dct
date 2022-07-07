@@ -38,8 +38,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 // import { AdminForgotComponent } from './admin-forgot/admin-forgot.component';
 import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { PatientDetailsModule } from './patient-details/patient-details.module';
-import { ServicediscountComponent } from './servicediscount/servicediscount.component';
 import { TemporaryRegistrationModule } from './temporary-registration/temporary-registration.module';
+import { ServicesModule } from './services/services.module';
 
 @NgModule({
   declarations: [
@@ -67,6 +67,7 @@ import { TemporaryRegistrationModule } from './temporary-registration/temporary-
     PatientDetailsModule,
     DoctorLoginModule,
     UpdatePatientModule,
+    ServicesModule,
     DoctorHomepageModule,
     DoctorDashboardModule,
     AddServicesModule,

@@ -10,6 +10,7 @@ export const environment = {
   adminRegistrationAPI: 'http://localhost:5000/api/admin',
   doctorRegistrationAPI: 'http://localhost:5000/api/doctor',
   getAllDoctors: 'http://localhost:5000/api/getdoctor',
+  getOneService: 'http://localhost:5000/api/services/getoneservice',
   adminLogin: 'http://localhost:5000/api/admin/login',
   doctorRegistration: 'http://localhost:4200/doctorregistration',
   patientRegistrationAPI: 'http://localhost:5000/api/patient/create',
@@ -34,6 +35,8 @@ export const environment = {
   getAllocateId: 'http://localhost:5000/api/patient/getallocateid',
   patientFilter: 'http://localhost:5000/api/patient/filter',
   updatePatient: 'http://localhost:5000/api/patient/updatepatient/',
+  updateService: 'http://localhost:5000/api/services/updateservice/',
+  deleteService: 'http://localhost:5000/api/services/delete',
   doctorDashboard: 'http://localhost:4200/doctordashboard',
   getServicesDoc: 'http://localhost:5000/api/services/getdoc',
   patientBills: 'http://localhost:5000/api/patient/patientbills'

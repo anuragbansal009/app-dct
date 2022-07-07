@@ -635,35 +635,42 @@
                 </div>
             </div> -->
             <div class="row text-center mt-2 headingRow">
-                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
+
+                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Bill Number</strong>
+                </div>
+                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Service Name</strong>
                 </div>
-                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Unit Price</strong>
                 </div>
-                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Total Amount</strong>
                 </div>
-                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Refund Amount</strong>
                 </div>
             </div>
             <div class="row text-center mt-2" *ngFor="let row of patientbills; let i = index;">
                 <div class="row text-center mt-2" *ngFor="let service of row.discount; let j = index;">
-                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 16px">
+                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
+                        {{ row.allocateid }}
+                    </div>
+                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
                         {{ service.service }}
                     </div>
-                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 16px">
+                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
                         {{ service.charges }}
                     </div>
-                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 16px">
+                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
                         {{ service.charges - service.discount }}
                     </div>
-                    <div class="col-md-3 col-sm-12 text-center">
-                        <mat-form-field appearance="fill" style="width: 100%">
-                            <mat-label>Amount</mat-label>
-                            <input type="number" matInput (keyup)="refundAdd(i, j, $event)">
-                        </mat-form-field>
+                    <div class="col-md-2 col-sm-12 text-center mb-2">
+                        <mat-dialog-actions style="display: block">
+                            <mat-icon mat-raised-button color="primary" 
+                            type="submit" (click)="refundFunc(row.allocateid, service.service)">delete</mat-icon>
+                        </mat-dialog-actions>
                     </div>
                 </div>
             </div>
@@ -678,14 +685,14 @@
                     Refund Amount should be less than total amount
                 </div>
             </div>
-            <div class="row text-center mt-2 mb-4">
+            <!-- <div class="row text-center mt-2 mb-4">
                 <mat-dialog-actions style="display: block">
                     <button mat-raised-button color="primary" [mat-dialog-close]="true" type="submit"
                         disabled="true" *ngIf="refundError">Refund</button>
                     <button mat-raised-button color="primary" [mat-dialog-close]="true" type="submit"
                         (click)="refundFunc()" *ngIf="!refundError">Refund</button>
                 </mat-dialog-actions>
-            </div>
+            </div> -->
         </mat-tab>
         <!-- <mat-tab>
             <ng-template mat-tab-label>

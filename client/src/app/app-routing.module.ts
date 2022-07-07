@@ -15,6 +15,7 @@ import { BilSummaryComponent } from './bil-summary/bil-summary.component';
 import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.component';
 //import { UpdateBillComponent } from './update-bill/update-bill.component';
 import { BillInvoiceComponent } from './bill-invoice/bill-invoice.component';
+import { ServicesComponent } from './services/services.component';
 
 const routes: Routes = [
   { path: 'adminregistration', component: AdminRegistrationComponent },
@@ -28,6 +29,7 @@ const routes: Routes = [
   { path: 'patientregistration', component: PatientRegistrationComponent },
   { path: 'patientlist', component: PatientListComponent },
   { path: 'update-patient/:id', component: UpdatePatientComponent },
+  { path: 'services/:id', component: ServicesComponent },
   { path: 'bill/:id', component: BillComponent },
   //{ path: 'updatebill/:id', component: UpdateBillComponent },
   { path: 'billsummary', component: BilSummaryComponent },

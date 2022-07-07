@@ -86,6 +86,7 @@ export class BillComponent implements OnInit {
   discountString: string = 'Lab Discount'
   servicediscountString: string = 'Service Discount'
   serviceArr: any = [];
+  serviceArr2: any = [];
   selectedValue: any;
   tempValue: any = '';
   discountValue: any = null
@@ -213,6 +214,7 @@ export class BillComponent implements OnInit {
         post.charges = this.selectedValue
       }
       this.serviceArr.push(post)
+      this.serviceArr2.push(post)
     }
     this.tempValue = ''
     this.selectedValue = null
@@ -408,12 +410,13 @@ export class BillComponent implements OnInit {
   refundList: any = [];
   refundReason: any
 
-  refundFunc() {
+  refundFunc(allocateid: any, service: any) {
     const temp = {
       refunds: this.refundList,
       reason: this.refundReason
     }
-    console.log(temp)
+
+    console.log(allocateid)
   }
 
   prevDue: any;
@@ -441,6 +444,9 @@ export class BillComponent implements OnInit {
         }
         if (this.bill.at(-1).discount) {
           this.sArr = this.bill.at(-1).discount
+          this.sArr.forEach((service:any) => {
+            this.serviceArr2.push(service)
+          });
         }
       }
       console.log(this.prevDue)
@@ -539,7 +545,7 @@ export class BillComponent implements OnInit {
   onSubmit(post: any) {
 
     post.subtotal = this.subtotal
-    post.discount = this.serviceArr
+    post.discount = this.serviceArr2
 
     if (this.inputbalance !== 0) {
       post.payment = post.payment + this.inputpayment

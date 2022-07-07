@@ -83,6 +83,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                 {
                     new: true,
                 }
+
             )
 
             console.log(bill)
@@ -264,6 +265,23 @@ router.post('/patient/patientbills', async (req, res) => {
         console.log(err.message);
     }
 })
+
+// router.post('/patient/refund/:id', async (req, res) => {
+//     try {
+//         let bill = await Bill.find({allocateid: req.params.id});
+
+//         await Bill.updateOne({ allocateid: req.params.id }, {
+//             $pullAll: {
+//                 discount: [{service: req.body.service}],
+//             },
+//         });
+
+//         res.json(bill)
+//     }
+//     catch(err) {
+//         console.log(err.message);
+//     }
+// })
 
 
 
