@@ -10,6 +10,7 @@ import { DoctorHomepageComponent } from './doctor-homepage/doctor-homepage.compo
 import { PatientRegistrationComponent } from './patient-registration/patient-registration.component';
 import { PatientListComponent } from './patient-list/patient-list.component';
 import { UpdatePatientComponent } from './update-patient/update-patient.component';
+import { RefundComponent } from './refund/refund.component';
 import { BillComponent } from './bill/bill.component';
 import { BilSummaryComponent } from './bil-summary/bil-summary.component';
 import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.component';
@@ -29,6 +30,7 @@ const routes: Routes = [
   { path: 'patientregistration', component: PatientRegistrationComponent },
   { path: 'patientlist', component: PatientListComponent },
   { path: 'update-patient/:id', component: UpdatePatientComponent },
+  { path: 'refund/:id', component: RefundComponent },
   { path: 'services/:id', component: ServicesComponent },
   { path: 'bill/:id', component: BillComponent },
   //{ path: 'updatebill/:id', component: UpdateBillComponent },

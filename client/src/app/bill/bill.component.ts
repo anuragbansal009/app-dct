@@ -194,7 +194,7 @@ export class BillComponent implements OnInit {
 
   patientBills() {
     this.http.post(environment.patientBills, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
-      console.log(res)
+      console.log('hello',res)
       this.patientbills = res
     })
   }
@@ -561,8 +561,7 @@ export class BillComponent implements OnInit {
       post.payment = post.payment + this.inputpayment
     }
     post.payment = this.payment
-    console.log(this.previousTotal)
-    console.log(post)
+
     this.http.post(environment.patientBill + this.id, post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,

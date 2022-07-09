@@ -31,8 +31,6 @@ router.post('/patient/bill/:id', async (req, res) => {
 
         let patientbill = await Bill.findOne({ allocateid: patient.allocateid });
 
-        console.log(patientbill)
-
         if (patientbill) {
             const newBill = {};
 
@@ -73,15 +71,6 @@ router.post('/patient/bill/:id', async (req, res) => {
 
                 newBill.subtotal = subtotal;
 
-                // if(patientbill.subtotal)
-                // {
-                //     newBill.subtotal = subtotal + patientbill.subtotal;
-                // }
-                // else
-                // {
-                //     newBill.subtotal = subtotal;
-                // }   
-
             }
             if (totalDiscount) {
                 newBill.totalDiscount = totalDiscount;
@@ -103,25 +92,6 @@ router.post('/patient/bill/:id', async (req, res) => {
 
             )
 
-            // let totalAmount = await Bill.findOne({ _id: req.params.id })
-
-            // if (!totalAmount.payment) {
-            //     totalAmount.payment = 0
-            // }
-
-            // bill = await Bill.findOneAndUpdate(
-            //     {
-            //         _id: req.params.id
-            //     },
-            //     {
-            //         payment: totalAmount.payment + payment,
-            //         subtotal: totalAmount.subtotal + subtotal,
-            //     },
-            //     {
-            //         new: true
-            //     }
-            // )
-
             if (bill.payment == 0) {
                 findpatient = await Patient.findOneAndUpdate(
                     {
@@ -129,6 +99,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                     },
                     {
                         status: "Unpaid",
+                        discount: discount
                     }
                 )
             }
@@ -140,6 +111,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                     },
                     {
                         status: "Pending",
+                        discount: discount
                     }
                 )
             }
@@ -152,6 +124,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                     },
                     {
                         status: "Paid",
+                        discount: discount
                     }
                 )
 
@@ -192,29 +165,10 @@ router.post('/patient/bill/:id', async (req, res) => {
                             },
                             {
                                 status: "Unpaid",
+                                discount: discount
                             }
                         )
                     }
-
-                    // let totalAmount = await Bill.findOne({ _id: req.params.id })
-
-                    // if (!totalAmount.payment) {
-                    //     totalAmount.payment = 0
-                    // }
-
-                    // if (!totalAmount.subtotal) {
-                    //     totalAmount.subtotal = 0
-                    // }
-
-                    // letfindpatient = await Bill.findOneAndUpdate(
-                    //     {
-                    //         _id: req.params.id
-                    //     },
-                    //     {
-                    //         payment: totalAmount.payment + payment,
-                    //         subtotal: totalAmount.subtotal + subtotal,
-                    //     }
-                    // )
 
                     if (bill.payment < bill.subtotal && bill.payment !== 0) {
                         findpatient = await Patient.findOneAndUpdate(
@@ -223,6 +177,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                             },
                             {
                                 status: "Pending",
+                                discount: discount
                             }
                         )
                     }
@@ -235,6 +190,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                             },
                             {
                                 status: "Paid",
+                                discount: discount
                             }
                         )
 
@@ -308,22 +264,21 @@ router.post('/patient/getbill/:id', async (req, res) => {
     }
 })
 
-router.post('/patient/patientbills', async (req, res) => {
-    try {
-        let bill = await Bill.find({ name: req.body.name, mobile: req.body.mobile });
-        res.json(bill)
-    }
-    catch (err) {
-        console.log(err.message);
-    }
-})
+// router.post('/patient/patientbills', async (req, res) => {
+//     try {
+//         let bill = await Bill.find({ name: req.body.name, mobile: req.body.mobile });
+//         res.json(bill)
+//     }
+//     catch (err) {
+//         console.log(err.message);
+//     }
+// })
 
 router.post('/patient/refund', async (req, res) => {
     try {
         let bill = await Bill.find({ allocateid: req.body.allocateid });
 
-        if(req.body.reason)
-        {
+        if (req.body.reason) {
             if (bill) {
                 bill = await Bill.findOneAndUpdate(
                     {
@@ -338,8 +293,22 @@ router.post('/patient/refund', async (req, res) => {
                     }
                 )
             }
-    
+
             bill = await Bill.findOneAndUpdate(
+                {
+                    allocateid: req.body.allocateid
+                },
+                {
+                    $pull: {
+                        discount: { service: req.body.service }
+                    },
+                },
+                {
+                    new: true,
+                }
+            );
+
+            let patient = await Patient.findOneAndUpdate(
                 {
                     allocateid: req.body.allocateid
                 },
@@ -354,16 +323,89 @@ router.post('/patient/refund', async (req, res) => {
             );
             res.json(bill)
         }
-        else{
+        else {
             return res.status(401).send("Reason Box is Empty")
         }
-        
 
-        
+
+
 
     }
     catch (err) {
         console.log(err.message);
+    }
+})
+
+router.post('/bill/refund', async (req, res) => {
+    try {
+
+        let bill = await Bill.find({ allocateid: req.body.allocateid })
+
+        if (req.body.reason) {
+
+            if(bill[0].payment > req.body.refund)
+            {
+                bill = await Bill.findOneAndUpdate(
+                    {
+                        allocateid: req.body.allocateid,
+                    },
+                    {
+                        payment: bill[0].payment - req.body.refund,
+                    },
+                    {
+                        new: true,
+                    }
+                )
+    
+                if (bill.payment == 0) {
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Unpaid",
+                        }
+                    )
+                }
+    
+                if (bill.payment < bill.subtotal && bill.payment !== 0) {
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Pending",
+                        }
+                    )
+                }
+    
+                if (bill.payment == bill.subtotal) {
+    
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Paid",
+                        }
+                    )
+    
+                }
+                res.send(bill)
+
+            }
+            else{
+                return res.status(401).send("Refund should be less than Paid amount")
+            }
+
+            
+        }
+        else {
+            return res.status(401).send("Reason Box is Empty")
+        }
+
+    } catch (error) {
+        console.log(error.message)
     }
 })
 
