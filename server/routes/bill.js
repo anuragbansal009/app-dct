@@ -97,8 +97,12 @@ router.post('/patient/bill/:id', async (req, res) => {
 
             let totalAmount = await Bill.findOne({ _id: req.params.id })
 
-            if (!totalAmount.totalpaid) {
-                totalAmount.totalpaid = 0
+            if (!totalAmount.payment) {
+                totalAmount.payment = 0
+            }
+
+            if (!totalAmount.subtotal) {
+                totalAmount.subtotal = 0
             }
 
             letfindpatient = await Bill.findOneAndUpdate(
@@ -106,7 +110,8 @@ router.post('/patient/bill/:id', async (req, res) => {
                     _id: req.params.id
                 },
                 {
-                    totalpaid: totalAmount.totalpaid + payment,
+                    payment: totalAmount.payment + payment,
+                    subtotal: totalAmount.subtotal + subtotal,
                 }
             )
 
@@ -175,8 +180,12 @@ router.post('/patient/bill/:id', async (req, res) => {
 
                     let totalAmount = await Bill.findOne({ _id: req.params.id })
 
-                    if (!totalAmount.totalpaid) {
-                        totalAmount.totalpaid = 0
+                    if (!totalAmount.payment) {
+                        totalAmount.payment = 0
+                    }
+        
+                    if (!totalAmount.subtotal) {
+                        totalAmount.subtotal = 0
                     }
         
                     letfindpatient = await Bill.findOneAndUpdate(
@@ -184,7 +193,8 @@ router.post('/patient/bill/:id', async (req, res) => {
                             _id: req.params.id
                         },
                         {
-                            totalpaid: totalAmount.totalpaid + payment,
+                            payment: totalAmount.payment + payment,
+                            subtotal: totalAmount.subtotal + subtotal,
                         }
                     )
 
