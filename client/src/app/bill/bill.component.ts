@@ -422,6 +422,7 @@ export class BillComponent implements OnInit {
   }
 
   prevDue: any;
+  previousTotal: any = 0;
 
   billdetails() {
     this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
@@ -546,14 +547,21 @@ export class BillComponent implements OnInit {
   payment: any
   onSubmit(post: any) {
 
-    post.subtotal = this.subtotal
-    post.discount = this.serviceArr2
+    // this.sArr.forEach((element: { charges: number; discount: number; }) => {
+    //   this.previousTotal = this.previousTotal + element.charges - (element.charges * (element.discount / 100))
+    // });
 
+    this.serviceArr2.forEach((element: { charges: number; discount: number; }) => {
+      this.previousTotal = this.previousTotal + element.charges - (element.charges * (element.discount / 100))
+    });
+    
+    post.discount = this.serviceArr2
+    post.subtotal = this.previousTotal
     if (this.inputbalance !== 0) {
       post.payment = post.payment + this.inputpayment
     }
     post.payment = this.payment
-    console.log(this.payment)
+    console.log(this.previousTotal)
     console.log(post)
     this.http.post(environment.patientBill + this.id, post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
