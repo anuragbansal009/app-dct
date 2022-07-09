@@ -59,12 +59,12 @@ router.post('/patient/bill/:id', async (req, res) => {
             }
             if (payment) {
                 newBill.payment = payment;
-                // if (patientbill.payment) {
-                //     newBill.payment = payment + patientbill.payment;
-                // }
-                // else {
-                //     newBill.payment = payment;
-                // }
+                if (patientbill.payment) {
+                    newBill.payment = payment + patientbill.payment;
+                }
+                else {
+                    newBill.payment = payment;
+                }
             }
             if (paymentmode) {
                 newBill.paymentmode = paymentmode;
@@ -107,10 +107,6 @@ router.post('/patient/bill/:id', async (req, res) => {
 
             // if (!totalAmount.payment) {
             //     totalAmount.payment = 0
-            // }
-
-            // if (!totalAmount.subtotal) {
-            //     totalAmount.subtotal = 0
             // }
 
             // bill = await Bill.findOneAndUpdate(
