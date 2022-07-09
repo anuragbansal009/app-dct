@@ -35,5 +35,6 @@ export const environment = {
   deleteService: 'http://localhost:5000/api/services/delete',
   doctorDashboard: 'http://localhost:4200/doctordashboard',
   getServicesDoc: 'http://localhost:5000/api/services/getdoc',
-  patientBills: 'http://localhost:5000/api/patient/patientbills'
+  patientBills: 'http://localhost:5000/api/patient/patientbills',
+  refundBill: 'http://localhost:5000/api/patient/refund'
 };

@@ -31,6 +31,8 @@ router.post('/patient/bill/:id', async (req, res) => {
 
         let patientbill = await Bill.findOne({ allocateid: patient.allocateid });
 
+        console.log(patientbill)
+
         if (patientbill) {
             const newBill = {};
 
@@ -57,12 +59,29 @@ router.post('/patient/bill/:id', async (req, res) => {
             }
             if (payment) {
                 newBill.payment = payment;
+                // if (patientbill.payment) {
+                //     newBill.payment = payment + patientbill.payment;
+                // }
+                // else {
+                //     newBill.payment = payment;
+                // }
             }
             if (paymentmode) {
                 newBill.paymentmode = paymentmode;
             }
             if (subtotal) {
+
                 newBill.subtotal = subtotal;
+
+                // if(patientbill.subtotal)
+                // {
+                //     newBill.subtotal = subtotal + patientbill.subtotal;
+                // }
+                // else
+                // {
+                //     newBill.subtotal = subtotal;
+                // }   
+
             }
             if (totalDiscount) {
                 newBill.totalDiscount = totalDiscount;
@@ -84,6 +103,29 @@ router.post('/patient/bill/:id', async (req, res) => {
 
             )
 
+            // let totalAmount = await Bill.findOne({ _id: req.params.id })
+
+            // if (!totalAmount.payment) {
+            //     totalAmount.payment = 0
+            // }
+
+            // if (!totalAmount.subtotal) {
+            //     totalAmount.subtotal = 0
+            // }
+
+            // bill = await Bill.findOneAndUpdate(
+            //     {
+            //         _id: req.params.id
+            //     },
+            //     {
+            //         payment: totalAmount.payment + payment,
+            //         subtotal: totalAmount.subtotal + subtotal,
+            //     },
+            //     {
+            //         new: true
+            //     }
+            // )
+
             if (bill.payment == 0) {
                 findpatient = await Patient.findOneAndUpdate(
                     {
@@ -94,26 +136,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                     }
                 )
             }
-
-            let totalAmount = await Bill.findOne({ _id: req.params.id })
-
-            if (!totalAmount.payment) {
-                totalAmount.payment = 0
-            }
-
-            if (!totalAmount.subtotal) {
-                totalAmount.subtotal = 0
-            }
-
-            letfindpatient = await Bill.findOneAndUpdate(
-                {
-                    _id: req.params.id
-                },
-                {
-                    payment: totalAmount.payment + payment,
-                    subtotal: totalAmount.subtotal + subtotal,
-                }
-            )
 
             if (bill.payment < bill.subtotal && bill.payment !== 0) {
                 findpatient = await Patient.findOneAndUpdate(
@@ -183,11 +205,11 @@ router.post('/patient/bill/:id', async (req, res) => {
                     if (!totalAmount.payment) {
                         totalAmount.payment = 0
                     }
-        
+
                     if (!totalAmount.subtotal) {
                         totalAmount.subtotal = 0
                     }
-        
+
                     letfindpatient = await Bill.findOneAndUpdate(
                         {
                             _id: req.params.id
@@ -300,22 +322,54 @@ router.post('/patient/patientbills', async (req, res) => {
     }
 })
 
-// router.post('/patient/refund/:id', async (req, res) => {
-//     try {
-//         let bill = await Bill.find({allocateid: req.params.id});
+router.post('/patient/refund', async (req, res) => {
+    try {
+        let bill = await Bill.find({ allocateid: req.body.allocateid });
 
-//         await Bill.updateOne({ allocateid: req.params.id }, {
-//             $pullAll: {
-//                 discount: [{service: req.body.service}],
-//             },
-//         });
+        if(req.body.reason)
+        {
+            if (bill) {
+                bill = await Bill.findOneAndUpdate(
+                    {
+                        allocateid: req.body.allocateid,
+                    },
+                    {
+                        payment: bill[0].payment - req.body.charge,
+                        subtotal: bill[0].subtotal - req.body.charge,
+                    },
+                    {
+                        new: true
+                    }
+                )
+            }
+    
+            bill = await Bill.findOneAndUpdate(
+                {
+                    allocateid: req.body.allocateid
+                },
+                {
+                    $pull: {
+                        discount: { service: req.body.service }
+                    },
+                },
+                {
+                    new: true,
+                }
+            );
+            res.json(bill)
+        }
+        else{
+            return res.status(401).send("Reason Box is Empty")
+        }
+        
 
-//         res.json(bill)
-//     }
-//     catch(err) {
-//         console.log(err.message);
-//     }
-// })
+        
+
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+})
 
 
 

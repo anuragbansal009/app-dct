@@ -410,13 +410,15 @@ export class BillComponent implements OnInit {
   refundList: any = [];
   refundReason: any
 
-  refundFunc(allocateid: any, service: any) {
+  refundFunc(allocateid: any, service: any, charge: any) {
     const temp = {
       refunds: this.refundList,
       reason: this.refundReason
     }
+    this.http.post(environment.refundBill, {allocateid: allocateid, service: service, charge: charge, reason: this.refundReason}).subscribe((res)=>{
+      console.log(res)
+    })
 
-    console.log(allocateid)
   }
 
   prevDue: any;
