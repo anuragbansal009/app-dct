@@ -54,6 +54,10 @@ const BillSchema = new Schema({
     date: {
         type: String,
         default: Date.now,
+    },
+    totalpaid: {
+        type: Number,
+        default: 0,
     }
 
 })
