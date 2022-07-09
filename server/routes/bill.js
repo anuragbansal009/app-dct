@@ -200,25 +200,25 @@ router.post('/patient/bill/:id', async (req, res) => {
                         )
                     }
 
-                    let totalAmount = await Bill.findOne({ _id: req.params.id })
+                    // let totalAmount = await Bill.findOne({ _id: req.params.id })
 
-                    if (!totalAmount.payment) {
-                        totalAmount.payment = 0
-                    }
+                    // if (!totalAmount.payment) {
+                    //     totalAmount.payment = 0
+                    // }
 
-                    if (!totalAmount.subtotal) {
-                        totalAmount.subtotal = 0
-                    }
+                    // if (!totalAmount.subtotal) {
+                    //     totalAmount.subtotal = 0
+                    // }
 
-                    letfindpatient = await Bill.findOneAndUpdate(
-                        {
-                            _id: req.params.id
-                        },
-                        {
-                            payment: totalAmount.payment + payment,
-                            subtotal: totalAmount.subtotal + subtotal,
-                        }
-                    )
+                    // letfindpatient = await Bill.findOneAndUpdate(
+                    //     {
+                    //         _id: req.params.id
+                    //     },
+                    //     {
+                    //         payment: totalAmount.payment + payment,
+                    //         subtotal: totalAmount.subtotal + subtotal,
+                    //     }
+                    // )
 
                     if (bill.payment < bill.subtotal && bill.payment !== 0) {
                         findpatient = await Patient.findOneAndUpdate(
