@@ -336,9 +336,17 @@ router.post('/patient/getmobile', async (req, res) => {
 
     res.json(patients)
 
-
 })
 
+router.post('/patient/patientbills', async (req, res) => {
+    try {
+        let patient = await Patient.find({ name: req.body.name, mobile: req.body.mobile });
+        res.json(patient)
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+})
 
 module.exports = router
 

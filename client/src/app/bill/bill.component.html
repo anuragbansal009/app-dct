@@ -668,8 +668,32 @@
                     </div>
                     <div class="col-md-2 col-sm-12 text-center mb-2">
                         <mat-dialog-actions style="display: block">
-                            <mat-icon mat-raised-button color="primary" 
+
+                            <button *ngIf="row.status == 'Paid' && row.age" type="submit"
+                                (click)="refundFunc(row.allocateid, service.service, service.charges)" mat-raised-button
+                                >
+                                <mat-icon [mat-dialog-close] mat-raised-button color="primary">delete</mat-icon>
+                            </button>
+                            <button *ngIf="row.status == 'Pending' && row.age" type="submit"
+                                (click)="refundFunc(row.allocateid, service.service, service.charges)" disabled
+                                mat-raised-button>
+                                <mat-icon  mat-raised-button color="primary">delete</mat-icon>
+                            </button>
+                            <button *ngIf="row.status == 'Unpaid' && row.age" type="submit"
+                                (click)="refundFunc(row.allocateid, service.service, service.charges)" disabled
+                                mat-raised-button>
+                                <mat-icon  mat-raised-button color="primary">delete</mat-icon>
+                            </button>
+
+                            <!-- <mat-icon *ngIf="row.status == 'Paid' && row.age" mat-raised-button color="primary" 
                             type="submit" (click)="refundFunc(row.allocateid, service.service, service.charges)">delete</mat-icon>
+
+                            <mat-icon *ngIf="row.status == 'Pending' && row.age" disabled mat-raised-button color="primary" 
+                            type="submit" (click)="refundFunc(row.allocateid, service.service, service.charges)">delete</mat-icon>
+
+                            <mat-icon *ngIf="row.status == 'Unpaid' && row.age" disabled mat-raised-button color="primary" 
+                            type="submit" (click)="refundFunc(row.allocateid, service.service, service.charges)">delete</mat-icon> -->
+
                         </mat-dialog-actions>
                     </div>
                 </div>

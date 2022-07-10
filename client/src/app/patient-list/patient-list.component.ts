@@ -13,6 +13,7 @@ import { VitalsComponent } from '../vitals/vitals.component';
 import { DateAdapter } from '@angular/material/core';
 import { BillInvoiceComponent } from '../bill-invoice/bill-invoice.component';
 import { PatientDetailsComponent } from '../patient-details/patient-details.component';
+import { RefundComponent } from '../refund/refund.component';
 import { environment } from 'src/environments/environment';
 
 export interface PeriodicElement {
@@ -58,7 +59,7 @@ export class PatientListComponent implements OnInit {
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
 
-  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'update', 'status', 'print'];
+  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'update','refund', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
 
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe, private dateAdapter: DateAdapter<Date>) {
@@ -176,6 +177,17 @@ export class PatientListComponent implements OnInit {
   updateEmployee(id: number) {
     // this.router.navigate(['update-patient', id]);
     const dialogRef = this.dialog.open(UpdatePatientComponent, {
+      data: { id: id },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.getallpatients();
+    });
+  }
+
+  refundAmount(id: number) {
+    // this.router.navigate(['update-patient', id]);
+    const dialogRef = this.dialog.open(RefundComponent, {
       data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result => {

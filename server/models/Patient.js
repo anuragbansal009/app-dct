@@ -63,6 +63,9 @@ const PatientSchema = new Schema({
         type: Boolean,
         default: false
     },
+    discount: {
+        type: Array,
+    },
     dor: {
         type: String,
         defualt: Date.now(),
