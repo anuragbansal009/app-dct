@@ -433,13 +433,22 @@ export class BillComponent implements OnInit {
         this.selectedservice = this.bill.at(-1).labcharges
         this.selectedlabtest = this.bill.at(-1).labtests
         if (this.bill.at(-1).subtotal) {
-          this.subtotal = this.bill.at(-1).subtotal - this.bill.at(-1).payment
+          this.subtotal = this.bill.at(-1).subtotal - this.bill.at(-1).payment 
+          if (this.bill.at(-1).totalDiscount) {
+            this.subtotal = this.subtotal - this.bill.at(-1).totalDiscount
+          }
           if (this.bill.at(-1).payment) {
             this.inputpayment = this.bill.at(-1).payment
             this.prevDue = this.bill.at(-1).subtotal - this.bill.at(-1).payment
+            if (this.bill.at(-1).totalDiscount) {
+              this.prevDue = this.prevDue - this.bill.at(-1).totalDiscount
+            }
           }
           else {
             this.prevDue = this.bill.at(-1).subtotal
+            if (this.bill.at(-1).totalDiscount) {
+              this.prevDue = this.prevDue - this.bill.at(-1).totalDiscount
+            }
           }
         }
         if (this.bill.at(-1).paymentmode) {

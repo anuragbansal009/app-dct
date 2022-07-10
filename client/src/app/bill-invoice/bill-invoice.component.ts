@@ -93,58 +93,38 @@ export class BillInvoiceComponent implements OnInit {
   getData() {
     this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
       this.list = res
-      console.log(this.list[0])
-      this.patientName = this.list[0].name;
-      this.patientMobileNumber = '+91-' + this.list[0].mobile;
-      this.patientId = this.list[0].allocateid;
-      this.referredBy = 'Dr. ' + this.list[0].doctor_name;
+      this.patientName = this.list.at(-1).name;
+      this.patientMobileNumber = '+91-' + this.list.at(-1).mobile;
+      this.patientId = this.list.at(-1).allocateid;
+      this.referredBy = 'Dr. ' + this.list.at(-1).doctor_name;
       this.billDate = Math.floor(Date.now() / this.interval) * this.interval
-      this.billNumber = this.list[0].allocateid;
+      this.billNumber = this.list.at(-1).allocateid;
       this.billStatus = this.status;
-      this.list[0].labcharges.forEach((element: { service: any; charges: any; gst: any }) => {
+
+      console.log(this.services)
+      this.list.at(-1).discount.forEach((element: { service: any; charges: any; gst: any; discount: any }) => {
         this.temp3 = 0
-        this.list[0].discount.forEach((element2: { service: any; discount: any; }) => {
-          if(element2.service == element.service) {
-            this.temp3 = element2.discount
-          }
-        });
         this.tempS = {
           serviceName: element.service,
           servicePrice: element.charges,
-          serviceDiscount: this.temp3,
-          serviceNetPrice: element.charges * 1.18,
+          serviceDiscount: element.charges * (element.discount / 100),
+          serviceNetPrice: element.charges - (element.charges * (element.discount / 100)),
         }
         this.services.push(this.tempS);
       });
-
-      console.log(this.services)
-      this.list[0].labtests.forEach((element: { labtest: any; charges: any; gst: any }) => {
-        this.temp3 = 0
-        this.list[0].discount.forEach((element2: { service: any; discount: any; }) => {
-          if(element2.service == element.labtest) {
-            this.temp3 = element2.discount
-          }
-        });
-        this.tempS = {
-          serviceName: element.labtest,
-          servicePrice: element.charges,
-          serviceDiscount: this.temp3,
-          serviceNetPrice: element.charges * 1.18,
-        }
-        this.services.push(this.tempS);
-      });
-      this.billedAmount = this.list[0].subtotal
-      this.recievedAmount = this.list[0].payment
-      this.discountedAmount = this.list[0].discount
+      this.billedAmount = this.list.at(-1).subtotal
+      this.recievedAmount = this.list.at(-1).payment
+      this.discountedAmount = this.list.at(-1).totalDiscount
       if(this.discountedAmount == null || this.discountedAmount == 0){
         this.discountedAmount = 0
       }
-      this.finalAmount = this.billedAmount;
-      // this.finalAmount = this.billedAmount - this.discountedAmount;
+      // this.finalAmount = this.billedAmount;
+      this.finalAmount = this.billedAmount - this.discountedAmount;
       this.balanceAmount = this.finalAmount - this.recievedAmount;
-      this.paymentMode = this.list[0].paymentmode
+      this.paymentMode = this.list.at(-1).paymentmode
       this.amountInWords = this.inWords(this.finalAmount)
     })
+    console.log(this.services)
   }
 
 }

@@ -133,7 +133,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                 )
             }
 
-            if (bill.payment < bill.subtotal && bill.payment !== 0) {
+            if (bill.payment < bill.subtotal - bill.totalDiscount && bill.payment !== 0) {
                 findpatient = await Patient.findOneAndUpdate(
                     {
                         _id: req.params.id
@@ -144,7 +144,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                 )
             }
 
-            if (bill.payment == bill.subtotal) {
+            if (bill.payment == bill.subtotal - bill.totalDiscount) {
 
                 findpatient = await Patient.findOneAndUpdate(
                     {
@@ -216,7 +216,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                     //     }
                     // )
 
-                    if (bill.payment < bill.subtotal && bill.payment !== 0) {
+                    if (bill.payment < bill.subtotal - bill.totalDiscount && bill.payment !== 0) {
                         findpatient = await Patient.findOneAndUpdate(
                             {
                                 _id: req.params.id
@@ -227,7 +227,7 @@ router.post('/patient/bill/:id', async (req, res) => {
                         )
                     }
 
-                    if (bill.payment == bill.subtotal) {
+                    if (bill.payment == bill.subtotal - bill.totalDiscount) {
 
                         findpatient = await Patient.findOneAndUpdate(
                             {
