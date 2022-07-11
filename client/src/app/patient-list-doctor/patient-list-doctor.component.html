@@ -1,0 +1,160 @@
+
+<div class="container-fluid mt-4 col-sm-12">
+    <div class="row mx-auto justify-content-md-center" style="text-align: center;">
+      <div class="col-md-3 col-sm-12 text-end wrapper">
+        <div class="search_box" style="width: 100%">
+          <input type="text" class="input_search" placeholder="Search" (keyup)="applyFilter($event)" style="width: 250px">
+          <div class="search_btn" style="margin-left: 15px">
+            <mat-icon>search</mat-icon>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 col-sm-12 text-start wrapper">
+        <div class="search_box">
+          <input matInput [matDatepicker]="picker" placeholder="Slot Date" id="filterdate"
+            (dateChange)="filterallpatients($event)" [defaultValue]="todayDate | date: 'dd/MM/yyyy'" class="input_search">
+          <div class="search_btn" style="margin-left: 15px;">
+            <mat-datepicker-toggle matSuffix [for]="picker" style="color: white !important"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </div>
+        </div>
+      </div>
+    </div>
+  
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+  
+        <ng-container matColumnDef="allocateid">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient ID </th>
+          <td class="allocateid" mat-cell *matCellDef="let row" (click)="handledetails(row.allocateid)"> {{row.allocateid}} </td>
+        </ng-container>
+  
+        <!-- Progress Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Name </th>
+          <td mat-cell *matCellDef="let row"> {{row.name | titlecase}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="vitals">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Patient Vitals </th>
+          <td mat-cell *matCellDef="let row">
+            <div class="vitals btn dropdown-toggle" mat-raised-button (click)="handlevitals(row.allocateid)"
+              color="primary" #tooltip="matTooltip" matTooltip="{{row.vitalTooltip}}" [matTooltipPosition]="'right'">
+              <mat-icon *ngIf="row.vitalTooltip == ''">info</mat-icon>
+              <mat-icon *ngIf="row.vitalTooltip != ''" class="greencolor">info</mat-icon></div>
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="doctor">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Doctor Name </th>
+          <td mat-cell *matCellDef="let row"> <strong>Dr. {{row.doctor_name | titlecase}} </strong></td>
+        </ng-container>
+  
+        <ng-container matColumnDef="slotdate">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Date </th>
+          <td mat-cell *matCellDef="let row"> {{row.slotdate}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="slottime">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Appointment Time </th>
+          <td mat-cell *matCellDef="let row"> {{row.time}} </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="followup">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Follow Up </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-icon *ngIf="row.followup == false" class="redcolor">close</mat-icon>
+            <mat-icon *ngIf="row.followup == true" class="greencolor">check</mat-icon>
+  
+          </td>
+        </ng-container>
+  
+        <ng-container matColumnDef="prescription">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Prescription </th>
+          <td mat-cell *matCellDef="let row" class="text-center"> <button (click)="handlePrescription(row.allocateid)"
+              mat-icon-button color="primary" aria-label="Example icon-button with a heart icon">
+              <i class="fa-solid fa-capsules"></i>
+            </button> </td>
+  
+        </ng-container>
+
+        <ng-container matColumnDef="update">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Update </th>
+          <td mat-cell *matCellDef="let row" class="text-center"> <button (click)="updateEmployee(row.allocateid)"
+              mat-icon-button color="primary" aria-label="Example icon-button with a heart icon">
+              <mat-icon>edit</mat-icon>
+            </button> </td>
+  
+        </ng-container>
+  
+        <ng-container matColumnDef="refund">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Refund </th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <button *ngIf="row.status == 'Paid' && row.age" (click)="refundAmount(row.allocateid)" mat-raised-button class="refund">
+              Refund
+            </button>
+            <button *ngIf="row.status == 'Pending' && row.age" (click)="refundAmount(row.allocateid)" mat-raised-button class="refund">
+              Refund
+            </button>
+            <button *ngIf="row.status == 'Unpaid' && row.age" (click)="refundAmount(row.allocateid)" disabled mat-raised-button class="refund">
+              Refund
+            </button>
+            <button *ngIf="!row.age" (click)="handleBill(row.allocateid)" mat-raised-button disabled class="refund">
+              Refund
+            </button>
+          </td>
+  
+        </ng-container>
+  
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Status </th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <button *ngIf="row.status == 'Paid' && row.age" (click)="handleBill(row._id)" mat-raised-button class="success">
+              {{row.status}}
+            </button>
+            <button *ngIf="row.status == 'Pending' && row.age" (click)="handleBill(row._id)" mat-raised-button class="warning">
+              {{row.status}}
+            </button>
+            <button *ngIf="row.status == 'Unpaid' && row.age" (click)="handleBill(row._id)" mat-raised-button color="warn">
+              {{row.status}}
+            </button>
+            <button *ngIf="!row.age" (click)="handleBill(row._id)" mat-raised-button disabled color="warn">
+              Temporary
+            </button>
+          </td>
+  
+        </ng-container>
+  
+        <ng-container matColumnDef="print">
+          <th mat-header-cell *matHeaderCellDef class="text-center"> Bill Print </th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <button *ngIf="row.status == 'Paid'" (click)="handleprint(row._id, 'Paid')" mat-icon-button class="greencolor">
+              <mat-icon>print</mat-icon>
+            </button>
+            <button class="print" *ngIf="row.status == 'Pending'" (click)="handleprint(row._id, 'Pending')"
+            mat-icon-button class="greencolor">
+              <mat-icon>print</mat-icon>
+            </button>
+            <button *ngIf="row.status == 'Unpaid'" (click)="handleprint(row._id, 'Unpaid')" disabled="true"
+            mat-icon-button class="redcolor">
+            <mat-icon>print</mat-icon>
+            </button>
+          </td>
+  
+        </ng-container>  
+  
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell text-center" colspan="9">No Appointments for the day!</td>
+        </tr>
+      </table>
+  
+  
+  
+      <mat-paginator [pageSizeOptions]="[25, 50, 75, 100]" aria-label="Select page of users"></mat-paginator>
+    </div>
+  
+  </div>

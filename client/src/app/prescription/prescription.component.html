@@ -1,0 +1,214 @@
+<div>
+
+    <mat-dialog-actions style=" margin-top: -20px">
+        <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+            <button mat-icon-button mat-dialog-close>
+                <mat-icon>close</mat-icon>
+            </button>
+        </span>
+    </mat-dialog-actions>
+    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Prescription</h1>
+
+    <hr>
+
+    <div *ngIf="!post" novalidate>
+        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
+
+            <div class="container-fluid">
+                <mat-dialog-content>
+                    <div class="row">
+                        <div class="col-md-6 col-sm-12" *ngIf="patientDetails">
+                            <div class="row p-2" *ngIf="patientDetails.name">
+                                <div class="col-6">
+                                    <strong>
+                                        Name:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientDetails.name }}
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientDetails.age">
+                                <div class="col-6">
+                                    <strong>
+                                        Age:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientDetails.age }}
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientDetails.bloodgroup">
+                                <div class="col-6">
+                                    <strong>
+                                        Blood Group:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientDetails.bloodgroup }}
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientDetails.gender">
+                                <div class="col-6">
+                                    <strong>
+                                        Gender:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientDetails.gender }}
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientDetails.followup">
+                                <div class="col-6">
+                                    <strong>
+                                        Follow Up:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientDetails.followup | yesNo }}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 col-sm-12" *ngIf="patientVitals">
+                            <div class="row p-2" *ngIf="patientVitals.weight">
+                                <div class="col-6">
+                                    <strong>
+                                        Weight:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientVitals.weight }} Kg
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientVitals.height">
+                                <div class="col-6">
+                                    <strong>
+                                        Height:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientVitals.height }} cm
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientVitals.fewer">
+                                <div class="col-6">
+                                    <strong>
+                                        Temperature:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientVitals.fewer }} F
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientVitals.sbp && patientVitals.dbp">
+                                <div class="col-6">
+                                    <strong>
+                                        Blood Pressure:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientVitals.sbp }} / {{ patientVitals.dbp }} mmHg
+                                </div>
+                            </div>
+                            <div class="row p-2" *ngIf="patientVitals.pulse">
+                                <div class="col-6">
+                                    <strong>
+                                        Pulse:
+                                    </strong>
+                                </div>
+                                <div class="col-6">
+                                    {{ patientVitals.pulse }} bpm
+                                </div>
+                            </div>
+                            <!-- <div *ngIf="patientVitals.fields">
+                                <div class="row p-2" *ngFor="let item of extraFields; let i=index">
+                                    <div class="col-6">
+                                        <strong>
+                                            {{ extraFields[i] }}:
+                                        </strong>
+                                    </div>
+                                    <div class="col-6">
+                                        {{ extraFieldsValues[i] }}
+                                    </div>
+                                </div>
+                            </div> -->
+                        </div>
+                    </div>
+
+                    <div class="row mt-5 mb-5">
+                        <mat-form-field class="example-chip-list" appearance="outline">
+                            <mat-label>Medicines</mat-label>
+                            <mat-chip-list #chipList aria-label="Medicines">
+                              <mat-chip
+                                *ngFor="let medicine of medicines"
+                                (removed)="remove(medicine)">
+                                {{medicine}}
+                                <button matChipRemove>
+                                  <mat-icon class="whiteIcon">cancel</mat-icon>
+                                </button>
+                              </mat-chip>
+                              <input
+                                placeholder="Add Medicines..."
+                                #medicineInput
+                                [formControl]="medicineCtrl"
+                                [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)">
+                            </mat-chip-list>
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                              <mat-option *ngFor="let medicine of filteredmedicines | async" [value]="medicine">
+                                {{medicine}}
+                              </mat-option>
+                            </mat-autocomplete>
+                          </mat-form-field>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4 col-sm-12" *ngFor="let input of inputs; let i = index;"
+                            formGroupName="fields">
+                            <mat-form-field appearance="outline" class="form-element" style="width: 225px">
+                                <mat-label>{{input}}</mat-label>
+                                <input matInput placeholder="{{input}}" formControlName="{{input}}">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    
+                </mat-dialog-content>
+                <mat-dialog-actions class="text-center mx-auto">
+                    <div class="row text-center mx-auto" style="width: 100%;">
+                        <div class="col-md-3">
+                            <div class="form-element">
+                                <button mat-raised-button color="primary" type="submit" class="button"
+                                    [mat-dialog-close]="true">Save</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-element">
+                                <button mat-raised-button color="accent" class="button" (click)="addField()">Save Template
+                                    </button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-element">
+                                <button mat-raised-button color="accent" class="button" mat-dialog-close>Load Template</button>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-element">
+                                <button mat-raised-button color="warn" class="button" mat-dialog-close>Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert alert-success" role="alert" *ngIf="showSuccess">
+                        Vitals Added Successfully
+                    </div>
+                    <div class="alert alert-danger" role="alert" *ngIf="showError">
+                        {{ errorString }}
+                    </div>
+                </mat-dialog-actions>
+            </div>
+
+        </form>
+    </div>
+</div>

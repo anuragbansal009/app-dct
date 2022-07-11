@@ -43,6 +43,8 @@ import { ServicesModule } from './services/services.module';
 import { LabtestsModule } from './labtests/labtests.module';
 import { RefundModule } from './refund/refund.module';
 import { LabtestsComponent } from './labtests/labtests.component';
+import { PrescriptionModule } from './prescription/prescription.module';
+import { PatientListDoctorModule } from './patient-list-doctor/patient-list-doctor.module';
 
 @NgModule({
   declarations: [
@@ -84,7 +86,9 @@ import { LabtestsComponent } from './labtests/labtests.component';
       useFactory: adapterFactory,
     }),
     NgbPopoverModule,
-    TemporaryRegistrationModule    
+    TemporaryRegistrationModule,
+    PrescriptionModule,
+    PatientListDoctorModule
   ],
   providers: [NavbarService],
   bootstrap: [AppComponent]
