@@ -364,5 +364,26 @@ router.post('/patient/patientvisits', async (req, res) => {
     }
 })
 
+router.delete('/patient/cancel/:id', async (req, res) => {
+
+    try {
+        let patient = await Patient.find({allocateid: req.params.id})
+
+        if (!patient) {
+            return res.status(401).send("patient Not found")
+        }
+
+        patient = await Patient.findOneAndDelete({allocateid: req.params.id})
+        let bill = await Bill.findOneAndDelete({allocateid: req.params.id})
+        res.json({ "Deleted": "Appointment Canceled successfully", patient: patient });
+
+        
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error occured");
+    }
+    
+})
+
 module.exports = router
 

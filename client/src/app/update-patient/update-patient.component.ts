@@ -42,6 +42,7 @@ export class UpdatePatientComponent implements OnInit {
   inputdate: any = ''
   inputtime: any = ''
   doctors: any;
+  status:any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {id: any},
@@ -55,6 +56,8 @@ export class UpdatePatientComponent implements OnInit {
   ngOnInit() {
 
     this.id = this.data.id;
+
+    console.log(this.id)
 
     this.alldoctors()
 
@@ -71,6 +74,7 @@ export class UpdatePatientComponent implements OnInit {
       this.inputdoctor = this.patient[0].doctor_name
       this.inputdate = this.patient[0].slotdate
       this.inputtime = this.patient[0].time
+      this.status = this.patient[0].status
 
     })
 
@@ -88,6 +92,35 @@ export class UpdatePatientComponent implements OnInit {
     });
 
     // this.createForm();
+  }
+
+  cancelAppointment()
+  {
+    this.http.delete(environment.deletePatient + this.id).subscribe({
+      next: res => {
+        this.snackBar.open('Appointment Canceled Successfully', 'Close', {
+          duration: 3000,
+        });
+        this.showSuccess = true;
+        this.router.navigate(['doctordashboard']);
+      },
+      error: error => {
+        if (error.status === 401) {
+          this.showError = true;
+          this.errorString = 'Error! Patient Not found';
+        }
+        else if (error.status === 500) {
+          this.showError = true;
+          this.errorString = 'Error!';
+        }
+        else {
+          this.showError = true;
+          this.errorString = 'Error! Please Try Again';
+        }
+        console.error('There was an error!', error);
+      }
+    })
+
   }
 
   alldoctors()
@@ -154,7 +187,7 @@ export class UpdatePatientComponent implements OnInit {
         }
         else if (error.status === 500) {
           this.showError = true;
-          this.errorString = 'Error! User Already Registered';
+          this.errorString = 'Error!';
         }
         else {
           this.showError = true;

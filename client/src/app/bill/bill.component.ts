@@ -602,7 +602,7 @@ export class BillComponent implements OnInit {
   }
 
   handleclose() {
-    window.location.reload();
+    this.router.navigate(['doctordashboard']);
   }
 
 

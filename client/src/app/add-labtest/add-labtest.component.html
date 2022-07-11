@@ -36,7 +36,7 @@
                                         <mat-form-field appearance="outline" class="form-element">
                                             <mat-label>Doctor Name</mat-label>
                                             <mat-select placeholder="Doctor Name" formControlName="doctor_name">
-                                                <mat-option *ngFor="let doctor of doctors" value="{{doctor}}">{{doctor}}</mat-option>
+                                                <mat-option *ngFor="let doctor of everydoctor" value="{{doctor}}">{{doctor}}</mat-option>
                                             </mat-select>
                                             <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
                                                 {{ titleAlert }}
@@ -58,7 +58,7 @@
                             <mat-dialog-actions>
                                 <div class="form-element">
                                     <button mat-raised-button color="primary" type="submit" class="button"
-                                        [disabled]="!formGroup.valid" [mat-dialog-close]="true">Submit</button>
+                                        [disabled]="!formGroup.valid" >Submit</button>
                                 </div>
                             </mat-dialog-actions>
                             <div class="alert alert-success" role="alert" *ngIf="showSuccess">

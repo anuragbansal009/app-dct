@@ -8,7 +8,8 @@
             </button>
         </span>
     </mat-dialog-actions>
-    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Update Patient Details</h1>
+    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Update Patient
+        Details</h1>
 
     <hr>
 
@@ -17,122 +18,126 @@
 
             <div class="container-fluid">
                 <mat-dialog-content>
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Name</mat-label>
-                            <input matInput placeholder="Name" value={{inputname}} formControlName="name">
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Name</mat-label>
+                                <input matInput placeholder="Name" value={{inputname}} formControlName="name">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Doctor Name</mat-label>
+                                <mat-select placeholder="Doctor Name" formControlName="doctor_name"
+                                    [(value)]="inputdoctor">
+                                    <mat-option *ngFor="let doctor of doctors" value="{{doctor}}">{{doctor}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Doctor Name</mat-label>
-                            <mat-select placeholder="Doctor Name" formControlName="doctor_name" [(value)]="inputdoctor">
-                                <mat-option *ngFor = "let doctor of doctors" value="{{doctor}}">{{doctor}}</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Gender</mat-label>
+                                <mat-select placeholder="Gender" formControlName="gender" [(value)]="inputgender">
+                                    <mat-option value="Male">Male</mat-option>
+                                    <mat-option value="Female">Female</mat-option>
+                                    <mat-option value="Other">Other</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formGroup.controls['gender'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Age</mat-label>
+                                <span matSuffix>Years</span>
+                                <input matInput placeholder="Age" value={{inputage}} formControlName="age">
+                                <mat-error *ngIf="formGroup.controls['age'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Bloodgroup</mat-label>
+                                <mat-select placeholder="Blood Group" formControlName="bloodgroup"
+                                    [(value)]="inputbloodgroup">
+                                    <mat-option value="O+">O+</mat-option>
+                                    <mat-option value="O-">O-</mat-option>
+                                    <mat-option value="A+">A+</mat-option>
+                                    <mat-option value="A-">A-</mat-option>
+                                    <mat-option value="B+">B+</mat-option>
+                                    <mat-option value="B-">B-</mat-option>
+                                    <mat-option value="AB">AB+</mat-option>
+                                    <mat-option value="AB">AB-</mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="formGroup.controls['bloodgroup'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Gender</mat-label>
-                            <mat-select placeholder="Gender" formControlName="gender" [(value)]="inputgender">
-                                <mat-option value="Male">Male</mat-option>
-                                <mat-option value="Female">Female</mat-option>
-                                <mat-option value="Other">Other</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="formGroup.controls['gender'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-5">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Mobile</mat-label>
+                                <input matInput placeholder="Mobile" value={{inputmobile}} formControlName="mobile">
+                                <mat-icon matSuffix>call</mat-icon>
+                                <mat-error *ngIf="formGroup.controls['mobile'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-5">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>City</mat-label>
+                                <input matInput placeholder="City" value={{inputcity}} formControlName="city">
+                                <mat-error *ngIf="formGroup.controls['city'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-2">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Pin</mat-label>
+                                <input matInput placeholder="Pin" value={{inputpin}} formControlName="pin">
+                                <mat-error *ngIf="formGroup.controls['pin'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Age</mat-label>
-                            <span matSuffix>Years</span>
-                            <input matInput placeholder="Age" value={{inputage}} formControlName="age">
-                            <mat-error *ngIf="formGroup.controls['age'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Slot Date</mat-label>
+                                <input matInput [matDatepicker]="picker" value="{{inputdate}}" placeholder="Slot Date"
+                                    formControlName="slotdate">
+                                <mat-hint>DD/MM/YYYY</mat-hint>
+                                <mat-error *ngIf="formGroup.controls['slotdate'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Time</mat-label>
+                                <input matInput type="time" value="{{inputtime}}" placeholder="Slot Time"
+                                    formControlName="time">
+                                <mat-error *ngIf="formGroup.controls['time'].touched">
+                                    {{ titleAlert }}
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
                     </div>
-                    <div class="col-md-4">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Bloodgroup</mat-label>
-                            <mat-select placeholder="Blood Group" formControlName="bloodgroup"
-                                [(value)]="inputbloodgroup">
-                                <mat-option value="O+">O+</mat-option>
-                                <mat-option value="O-">O-</mat-option>
-                                <mat-option value="A+">A+</mat-option>
-                                <mat-option value="A-">A-</mat-option>
-                                <mat-option value="B+">B+</mat-option>
-                                <mat-option value="B-">B-</mat-option>
-                                <mat-option value="AB">AB+</mat-option>
-                                <mat-option value="AB">AB-</mat-option>
-                            </mat-select>
-                            <mat-error *ngIf="formGroup.controls['bloodgroup'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-5">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Mobile</mat-label>
-                            <input matInput placeholder="Mobile" value={{inputmobile}} formControlName="mobile">
-                            <mat-icon matSuffix>call</mat-icon>
-                            <mat-error *ngIf="formGroup.controls['mobile'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-5">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>City</mat-label>
-                            <input matInput placeholder="City" value={{inputcity}} formControlName="city">
-                            <mat-error *ngIf="formGroup.controls['city'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-2">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Pin</mat-label>
-                            <input matInput placeholder="Pin" value={{inputpin}} formControlName="pin">
-                            <mat-error *ngIf="formGroup.controls['pin'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Slot Date</mat-label>
-                            <input matInput [matDatepicker]="picker" value="{{inputdate}}" placeholder="Slot Date" formControlName="slotdate">
-                            <mat-hint>DD/MM/YYYY</mat-hint>
-                            <mat-error *ngIf="formGroup.controls['slotdate'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                            <mat-datepicker #picker></mat-datepicker>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-md-6">
-                        <mat-form-field appearance="outline" class="form-element">
-                            <mat-label>Time</mat-label>
-                            <input matInput type="time" value="{{inputtime}}" placeholder="Slot Time" formControlName="time">
-                            <mat-error *ngIf="formGroup.controls['time'].touched">
-                                {{ titleAlert }}
-                            </mat-error>
-                        </mat-form-field>
-                    </div>
-                </div>
                 </mat-dialog-content>
                 <mat-dialog-actions class="text-center mx-auto">
                     <div class="row text-center mx-auto" style="width: 100%;">
@@ -143,10 +148,16 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="form-element">
-                                <button mat-raised-button color="warn" class="button" mat-dialog-close>Cancel</button>
+                            <div *ngIf="status == 'Unpaid'" class="form-element">
+                                <button  mat-raised-button color="warn" class="button"
+                                    (click)="cancelAppointment()" mat-dialog-close>Cancel Appointment</button>
+                            </div>
+                            <div *ngIf="status != 'Unpaid'" class="form-element">
+                                <button  mat-raised-button color="warn" class="button"
+                                    (click)="cancelAppointment()" disabled mat-dialog-close>Cancel Appointment</button>
                             </div>
                         </div>
+                        
                     </div>
                     <div class="alert alert-success" role="alert" *ngIf="showSuccess">
                         User Created Successfully
