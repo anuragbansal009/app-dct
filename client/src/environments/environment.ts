@@ -11,6 +11,7 @@ export const environment = {
   doctorRegistrationAPI: 'http://localhost:5000/api/doctor',
   getAllDoctors: 'http://localhost:5000/api/getdoctor',
   getOneService: 'http://localhost:5000/api/services/getoneservice',
+  getOneLabtest: 'http://localhost:5000/api/labtest/getonelabtest',
   adminLogin: 'http://localhost:5000/api/admin/login',
   doctorRegistration: 'http://localhost:4200/doctorregistration',
   patientRegistrationAPI: 'http://localhost:5000/api/patient/create',
@@ -36,12 +37,16 @@ export const environment = {
   patientFilter: 'http://localhost:5000/api/patient/filter',
   updatePatient: 'http://localhost:5000/api/patient/updatepatient/',
   updateService: 'http://localhost:5000/api/services/updateservice/',
+  updateLabtest: 'http://localhost:5000/api/labtest/updatelabtest/',
   deleteService: 'http://localhost:5000/api/services/delete',
   doctorDashboard: 'http://localhost:4200/doctordashboard',
   getServicesDoc: 'http://localhost:5000/api/services/getdoc',
+  getLabtestDoc: 'http://localhost:5000/api/labtest/getdoc',
   patientBills: 'http://localhost:5000/api/patient/patientbills',
   refundBill: 'http://localhost:5000/api/patient/refund',
-  refundBillAmount: 'http://localhost:5000/api/bill/refund'
+  refundBillAmount: 'http://localhost:5000/api/bill/refund',
+  patientVisit: 'http://localhost:5000/api/patient/patientvisits',
+  deleteLabtest: 'http://localhost:5000/api/labtest/delete',
 };
 
 

@@ -17,6 +17,7 @@ import { DoctorDashboardComponent } from './doctor-dashboard/doctor-dashboard.co
 //import { UpdateBillComponent } from './update-bill/update-bill.component';
 import { BillInvoiceComponent } from './bill-invoice/bill-invoice.component';
 import { ServicesComponent } from './services/services.component';
+import { LabtestsComponent } from './labtests/labtests.component';
 
 const routes: Routes = [
   { path: 'adminregistration', component: AdminRegistrationComponent },
@@ -32,6 +33,7 @@ const routes: Routes = [
   { path: 'update-patient/:id', component: UpdatePatientComponent },
   { path: 'refund/:id', component: RefundComponent },
   { path: 'services/:id', component: ServicesComponent },
+  { path: 'labtests/:id', component: LabtestsComponent },
   { path: 'bill/:id', component: BillComponent },
   //{ path: 'updatebill/:id', component: UpdateBillComponent },
   { path: 'billsummary', component: BilSummaryComponent },

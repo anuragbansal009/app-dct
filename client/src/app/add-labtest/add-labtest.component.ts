@@ -8,6 +8,8 @@ import {
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { LabtestsComponent } from '../labtests/labtests.component';
 
 @Component({
   selector: 'app-add-labtest',
@@ -28,10 +30,10 @@ export class AddLabtestComponent implements OnInit {
   patientdata:any;
   services: any;
 
-  constructor(private formBuilder: FormBuilder, private router: Router,private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder,public dialog: MatDialog, private router: Router,private http: HttpClient) { }
 
   ngOnInit(): void {
-    this.getAllDoctors();
+    this.alldoctors();
     this.createForm();
     
   }
@@ -51,22 +53,36 @@ export class AddLabtestComponent implements OnInit {
 
   doctors: any;
   selectedDoctor: any
-  servicesPreview: any
+  labtestPreview: any
+  everydoctor: any;
 
   changePreview() {
     console.log(this.selectedDoctor)
-    this.getServices()
+    this.getLabtests()
   }
 
-  editService(i: any) {
-    console.log(i)
+
+  alldoctors() {
+    this.http.get(environment.getAllDoctors).subscribe((res) => {
+      this.everydoctor = res
+      console.log(this.everydoctor)
+    })
   }
 
-  getServices() {
-    this.http.post(environment.getServicesDoc, {doctor_name: this.selectedDoctor}).subscribe({
+  editLabtest(labtest: any, doctor: any) {
+    const dialogRef = this.dialog.open(LabtestsComponent, {
+      data: { name: labtest, doctor: doctor },
+      width: '50%',
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
+  }
+
+  deleteLabtest(labtest: any, doctor: any) {
+    this.http.post(environment.deleteLabtest, { labtest: labtest,doctor_name: doctor }).subscribe({
       next: res => {
         console.log(res)
-        this.servicesPreview = res
       },
       error: error => {
         console.log(error)
@@ -74,11 +90,12 @@ export class AddLabtestComponent implements OnInit {
     })
   }
 
-  getAllDoctors() {
-    this.http.get(environment.getAllDoctors).subscribe({
+
+  getLabtests() {
+    this.http.post(environment.getLabtestDoc, { doctor_name: this.selectedDoctor }).subscribe({
       next: res => {
         console.log(res)
-        this.doctors = res
+        this.labtestPreview = res
       },
       error: error => {
         console.log(error)

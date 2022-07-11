@@ -59,4 +59,96 @@ router.post('/labtest/get', async (req, res) => {
     }
 })
 
+router.post('/labtest/getdoc', async (req, res) => {
+    labtestList = []
+    try {
+        console.log(req)
+        const allLabtests = await Labtest.find({doctor_name: req.body.doctor_name});
+
+        allLabtests.forEach((labtest, i) => {
+            labtestList[i] = {
+                labtest: labtest.labtest,
+                charges: labtest.charges,
+                doctor_name: labtest.doctor_name
+            }
+        })
+        res.json(labtestList);
+
+    } catch (error) {
+        res.status(500).send('Error occured')
+    }
+})
+
+router.post('/labtest/getonelabtest', async (req, res) => {
+    try {
+
+        const labtest = await Labtest.find({doctor_name: req.body.doctor_name, labtest: req.body.labtest})
+        res.json(labtest)
+        
+    } catch (error) {
+        res.status(500).send('Error occured')
+    }
+})
+
+router.post('/labtest/updatelabtest/:id', async (req, res) => {
+    const {
+        labtest,
+        charges,
+        doctor_name,
+    } = req.body;
+
+    try {
+        const newLabtest = {};
+        if (labtest) {
+            newLabtest.labtest = labtest;
+        }
+        if (charges) {
+            newLabtest.charges = charges;
+        }
+        if (doctor_name) {
+            newLabtest.doctor_name = doctor_name;
+        }
+
+        let Updatedlabtest = await Labtest.findOneAndUpdate(
+            {
+                _id: req.params.id
+            },
+            {
+                $set: newLabtest
+            },
+            {
+                new: true
+            }
+        )
+
+        res.json(Updatedlabtest);
+
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error occured");
+    }
+
+})
+
+router.post('/labtest/delete', async (req, res) => {
+
+    try {
+        let labtest = await Labtest.find({labtest: req.body.labtest, doctor_name: req.body.doctor_name})
+
+        console.log(labtest)
+        if (labtest.length == 0) {
+            return res.status(401).send("labtest Not found")
+        }
+
+        labtest = await Labtest.findOneAndDelete({labtest: req.body.labtest, doctor_name: req.body.doctor_name})
+        res.json({ "Deleted": "labtest has been deleted successfully", labtest });
+        
+    } catch (err) {
+        console.log(err.message);
+        res.status(500).send("Error occured");
+    }
+    
+})
+
+
 module.exports = router

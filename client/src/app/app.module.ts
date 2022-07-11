@@ -40,7 +40,9 @@ import { NgbPopoverModule } from '@ng-bootstrap/ng-bootstrap';
 import { PatientDetailsModule } from './patient-details/patient-details.module';
 import { TemporaryRegistrationModule } from './temporary-registration/temporary-registration.module';
 import { ServicesModule } from './services/services.module';
+import { LabtestsModule } from './labtests/labtests.module';
 import { RefundModule } from './refund/refund.module';
+import { LabtestsComponent } from './labtests/labtests.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { RefundModule } from './refund/refund.module';
     RefundModule,
     BillModule,
     VitalsModule,
+    LabtestsModule,
     PatientListModule,
     PatientDetailsModule,
     DoctorLoginModule,

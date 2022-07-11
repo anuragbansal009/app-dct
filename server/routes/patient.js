@@ -73,8 +73,14 @@ router.post('/patient/create', [
 
         lastPatient = await database.collection('patients').findOne({}, { sort: { _id: -1 } });
 
-        position = lastPatient.position + 1
-        allocateid = doctor.allocateid.concat(String(position))
+        if (lastPatient) {
+            position = lastPatient.position + 1
+            allocateid = doctor.allocateid.concat(String(position))
+        }
+        else{
+            position = 1
+            allocateid = doctor.allocateid.concat(String(position))
+        }
 
         if (patientdate < followupdate) {
             patient = await Patient.create({
@@ -149,14 +155,14 @@ router.get('/patient/get', async (req, res) => {
 
 router.post('/patient/getMobile', async (req, res) => {
     try {
-        const {mobile} = req.body
+        const { mobile } = req.body
         const patient = await Patient.find({ mobile: mobile })
         res.send(patient)
     } catch (error) {
         console.log(error)
         res.status(500).send("Error occured");
     }
-    
+
 })
 
 router.post('/patient/getid', async (req, res) => {
@@ -328,8 +334,8 @@ router.post('/patient/getmobile', async (req, res) => {
     // lastPatient = await database.collection('patients').findOne({}, { sort: { _id: -1 } });
     let patients = await Patient.find(
         {
-            "$or":[
-                {name: {$regex: req.body.name}}
+            "$or": [
+                { name: { $regex: req.body.name } }
             ]
         }
     )
@@ -339,6 +345,16 @@ router.post('/patient/getmobile', async (req, res) => {
 })
 
 router.post('/patient/patientbills', async (req, res) => {
+    try {
+        let patient = await Patient.find({ name: req.body.name, mobile: req.body.mobile });
+        res.json(patient)
+    }
+    catch (err) {
+        console.log(err.message);
+    }
+})
+
+router.post('/patient/patientvisits', async (req, res) => {
     try {
         let patient = await Patient.find({ name: req.body.name, mobile: req.body.mobile });
         res.json(patient)

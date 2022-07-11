@@ -101,18 +101,6 @@ export class AddServicesComponent implements OnInit {
     })
   }
 
-  getAllDoctors() {
-    this.http.get(environment.getAllDoctors).subscribe({
-      next: res => {
-        console.log(res)
-        this.doctors = res
-      },
-      error: error => {
-        console.log(error)
-      }
-    })
-  }
-
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;

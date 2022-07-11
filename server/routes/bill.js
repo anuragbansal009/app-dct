@@ -276,56 +276,138 @@ router.post('/patient/getbill/:id', async (req, res) => {
 
 router.post('/patient/refund', async (req, res) => {
     try {
+        let charge
         let bill = await Bill.find({ allocateid: req.body.allocateid });
 
-        if (req.body.reason) {
-            if (bill) {
+        charge = req.body.charge - (req.body.charge * (req.body.discount / 100))
+
+        if(bill[0].payment > req.body.charge) 
+        {
+            if (req.body.reason) {
+                if (bill) {
+                    bill = await Bill.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid,
+                        },
+                        {
+                            payment: bill[0].payment - charge,
+                            subtotal: bill[0].subtotal - charge,
+                        },
+                        {
+                            new: true
+                        }
+                    )
+                }
+    
                 bill = await Bill.findOneAndUpdate(
                     {
-                        allocateid: req.body.allocateid,
+                        allocateid: req.body.allocateid
                     },
                     {
-                        payment: bill[0].payment - req.body.charge,
-                        subtotal: bill[0].subtotal - req.body.charge,
+                        $pull: {
+                            discount: { service: req.body.service }
+                        },
                     },
                     {
-                        new: true
+                        new: true,
                     }
-                )
+                );
+    
+                if (bill.payment == 0) {
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Unpaid",
+                        }
+                    )
+                }
+    
+                let patient = await Patient.findOneAndUpdate(
+                    {
+                        allocateid: req.body.allocateid
+                    },
+                    {
+                        $pull: {
+                            discount: { service: req.body.service }
+                        },
+                    },
+                    {
+                        new: true,
+                    }
+                );
+                res.json(bill)
+            }
+            else {
+                return res.status(401).send("Reason Box is Empty")
+            }
+        }
+        else
+        {
+            if (req.body.reason) {
+                if (bill) {
+                    bill = await Bill.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid,
+                        },
+                        {
+                            payment: 0,
+                            subtotal: bill[0].subtotal - charge,
+                        },
+                        {
+                            new: true
+                        }
+                    )
+                }
+    
+                bill = await Bill.findOneAndUpdate(
+                    {
+                        allocateid: req.body.allocateid
+                    },
+                    {
+                        $pull: {
+                            discount: { service: req.body.service }
+                        },
+                    },
+                    {
+                        new: true,
+                    }
+                );
+    
+                if (bill.payment == 0) {
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Unpaid",
+                        }
+                    )
+                }
+    
+                let patient = await Patient.findOneAndUpdate(
+                    {
+                        allocateid: req.body.allocateid
+                    },
+                    {
+                        $pull: {
+                            discount: { service: req.body.service }
+                        },
+                    },
+                    {
+                        new: true,
+                    }
+                );
+                res.json(bill)
+            }
+            else {
+                return res.status(401).send("Reason Box is Empty")
             }
 
-            bill = await Bill.findOneAndUpdate(
-                {
-                    allocateid: req.body.allocateid
-                },
-                {
-                    $pull: {
-                        discount: { service: req.body.service }
-                    },
-                },
-                {
-                    new: true,
-                }
-            );
+        }
 
-            let patient = await Patient.findOneAndUpdate(
-                {
-                    allocateid: req.body.allocateid
-                },
-                {
-                    $pull: {
-                        discount: { service: req.body.service }
-                    },
-                },
-                {
-                    new: true,
-                }
-            );
-            res.json(bill)
-        }
-        else {
-            return res.status(401).send("Reason Box is Empty")
-        }
+        
 
 
 
@@ -343,8 +425,7 @@ router.post('/bill/refund', async (req, res) => {
 
         if (req.body.reason) {
 
-            if(bill[0].payment > req.body.refund)
-            {
+            if (bill[0].payment >= req.body.refund) {
                 bill = await Bill.findOneAndUpdate(
                     {
                         allocateid: req.body.allocateid,
@@ -356,7 +437,7 @@ router.post('/bill/refund', async (req, res) => {
                         new: true,
                     }
                 )
-    
+
                 if (bill.payment == 0) {
                     findpatient = await Patient.findOneAndUpdate(
                         {
@@ -367,7 +448,7 @@ router.post('/bill/refund', async (req, res) => {
                         }
                     )
                 }
-    
+
                 if (bill.payment < bill.subtotal && bill.payment !== 0) {
                     findpatient = await Patient.findOneAndUpdate(
                         {
@@ -378,9 +459,9 @@ router.post('/bill/refund', async (req, res) => {
                         }
                     )
                 }
-    
+
                 if (bill.payment == bill.subtotal) {
-    
+
                     findpatient = await Patient.findOneAndUpdate(
                         {
                             allocateid: req.body.allocateid
@@ -389,16 +470,16 @@ router.post('/bill/refund', async (req, res) => {
                             status: "Paid",
                         }
                     )
-    
+
                 }
                 res.send(bill)
 
             }
-            else{
+            else {
                 return res.status(401).send("Refund should be less than Paid amount")
             }
 
-            
+
         }
         else {
             return res.status(401).send("Reason Box is Empty")

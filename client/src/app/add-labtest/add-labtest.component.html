@@ -6,83 +6,8 @@
             </button>
         </span>
     </mat-dialog-actions>
-    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Add Labtests</h1>
+    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Labtests</h1>
 
-    <hr>
-    <div *ngIf="!post" novalidate>
-        <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
-
-            <div class="container-fluid">
-                <mat-dialog-content>
-                    <div class="row">
-                        <div class="col-md-12">
-                            <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Labtest</mat-label>
-                                <input matInput placeholder="Labtest" formControlName="labtest">
-                                <mat-error *ngIf="formGroup.controls['labtest'].touched">
-                                    {{ titleAlert }}
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-6">
-                            <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Doctor Name</mat-label>
-                                <mat-select placeholder="Doctor Name" formControlName="doctor_name">
-                                    <mat-option *ngFor="let doctor of doctors" value="{{doctor}}">{{doctor}}</mat-option>
-                                </mat-select>
-                                <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
-                                    {{ titleAlert }}
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                        <div class="col-md-6">
-                            <mat-form-field appearance="outline" class="form-element">
-                                <mat-label>Charges</mat-label>
-                                <input matInput type="number" placeholder="Charges" formControlName="charges">
-                                <span matPrefix class="rupeePrefix">₹&nbsp;</span>
-                                <mat-error *ngIf="formGroup.controls['charges'].touched">
-                                    {{ titleAlert }}
-                                </mat-error>
-                            </mat-form-field>
-                        </div>
-                    </div>
-                </mat-dialog-content>
-                <mat-dialog-actions>
-                    <div class="form-element">
-                        <button mat-raised-button color="primary" type="submit" class="button"
-                            [disabled]="!formGroup.valid" [mat-dialog-close]="true">Submit</button>
-                    </div>
-                </mat-dialog-actions>
-                <div class="alert alert-success" role="alert" *ngIf="showSuccess">
-                    Service Added Successfully
-                </div>
-                <div class="alert alert-danger" role="alert" *ngIf="showError">
-                    {{ errorString }}
-                </div>
-            </div>
-        </form>
-
-    </div>
-</div>
-
-<div *ngFor="let services of services">
-
-    {{services.charges}}
-
-</div>
-
-
-<!-- <div class="container-fluid">
-    <mat-dialog-actions style=" margin-top: -20px">
-        <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-            <button mat-icon-button mat-dialog-close>
-                <mat-icon>close</mat-icon>
-            </button>
-        </span>
-    </mat-dialog-actions>
-    <h1 class="display-3 heading my-1 mx-auto text-center" style="margin-top: -2.75rem !important">Add Services</h1>
     <p>
         <mat-tab-group dynamicHeight mat-align-tabs="center">
             <mat-tab>
@@ -92,7 +17,7 @@
                 </ng-template>
                 <div *ngIf="!post" novalidate>
                     <form [formGroup]="formGroup" (ngSubmit)="onSubmit(formGroup.value)" class="form mx-auto">
-
+            
                         <div class="container-fluid">
                             <mat-dialog-content>
                                 <div class="row">
@@ -111,9 +36,7 @@
                                         <mat-form-field appearance="outline" class="form-element">
                                             <mat-label>Doctor Name</mat-label>
                                             <mat-select placeholder="Doctor Name" formControlName="doctor_name">
-                                                <mat-option value="doctor">doctor</mat-option>
-                                                <mat-option value="dhirendra">dhirendra</mat-option>
-                                                <mat-option value="gulshan">gulshan</mat-option>
+                                                <mat-option *ngFor="let doctor of doctors" value="{{doctor}}">{{doctor}}</mat-option>
                                             </mat-select>
                                             <mat-error *ngIf="formGroup.controls['doctor_name'].touched">
                                                 {{ titleAlert }}
@@ -123,8 +46,7 @@
                                     <div class="col-md-6">
                                         <mat-form-field appearance="outline" class="form-element">
                                             <mat-label>Charges</mat-label>
-                                            <input matInput type="number" placeholder="Charges"
-                                                formControlName="charges">
+                                            <input matInput type="number" placeholder="Charges" formControlName="charges">
                                             <span matPrefix class="rupeePrefix">₹&nbsp;</span>
                                             <mat-error *ngIf="formGroup.controls['charges'].touched">
                                                 {{ titleAlert }}
@@ -147,9 +69,10 @@
                             </div>
                         </div>
                     </form>
-
+            
                 </div>
             </mat-tab>
+
             <mat-tab>
                 <ng-template mat-tab-label>
                     <mat-icon>preview</mat-icon>
@@ -163,29 +86,34 @@
                                 width: 100%;">
                                     <mat-label>Select Doctor</mat-label>
                                     <mat-select [(ngModel)]="selectedDoctor" (ngModelChange)="changePreview()">
-                                        <mat-option *ngFor="let doc of doctors" [value]="doc">
+                                        <mat-option *ngFor="let doc of everydoctor" [value]="doc">
                                             Dr. {{doc | titlecase}}
                                         </mat-option>
                                     </mat-select>
                                 </mat-form-field>
                             </div>
                         </div>
-                        <div class="row" *ngIf="servicesPreview">
+                        <div class="row" *ngIf="labtestPreview">
                             <table class="table table-striped">
                                 <thead>
                                   <tr>
                                     <th scope="col">S.No.</th>
-                                    <th scope="col">Service Name</th>
+                                    <th scope="col">Labtest Name</th>
                                     <th scope="col">Charge</th>
+                                    <th scope="col">Edit</th>
+                                    <th scope="col">Delete</th>
                                   </tr>
                                 </thead>
                                 <tbody>
-                                  <tr *ngFor="let row of servicesPreview; let i = index">
+                                  <tr *ngFor="let row of labtestPreview; let i = index">
                                     <th scope="row" valign=middle>{{i + 1}}</th>
-                                    <td valign=middle>{{ row.service }}</td>
+                                    <td valign=middle>{{ row.labtest }}</td>
                                     <td valign=middle>{{ row.charges }}</td>
-                                    <td valign=middle><button mat-icon-button type="button" (click)="editService(i)">
+                                    <td valign=middle><button mat-icon-button type="button" (click)="editLabtest(row.labtest, row.doctor_name)">
                                         <mat-icon>edit</mat-icon>
+                                    </button></td>
+                                    <td valign=middle><button mat-icon-button type="button" [mat-dialog-close]="true" (click)="deleteLabtest(row.labtest, row.doctor_name)">
+                                        <mat-icon>delete</mat-icon>
                                     </button></td>
                                   </tr>
                                 </tbody>
@@ -196,4 +124,11 @@
             </mat-tab>
         </mat-tab-group>
     </p>
-</div> -->
+    
+</div>
+
+<div *ngFor="let services of services">
+
+    {{services.charges}}
+
+</div>

@@ -15,12 +15,14 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LabdiscountComponent } from '../labdiscount/labdiscount.component';
 import { ServicediscountComponent } from '../servicediscount/servicediscount.component';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
   selector: 'app-bill',
   templateUrl: './bill.component.html',
-  styleUrls: ['./bill.component.css']
+  styleUrls: ['./bill.component.css'],
+  providers: [DatePipe]
 })
 export class BillComponent implements OnInit {
 
@@ -97,6 +99,8 @@ export class BillComponent implements OnInit {
   labtestInputBalance: any = 0
   discountArr: any = []
   sArr: any = []
+  visits: any = []
+  visitdate: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: any },
@@ -105,7 +109,8 @@ export class BillComponent implements OnInit {
     private formBuilder: FormBuilder,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private router: Router) { }
+    private router: Router,
+    public datepipe: DatePipe) { }
 
   ngOnInit() {
 
@@ -161,8 +166,9 @@ export class BillComponent implements OnInit {
       discount: [null],
     });
 
+    
     this.patientBills()
-
+    
   }
 
   onItemDeSelect(item: any) {
@@ -192,12 +198,26 @@ export class BillComponent implements OnInit {
 
   }
 
-  patientBills() {
-    this.http.post(environment.patientBills, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
+  patientVisits() {
+    
+    this.http.post(environment.patientVisit, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       console.log('hello',res)
+      this.visits = res
+      this.visits.forEach((element: any) => {
+        element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
+      })
+      
+    })
+  }
+
+  patientBills() {
+    console.log(this.inputname)
+    this.http.post(environment.patientBills, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       this.patientbills = res
     })
   }
+
+  
 
   handleAdd(post: any) {
     console.log(post)
@@ -374,6 +394,7 @@ export class BillComponent implements OnInit {
       this.followup = this.patient[0].followup
 
       this.patientBills()
+      this.patientVisits()
     })
   }
 
@@ -410,12 +431,12 @@ export class BillComponent implements OnInit {
   refundList: any = [];
   refundReason: any
 
-  refundFunc(allocateid: any, service: any, charge: any) {
+  refundFunc(allocateid: any, service: any, charge: any, discount: any) {
     const temp = {
       refunds: this.refundList,
       reason: this.refundReason
     }
-    this.http.post(environment.refundBill, {allocateid: allocateid, service: service, charge: charge, reason: this.refundReason}).subscribe((res)=>{
+    this.http.post(environment.refundBill, {allocateid: allocateid, service: service, charge: charge,discount: discount, reason: this.refundReason}).subscribe((res)=>{
       console.log(res)
     })
 
