@@ -12,6 +12,8 @@ import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { CoreUIModule } from 'src/coreui.module';
 import { PatientRegistrationModule } from '../patient-registration/patient-registration.module';
 import { PatientListModule } from '../patient-list/patient-list.module';
+import { PatientListDoctorModule } from '../patient-list-doctor/patient-list-doctor.module';
+
 import { BilSummaryModule } from '../bil-summary/bill-summary.module';
 import { AddServicesModule } from '../add-services/add-services.module';
 import { AddLabtestModule } from '../add-labtest/add-labtest.module';
@@ -43,6 +45,7 @@ import {
         CoreUIModule,
         PatientRegistrationModule,
         PatientListModule,
+        PatientListDoctorModule,
         BilSummaryModule,
         AddServicesModule,
         AddLabtestModule
