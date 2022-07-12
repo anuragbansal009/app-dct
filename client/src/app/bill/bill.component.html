@@ -509,7 +509,7 @@
                                                     : 0
                                                 </td>
                                             </tr>
-                                            <tr>
+                                            <!-- <tr>
                                                 <td scope="row" valign="middle">
                                                     <strong>Discount</strong>
                                                 </td>
@@ -526,7 +526,7 @@
                                                         Discount Can't be larger than total amount!
                                                     </div>
                                                 </td>
-                                            </tr>
+                                            </tr> -->
                                             <tr>
                                                 <td scope="row" valign=middle>
                                                     <strong>Total Charge</strong>
@@ -664,7 +664,7 @@
                         {{ service.charges }}
                     </div>
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
-                        {{ service.charges - service.discount }}
+                        {{ service.charges - service.charges * service.discount / 100}}
                     </div>
                     <div class="col-md-2 col-sm-12 text-center mb-2">
                         <mat-dialog-actions style="display: block">
@@ -756,7 +756,7 @@
             </div>
         </mat-tab>
 
-        <mat-tab>
+        <!-- <mat-tab>
             <ng-template mat-tab-label>
                 <mat-icon class="example-tab-icon">receipt</mat-icon>
                 Bill Summary
@@ -792,7 +792,7 @@
                     </div>
                 </div>
             </div>
-        </mat-tab>
+        </mat-tab> -->
     </mat-tab-group>
 
 </div>
