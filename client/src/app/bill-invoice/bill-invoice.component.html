@@ -38,7 +38,7 @@
           <div class="col-md-12">
             <h3 class="display-2 text-center align-middle" style="margin-bottom: 10px; font-size: 1.2rem">
               <strong>
-                Bill Cum Recipt
+                Bill Recipt
               </strong>
             </h3>
           </div>
@@ -55,7 +55,7 @@
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
-                            Patient Name
+                            Name
                           </strong>
                         </h4>
                       </td>
@@ -83,7 +83,7 @@
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
-                            Patient ID
+                            ID
                           </strong>
                         </h4>
                       </td>
@@ -97,7 +97,7 @@
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
-                            Refereed By
+                            Examined By
                           </strong>
                         </h4>
                       </td>
@@ -165,11 +165,11 @@
           <table class="table table-borderless">
             <thead class="table-dark">
               <tr>
-                <th style="width: 5%">#</th>
+                <th style="width: 5%"> </th>
                 <th style="width: 50%">Service Particulars</th>
                 <th class="text-end" style="width: 15%">Price</th>
                 <th class="text-end" style="width: 15%">Discount</th>
-                <th class="text-end" style="width: 15%">Net Price</th>
+                <th class="text-end" style="width: 15%">Total Price</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
@@ -189,7 +189,7 @@
           <table class="mx-auto" style="width: 90%">
             <tbody>
               <tr>
-                <td style="width: 70%">
+                <td style="width: 40%">
                   <table>
                     <tr>
                       <td>
@@ -225,9 +225,7 @@
                           : {{ billedAmount }}
                         </h4>
                       </td>
-                    </tr>
-                    <tr>
-                      <td>
+                      <td style="padding-left: 50px;">
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
                             Bill Discount
@@ -253,9 +251,7 @@
                           : {{ finalAmount }}
                         </h4>
                       </td>
-                    </tr>
-                    <tr>
-                      <td>
+                      <td style="padding-left: 50px;">
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
                             Recieved Amount

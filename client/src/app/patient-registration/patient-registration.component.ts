@@ -72,6 +72,7 @@ export class PatientRegistrationComponent implements OnInit {
   createForm() {
     this.formGroup = this.formBuilder.group({
       name: [null, Validators.required],
+      salutation: [null, Validators.required],
       gender: [null, Validators.required],
       age: [null, Validators.required],
       mobile: [null, Validators.required],
@@ -139,6 +140,7 @@ export class PatientRegistrationComponent implements OnInit {
   list: any
   genderVal: any
   nameVal: any
+  salutation: any
   ageVal: any
   bgVal: any
   cityVal: any
@@ -169,6 +171,7 @@ export class PatientRegistrationComponent implements OnInit {
 
 
   onSubmit(post: any) {
+    post.name = this.salutation + " " + post.name
     console.log(post)
     this.showSuccess = false;
     this.showError = false;

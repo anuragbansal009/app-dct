@@ -29,3 +29,10 @@ body {
   white-space: pre-line !important;
 }
 
+.nameComponent .mat-form-field-infix {
+  display: inherit;
+}
+
+/* .mat-autocomplete-panel {
+  transform: translate3d(0px, 315px, 0px)!important;
+} */

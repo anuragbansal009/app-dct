@@ -8,7 +8,7 @@
 
 @media screen and (min-width: 1301px) {
     .form {
-      min-width: 1000px;
+      min-width: 1100px;
       max-width: 1500px;
       width: 100%;
     }
@@ -38,4 +38,9 @@
 .vitals {
   text-align: center;
   border: 1px lightgrey solid;
+}
+
+.form-element-2 {
+  padding: 5px 0px 25px 0px;
+  width: 130%;
 }

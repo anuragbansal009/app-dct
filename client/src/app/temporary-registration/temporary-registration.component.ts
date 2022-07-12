@@ -35,6 +35,7 @@ export class TemporaryRegistrationComponent implements OnInit {
   storedDate: any;
   storedTime: any;
   doctors: any;
+  salutation: any;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: {date: Date},
@@ -78,6 +79,7 @@ export class TemporaryRegistrationComponent implements OnInit {
   createForm() {
     this.formGroup = this.formBuilder.group({
       name: [null, Validators.required],
+      salutation: [null, Validators.required],
       mobile: [null, Validators.required],
       doctor_name: [null,],
       slotdate: [this.storedDate, Validators.required],
@@ -162,6 +164,7 @@ export class TemporaryRegistrationComponent implements OnInit {
 
 
   onSubmit(post: any) {
+    post.name = this.salutation + " " + post.name
     console.log(post)
     this.showSuccess = false;
     this.showError = false;
