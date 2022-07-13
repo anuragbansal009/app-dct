@@ -19,6 +19,7 @@ import { BillInvoiceComponent } from './bill-invoice/bill-invoice.component';
 import { ServicesComponent } from './services/services.component';
 import { LabtestsComponent } from './labtests/labtests.component';
 import { PrescriptionComponent } from './prescription/prescription.component';
+import { DiscountComponent } from './discount/discount.component';
 
 const routes: Routes = [
   { path: 'adminregistration', component: AdminRegistrationComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path: 'patientlist', component: PatientListComponent },
   { path: 'update-patient/:id', component: UpdatePatientComponent },
   { path: 'refund/:id', component: RefundComponent },
+  { path: 'discount/:id', component: DiscountComponent },
   { path: 'services/:id', component: ServicesComponent },
   { path: 'labtests/:id', component: LabtestsComponent },
   { path: 'bill/:id', component: BillComponent },

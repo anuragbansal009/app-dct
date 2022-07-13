@@ -29,6 +29,12 @@ const BillSchema = new Schema({
     totalDiscount: {
         type: Number,
     },
+    billDiscount: {
+        type: Number,
+    },
+    totalrefund: {
+        type: Number,
+    },
     followup: {
         type: Boolean
     },

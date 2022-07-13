@@ -45,6 +45,7 @@ import { RefundModule } from './refund/refund.module';
 import { LabtestsComponent } from './labtests/labtests.component';
 import { PrescriptionModule } from './prescription/prescription.module';
 import { PatientListDoctorModule } from './patient-list-doctor/patient-list-doctor.module';
+import { DiscountModule } from './discount/discount.module';
 
 @NgModule({
   declarations: [
@@ -55,6 +56,7 @@ import { PatientListDoctorModule } from './patient-list-doctor/patient-list-doct
     AppRoutingModule,
     ForgotModule,
     LabdiscountModule,
+    DiscountModule,
     ServicediscountModule,
     BilSummaryModule,
     BrowserAnimationsModule,

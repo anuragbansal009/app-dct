@@ -64,6 +64,7 @@ export class BillComponent implements OnInit {
   sdiscount: any;
   alllabtests: any;
   allservices: any;
+  billdiscount: any;
 
   patientservices: any;
   labcharges: any = [];
@@ -185,8 +186,6 @@ export class BillComponent implements OnInit {
   }
 
   onUnselectAll(item: any) {
-
-    console.log('unselect all')
   }
 
   onSelectAll(items: any) {
@@ -201,7 +200,6 @@ export class BillComponent implements OnInit {
   patientVisits() {
     
     this.http.post(environment.patientVisit, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
-      console.log('hello',res)
       this.visits = res
       this.visits.forEach((element: any) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
@@ -211,7 +209,6 @@ export class BillComponent implements OnInit {
   }
 
   patientBills() {
-    console.log(this.inputname)
     this.http.post(environment.patientBills, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       this.patientbills = res
     })
@@ -220,7 +217,6 @@ export class BillComponent implements OnInit {
   
 
   handleAdd(post: any) {
-    console.log(post)
     if (post.service == null || post.service == '') {
       this.snackBar.open('Please Select a Service', 'Close', {
         duration: 3000,
@@ -280,7 +276,6 @@ export class BillComponent implements OnInit {
           this.tempArr.discount = event.discount
           this.labtestSubtotal = this.labtestSubtotal + event.charges - (event.charges * (event.discount / 100))
           this.labtestInputBalance = this.labtestInputBalance + event.charges - (event.charges * (event.discount / 100))
-          console.log(this.labtestSubtotal, this.labtestInputBalance)
         }
       });
     });
@@ -295,7 +290,6 @@ export class BillComponent implements OnInit {
       this.labtestArray.push(this.tempArr)
       this.labtests.push(this.tempArr2)
     }
-    console.log(this.labtestArray, this.labtests)
   }
 
   subtotalTemp: any;
@@ -404,7 +398,6 @@ export class BillComponent implements OnInit {
     this.refundError = false
     const tempRef: any = []
     const refAmount = parseInt((event.target as HTMLInputElement).value);
-    console.log(this.patientbills[i].discount[j])
 
     tempRef.service = this.patientbills[i].discount[j].service
     tempRef.charges = this.patientbills[i].discount[j].charges
@@ -437,7 +430,6 @@ export class BillComponent implements OnInit {
       reason: this.refundReason
     }
     this.http.post(environment.refundBill, {allocateid: allocateid, service: service, charge: charge,discount: discount, reason: this.refundReason}).subscribe((res)=>{
-      console.log(res)
     })
 
   }
@@ -451,24 +443,26 @@ export class BillComponent implements OnInit {
       this.bill = res
       if (this.bill.length !== 0) {
 
+        this.billdiscount = this.bill[0].billDiscount
+
         this.selectedservice = this.bill.at(-1).labcharges
         this.selectedlabtest = this.bill.at(-1).labtests
         if (this.bill.at(-1).subtotal) {
           this.subtotal = this.bill.at(-1).subtotal - this.bill.at(-1).payment 
           if (this.bill.at(-1).totalDiscount) {
-            this.subtotal = this.subtotal - this.bill.at(-1).totalDiscount
+            this.subtotal = this.subtotal
           }
           if (this.bill.at(-1).payment) {
             this.inputpayment = this.bill.at(-1).payment
             this.prevDue = this.bill.at(-1).subtotal - this.bill.at(-1).payment
             if (this.bill.at(-1).totalDiscount) {
-              this.prevDue = this.prevDue - this.bill.at(-1).totalDiscount
+              this.prevDue = this.prevDue
             }
           }
           else {
             this.prevDue = this.bill.at(-1).subtotal
             if (this.bill.at(-1).totalDiscount) {
-              this.prevDue = this.prevDue - this.bill.at(-1).totalDiscount
+              this.prevDue = this.prevDue
             }
           }
         }
@@ -482,7 +476,6 @@ export class BillComponent implements OnInit {
           });
         }
       }
-      console.log(this.prevDue)
       if (!this.prevDue) {
         this.prevDue = 0
       }
@@ -585,6 +578,11 @@ export class BillComponent implements OnInit {
       this.previousTotal = this.previousTotal + element.charges - (element.charges * (element.discount / 100))
     });
     
+    if(this.billdiscount)
+    {
+      this.previousTotal = this.previousTotal - this.billdiscount
+    }
+
     post.discount = this.serviceArr2
     post.subtotal = this.previousTotal
     if (this.inputbalance !== 0) {

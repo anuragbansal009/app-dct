@@ -17,8 +17,6 @@ router.post('/patient/bill/:id', async (req, res) => {
             labcharges,
             labtests,
             discount,
-            followup,
-            totalDiscount,
             payment,
             paymentmode,
             subtotal
@@ -71,12 +69,6 @@ router.post('/patient/bill/:id', async (req, res) => {
 
                 newBill.subtotal = subtotal;
 
-            }
-            if (totalDiscount) {
-                newBill.totalDiscount = totalDiscount;
-            }
-            if (followup) {
-                newBill.followup = followup;
             }
 
             let bill = await Bill.findOneAndUpdate(
@@ -149,8 +141,9 @@ router.post('/patient/bill/:id', async (req, res) => {
                         labcharges: labcharges,
                         labtests: labtests,
                         discount: discount,
-                        totalDiscount: totalDiscount,
-                        followup: followup,
+                        billDiscount: 0,
+                        totalDiscount: 0,
+                        totalrefund: 0,
                         payment: payment,
                         paymentmode: paymentmode,
                         subtotal: subtotal,
@@ -292,6 +285,7 @@ router.post('/patient/refund', async (req, res) => {
                         {
                             payment: bill[0].payment - charge,
                             subtotal: bill[0].subtotal - charge,
+                            totalrefund: bill[0].totalrefund + charge
                         },
                         {
                             new: true
@@ -346,7 +340,22 @@ router.post('/patient/refund', async (req, res) => {
         else
         {
             if (req.body.reason) {
-                if (bill) {
+                if (bill[0].subtotal - charge < 0) {
+                    bill = await Bill.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid,
+                        },
+                        {
+                            payment: 0,
+                            subtotal: 0,
+                            totalrefund: bill[0].totalrefund + bill[0].payment
+                        },
+                        {
+                            new: true
+                        }
+                    )
+                }
+                else {
                     bill = await Bill.findOneAndUpdate(
                         {
                             allocateid: req.body.allocateid,
@@ -354,6 +363,7 @@ router.post('/patient/refund', async (req, res) => {
                         {
                             payment: 0,
                             subtotal: bill[0].subtotal - charge,
+                            totalrefund: bill[0].totalrefund + bill[0].payment
                         },
                         {
                             new: true
@@ -432,6 +442,7 @@ router.post('/bill/refund', async (req, res) => {
                     },
                     {
                         payment: bill[0].payment - req.body.refund,
+                        totalrefund: bill[0].totalrefund + req.body.refund
                     },
                     {
                         new: true,
@@ -477,6 +488,80 @@ router.post('/bill/refund', async (req, res) => {
             }
             else {
                 return res.status(401).send("Refund should be less than Paid amount")
+            }
+
+
+        }
+        else {
+            return res.status(401).send("Reason Box is Empty")
+        }
+
+    } catch (error) {
+        console.log(error.message)
+    }
+})
+
+router.post('/bill/discount', async (req, res) => {
+    try {
+
+        let bill = await Bill.find({ allocateid: req.body.allocateid })
+
+        if (req.body.reason) {
+
+            if (bill[0].payment >= req.body.discount) {
+                bill = await Bill.findOneAndUpdate(
+                    {
+                        allocateid: req.body.allocateid,
+                    },
+                    {
+                        payment: bill[0].payment - req.body.discount,
+                        subtotal: bill[0].subtotal - req.body.discount,
+                        billDiscount: bill[0].billDiscount + req.body.discount,
+                    },
+                    {
+                        new: true,
+                    }
+                )
+
+                if (bill.payment == 0) {
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Unpaid",
+                        }
+                    )
+                }
+
+                if (bill.payment < bill.subtotal && bill.payment !== 0) {
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Pending",
+                        }
+                    )
+                }
+
+                if (bill.payment == bill.subtotal) {
+
+                    findpatient = await Patient.findOneAndUpdate(
+                        {
+                            allocateid: req.body.allocateid
+                        },
+                        {
+                            status: "Paid",
+                        }
+                    )
+
+                }
+                res.send(bill)
+
+            }
+            else {
+                return res.status(401).send("Discount should be less than Paid amount")
             }
 
 

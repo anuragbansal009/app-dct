@@ -44,4 +44,5 @@ export const environment = {
   getOneLabtest: 'http://localhost:5000/api/labtest/getonelabtest',
   getLabtestDoc: 'http://localhost:5000/api/labtest/getdoc',
   deletePatient: 'http://localhost:5000/api/patient/cancel/',
+  discountBill: 'http://localhost:5000/api/bill/discount',
 };

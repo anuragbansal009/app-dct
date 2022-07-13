@@ -104,7 +104,7 @@
 
       <ng-container matColumnDef="allocateid">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient ID </th>
-        <td class="allocateid" mat-cell *matCellDef="let row" (click)="handledetails(row.allocateid)"> <span *ngIf="!row.age">{{row.allocateid}}</span></td>
+        <td class="allocateid" mat-cell *matCellDef="let row" (click)="handledetails(row.allocateid)"> <span *ngIf="row.age">{{row.allocateid}}</span></td>
       </ng-container>
 
       <!-- Progress Column -->
