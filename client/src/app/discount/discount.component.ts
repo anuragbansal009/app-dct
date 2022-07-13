@@ -30,12 +30,13 @@ export class DiscountComponent implements OnInit {
   patientRegistrationAPI = environment.patientRegistrationAPI;
 
   id: any
+  _id: any
   discountamount: any;
   reason: any;
-
+  billDetails: any = []
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: {id: any},
+    @Inject(MAT_DIALOG_DATA) public data: {id: any, _id: any},
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -46,13 +47,24 @@ export class DiscountComponent implements OnInit {
   ngOnInit() {
 
     this.id = this.data.id;
-
+    this._id = this.data._id
     console.log(this.id)
 
     this.formGroup = this.formBuilder.group({
       discount: [],
       reason: [],
     });
+
+    this.http.post(environment.billGetId, {_id: this._id}).subscribe({
+      next: res => {
+        console.log(res)
+        this.billDetails = res
+        this.billDetails = this.billDetails.at(-1)
+      },
+      error: error => {
+        console.error(error)
+      }
+    })
 
   }
 

@@ -167,10 +167,48 @@ export class PatientListComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (filterValue == '') {
+      const tempDate = {
+        value: new Date
+      }
+      this.filterallpatients(tempDate)
+    }
+    else {
+      this.http.get(environment.patientsGet).subscribe({
+        next: res => {
+          this.list = res
+          this.list.forEach((element: { slotdate: any; time: any; vitals: any; vitalTooltip: any }) => {
+            element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
+            element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
+            element.vitalTooltip = "";
+            if (element.vitals[0]) {
+              if (element.vitals[0].weight) {
+                element.vitalTooltip = element.vitalTooltip + "Weight: " + element.vitals[0].weight + " Kg" + "\n"
+              }
+              if (element.vitals[0].height) {
+                element.vitalTooltip = element.vitalTooltip + "Height: " + element.vitals[0].height + " cm" + "\n"
+              }
+              if (element.vitals[0].fewer) {
+                element.vitalTooltip = element.vitalTooltip + "Fever: " + element.vitals[0].fewer + " F" + "\n"
+              }
+              if (element.vitals[0].sbp && element.vitals[0].dbp) {
+                element.vitalTooltip = element.vitalTooltip + "Blood Pressure: " + element.vitals[0].sbp + "/" + element.vitals[0].dbp + " mmHg" + "\n"
+              }
+              if (element.vitals[0].pulse) {
+                element.vitalTooltip = element.vitalTooltip + "Pulse: " + element.vitals[0].pulse + " bpm" + "\n"
+              }
+            }
+          });
+          this.dataSource = new MatTableDataSource(this.list)
+          this.dataSource.filter = filterValue.trim().toLowerCase();
+          if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+          }
+        },
+        error: error => {
+          console.error(error)
+        }
+      })
     }
   }
 

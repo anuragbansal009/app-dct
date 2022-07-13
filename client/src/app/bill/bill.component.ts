@@ -237,7 +237,6 @@ export class BillComponent implements OnInit {
     this.discountValue = null
 
     this.priceCalculate()
-
   }
 
   servicesArray: any = []
@@ -290,6 +289,14 @@ export class BillComponent implements OnInit {
       this.labtestArray.push(this.tempArr)
       this.labtests.push(this.tempArr2)
     }
+
+    // for (var i = this.dropindex.length - 1; i>=0; i++) {
+    //   this.dropdownList.splice(i, 1);
+    // }
+
+    // for (var i = this.droptestindex.length - 1; i>=0; i++) {
+    //   this.dropdowntestlist.splice(i, 1);
+    // }
   }
 
   subtotalTemp: any;
@@ -318,17 +325,27 @@ export class BillComponent implements OnInit {
     this.priceCalculate()
   }
 
+  // dropindex: any = []
+  // droptestindex: any = []
+
   priceValue(event: any) {
+    // var index = 0
     this.dropdownList.forEach((element: { service: any; charges: any }) => {
       if (element.service == event.value) {
         this.selectedValue = element.charges
+        // this.dropindex.push(index)
       }
+      // index += 1
     });
+    // var index2 = 0
     this.dropdowntestlist.forEach((element: { labtest: any; charges: any }) => {
       if (element.labtest == event.value) {
         this.selectedValue = element.charges
+        // this.droptestindex.push(index2)
       }
+      // index2 += 1
     });
+    // console.log(this.dropindex, this.droptestindex)
   }
 
   handleDiscount() {

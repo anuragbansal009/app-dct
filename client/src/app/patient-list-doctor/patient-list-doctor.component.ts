@@ -60,8 +60,9 @@ export class PatientListDoctorComponent implements OnInit {
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
 
-  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'prescription', 'update', 'refund','discount', 'status', 'print'];
+  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'prescription', 'update', 'refund', 'discount', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
+  fulldataSource!: MatTableDataSource<any>
 
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe, private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
@@ -115,7 +116,6 @@ export class PatientListDoctorComponent implements OnInit {
 
 
   filterallpatients(event: any) {
-
     this.date = new Date(event.value).valueOf();
     this.date = this.date + 19800000;
     this.now = this.date;
@@ -168,10 +168,48 @@ export class PatientListDoctorComponent implements OnInit {
 
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (filterValue == '') {
+      const tempDate = {
+        value: new Date
+      }
+      this.filterallpatients(tempDate)
+    }
+    else {
+      this.http.get(environment.patientsGet).subscribe({
+        next: res => {
+          this.list = res
+          this.list.forEach((element: { slotdate: any; time: any; vitals: any; vitalTooltip: any }) => {
+            element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
+            element.time = this.datepipe.transform("01-01-1970 " + element.time, 'shortTime');
+            element.vitalTooltip = "";
+            if (element.vitals[0]) {
+              if (element.vitals[0].weight) {
+                element.vitalTooltip = element.vitalTooltip + "Weight: " + element.vitals[0].weight + " Kg" + "\n"
+              }
+              if (element.vitals[0].height) {
+                element.vitalTooltip = element.vitalTooltip + "Height: " + element.vitals[0].height + " cm" + "\n"
+              }
+              if (element.vitals[0].fewer) {
+                element.vitalTooltip = element.vitalTooltip + "Fever: " + element.vitals[0].fewer + " F" + "\n"
+              }
+              if (element.vitals[0].sbp && element.vitals[0].dbp) {
+                element.vitalTooltip = element.vitalTooltip + "Blood Pressure: " + element.vitals[0].sbp + "/" + element.vitals[0].dbp + " mmHg" + "\n"
+              }
+              if (element.vitals[0].pulse) {
+                element.vitalTooltip = element.vitalTooltip + "Pulse: " + element.vitals[0].pulse + " bpm" + "\n"
+              }
+            }
+          });
+          this.dataSource = new MatTableDataSource(this.list)
+          this.dataSource.filter = filterValue.trim().toLowerCase();
+          if (this.dataSource.paginator) {
+            this.dataSource.paginator.firstPage();
+          }
+        },
+        error: error => {
+          console.error(error)
+        }
+      })
     }
   }
 
@@ -186,10 +224,10 @@ export class PatientListDoctorComponent implements OnInit {
     });
   }
 
-  refundAmount(id: number) {
+  refundAmount(id: number, _id: any) {
     // this.router.navigate(['update-patient', id]);
     const dialogRef = this.dialog.open(RefundComponent, {
-      data: { id: id },
+      data: { id: id, _id: _id },
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -197,10 +235,10 @@ export class PatientListDoctorComponent implements OnInit {
     });
   }
 
-  discountAmount(id: number) {
+  discountAmount(id: number, _id: any) {
     // this.router.navigate(['update-patient', id]);
     const dialogRef = this.dialog.open(DiscountComponent, {
-      data: { id: id },
+      data: { id: id, _id: _id },
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

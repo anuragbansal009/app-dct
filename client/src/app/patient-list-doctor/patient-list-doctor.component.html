@@ -92,15 +92,15 @@
       <ng-container matColumnDef="refund">
         <th mat-header-cell *matHeaderCellDef class="text-center"> Refund </th>
         <td mat-cell *matCellDef="let row" class="text-center">
-          <button *ngIf="row.status == 'Paid' && row.age" (click)="refundAmount(row.allocateid)" mat-raised-button
+          <button *ngIf="row.status == 'Paid' && row.age" (click)="refundAmount(row.allocateid, row._id)" mat-raised-button
             class="refund">
             Refund
           </button>
-          <button *ngIf="row.status == 'Pending' && row.age" (click)="refundAmount(row.allocateid)" mat-raised-button
+          <button *ngIf="row.status == 'Pending' && row.age" (click)="refundAmount(row.allocateid, row._id)" mat-raised-button
             class="refund">
             Refund
           </button>
-          <button *ngIf="row.status == 'Unpaid' && row.age" (click)="refundAmount(row.allocateid)" disabled
+          <button *ngIf="row.status == 'Unpaid' && row.age" (click)="refundAmount(row.allocateid, row._id)" disabled
             mat-raised-button class="refund">
             Refund
           </button>
@@ -114,15 +114,15 @@
       <ng-container matColumnDef="discount">
         <th mat-header-cell *matHeaderCellDef class="text-center"> Discount </th>
         <td mat-cell *matCellDef="let row" class="text-center">
-          <button *ngIf="row.status == 'Paid' && row.age" (click)="discountAmount(row.allocateid)" mat-raised-button
+          <button *ngIf="row.status == 'Paid' && row.age" (click)="discountAmount(row.allocateid, row._id)" mat-raised-button
             class="refund">
             Discount
           </button>
-          <button *ngIf="row.status == 'Pending' && row.age" (click)="discountAmount(row.allocateid)" mat-raised-button
+          <button *ngIf="row.status == 'Pending' && row.age" (click)="discountAmount(row.allocateid, row._id)" mat-raised-button
             class="refund">
             Discount
           </button>
-          <button *ngIf="row.status == 'Unpaid' && row.age" (click)="discountAmount(row.allocateid)" disabled
+          <button *ngIf="row.status == 'Unpaid' && row.age" (click)="discountAmount(row.allocateid, row._id)" disabled
             mat-raised-button class="refund">
             Discount
           </button>
