@@ -19,13 +19,19 @@
             <div class="container-fluid">
                 <mat-dialog-content>
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
+                            <mat-form-field appearance="outline" class="form-element">
+                                <mat-label>Token Number</mat-label>
+                                <input matInput placeholder="Token No." value={{inputtoken}} formControlName="tokennumber">
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-4">
                             <mat-form-field appearance="outline" class="form-element">
                                 <mat-label>Name</mat-label>
                                 <input matInput placeholder="Name" value={{inputname}} formControlName="name">
                             </mat-form-field>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <mat-form-field appearance="outline" class="form-element">
                                 <mat-label>Doctor Name</mat-label>
                                 <mat-select placeholder="Doctor Name" formControlName="doctor_name"

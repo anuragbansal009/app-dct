@@ -176,18 +176,20 @@ export class TemporaryRegistrationComponent implements OnInit {
 
         // this.router.navigate([`bill/${this.patientid}`]);
 
-        const dialogRef = this.dialog.open(BillComponent, {
-          data: { id: this.patientid },
-        });
-        dialogRef.afterClosed().subscribe(result => {
-          window.location.reload();
-          console.log(`Dialog result: ${result}`);
-          if (result == true) {
-            let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;
-            element.click();
-          }
-        });
+        // const dialogRef = this.dialog.open(BillComponent, {
+        //   data: { id: this.patientid },
+        // });
+        // dialogRef.afterClosed().subscribe(result => {
+        //   window.location.reload();
+        //   console.log(`Dialog result: ${result}`);
+        //   if (result == true) {
+        //     let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;
+        //     element.click();
+        //   }
+        // });
         // this.router.navigate(['doctordashboard']);
+
+        window.location.reload();
 
         this.snackBar.open('Patient Registered Successfully', 'Close', {
           duration: 3000,

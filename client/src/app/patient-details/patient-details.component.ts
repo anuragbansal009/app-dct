@@ -67,7 +67,7 @@ export class PatientDetailsComponent implements OnInit {
       this.patinentData = res;
       console.log(this.patinentData)
 
-      this.allocateid = this.patinentData[0].allocateid
+      this.allocateid = this.patinentData[0].uid
       this.name = this.patinentData[0].name
       this.gender = this.patinentData[0].gender
       this.age = this.patinentData[0].age

@@ -7,8 +7,6 @@ const MongoClient = require('mongodb').MongoClient;
 const Bill = require('../models/Bill');
 const mongoURI = "mongodb://localhost:27017/hospital?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
 var database
-const ZonedDateTime = require("zoned-date-time");
-const zoneData = require("iana-tz-data");
 
 
 MongoClient.connect(mongoURI, { useNewUrlParser: true }, (err, res) => {
@@ -38,6 +36,8 @@ router.post('/patient/create', [
 
     try {
 
+        let uniqueid
+
         let patient = await Patient.find({ mobile: req.body.mobile, name: req.body.name, doctor_name: req.body.doctor_name });
 
 
@@ -57,8 +57,14 @@ router.post('/patient/create', [
             doctor_name,
             slotdate,
             time,
+            uid,
+            tokennumber,
             followup,
         } = req.body;
+
+        tokenpatient = await Patient.find({slotdate: req.body.slotdate})
+
+        token = tokenpatient.length + 10
 
         if (len !== 0) {
 
@@ -70,6 +76,16 @@ router.post('/patient/create', [
 
         }
 
+
+        if(patient.length !== 0)
+        {
+            uniqueid = patient[0].uid;
+        }
+        else
+        {
+            var val = Math.floor(1000 + Math.random() * 9000);
+            uniqueid = doctor.allocateid.concat('-',String(val))
+        }
 
         lastPatient = await database.collection('patients').findOne({}, { sort: { _id: -1 } });
 
@@ -98,8 +114,9 @@ router.post('/patient/create', [
                 slotdate: slotdate,
                 time: time,
                 status: "Unpaid",
-                followup: true
-
+                followup: true,
+                uid: uniqueid,
+                tokennumber: token
             })
 
         }
@@ -119,8 +136,9 @@ router.post('/patient/create', [
                 slotdate: slotdate,
                 time: time,
                 status: "Unpaid",
-                followup: false
-
+                followup: false,
+                uid: uniqueid,
+                tokennumber: token
             })
 
         }
@@ -216,6 +234,7 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
         slotdate,
         time,
         vitals,
+        tokennumber
     } = req.body;
 
     try {
@@ -253,6 +272,9 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
         }
         if (doctor_name) {
             newPatient.doctor_name = doctor_name;
+        }
+        if (tokennumber) {
+            newPatient.tokennumber = tokennumber;
         }
         if (vitals) {
             newPatient.vitals = vitals;
@@ -384,6 +406,7 @@ router.delete('/patient/cancel/:id', async (req, res) => {
     }
     
 })
+
 
 module.exports = router
 

@@ -60,7 +60,7 @@ export class PatientListDoctorComponent implements OnInit {
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
 
-  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'prescription', 'update', 'refund', 'discount', 'status', 'print'];
+  displayedColumns: string[] = ['tokennumber','uid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'prescription', 'update', 'refund', 'discount', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
   fulldataSource!: MatTableDataSource<any>
 
@@ -170,7 +170,7 @@ export class PatientListDoctorComponent implements OnInit {
     const filterValue = (event.target as HTMLInputElement).value;
     if (filterValue == '') {
       const tempDate = {
-        value: new Date
+        value: new Date().setHours(0,0,0,0)
       }
       this.filterallpatients(tempDate)
     }

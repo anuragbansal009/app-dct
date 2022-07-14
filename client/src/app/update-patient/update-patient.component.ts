@@ -41,6 +41,7 @@ export class UpdatePatientComponent implements OnInit {
   inputdoctor: any = ''
   inputdate: any = ''
   inputtime: any = ''
+  inputtoken: any = ''
   doctors: any;
   status:any;
 
@@ -75,10 +76,12 @@ export class UpdatePatientComponent implements OnInit {
       this.inputdate = this.patient[0].slotdate
       this.inputtime = this.patient[0].time
       this.status = this.patient[0].status
-
+      this.inputtoken = this.patient[0].tokennumber
+      
     })
 
     this.formGroup = this.formBuilder.group({
+      tokennumber: [this.inputtoken],
       name: [this.inputname],
       gender: [this.inputgender],
       age: [this.inputage],

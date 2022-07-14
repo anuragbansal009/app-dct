@@ -27,6 +27,10 @@ const PatientSchema = new Schema({
         type: String,
         required: true
     },
+    uid: {
+        type: String,
+        required: true
+    },
     position: {
         type: Number,
         required: true
@@ -65,6 +69,9 @@ const PatientSchema = new Schema({
     },
     discount: {
         type: Array,
+    },
+    tokennumber: {
+        type: Number,
     },
     dor: {
         type: String,
