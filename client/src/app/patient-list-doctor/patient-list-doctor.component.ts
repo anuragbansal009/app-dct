@@ -248,7 +248,7 @@ export class PatientListDoctorComponent implements OnInit {
   refundAmount(id: number) {
     // this.router.navigate(['update-patient', id]);
     const dialogRef = this.dialog.open(BillComponent, {
-      height: '560px',
+      height: '600px',
       width: '1400px',
       data: { id: id },
     });
@@ -261,7 +261,7 @@ export class PatientListDoctorComponent implements OnInit {
   discountAmount(id: number) {
     // this.router.navigate(['update-patient', id]);
     const dialogRef = this.dialog.open(BillComponent, {
-      height: '560px',
+      height: '600px',
       width: '1400px',
       data: { id: id },
     });
