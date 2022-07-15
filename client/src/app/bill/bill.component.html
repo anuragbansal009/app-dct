@@ -457,22 +457,24 @@
                                         style="overflow: hidden">
                                         <!-- <div class="col-lg-4 col-md-12 col-sm-12 text-center"
                                         style="border-left:1px solid #C8C8C8;" style="overflow: hidden"> -->
-                                        <table class="table table-borderless" style="text-align: left">
-                                            <tbody>
-
-                                                <tr>
-                                                    <td scope="row" valign=middle>
-                                                        <strong>Follow Up</strong>
-                                                    </td>
-                                                    <td>
-                                                        <mat-icon *ngIf="followup == false" class="redcolor">
-                                                            highlight_off
-                                                        </mat-icon>
-                                                        <mat-icon *ngIf="followup == true" class="greencolor">
-                                                            done_outline
-                                                        </mat-icon>
-                                                    </td>
-                                                </tr>
+                                        <table class="table" style="text-align: left">
+                                            
+                                            
+                                            <tr>
+                                                <td scope="row" valign=middle>
+                                                    <strong>Follow Up</strong>
+                                                </td>
+                                                <td>
+                                                    <mat-icon *ngIf="followup == false" class="redcolor">
+                                                        highlight_off
+                                                    </mat-icon>
+                                                    <mat-icon *ngIf="followup == true" class="greencolor">
+                                                        done_outline
+                                                    </mat-icon>
+                                                </td>
+                                            </tr>
+                                            
+                                            <tbody>                   
                                                 <tr>
                                                     <td scope="row" valign=middle>
                                                         <strong>Service Charge</strong>
@@ -819,7 +821,7 @@
             <div class=" row text-center mt-2" *ngFor="let row of visits; let i = index;">
                 <div style="background-color: rgb(228, 235, 238); padding: 9px;" class="row text-center mt-2">
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
-                        {{ row.allocateid }}
+                        {{ row.uid }}
                     </div>
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
                         {{ row.name | titlecase }}
