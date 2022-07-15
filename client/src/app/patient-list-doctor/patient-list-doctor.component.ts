@@ -17,6 +17,7 @@ import { PatientDetailsComponent } from '../patient-details/patient-details.comp
 import { RefundComponent } from '../refund/refund.component';
 import { DiscountComponent } from '../discount/discount.component';
 import { environment } from 'src/environments/environment';
+import { identity } from 'rxjs';
 
 export interface PeriodicElement {
   name: string;
@@ -224,10 +225,12 @@ export class PatientListDoctorComponent implements OnInit {
     });
   }
 
-  refundAmount(id: number, _id: any) {
+  refundAmount(id: number) {
     // this.router.navigate(['update-patient', id]);
-    const dialogRef = this.dialog.open(RefundComponent, {
-      data: { id: id, _id: _id },
+    const dialogRef = this.dialog.open(BillComponent, {
+      height: '560px',
+      width: '1400px',
+      data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -235,10 +238,12 @@ export class PatientListDoctorComponent implements OnInit {
     });
   }
 
-  discountAmount(id: number, _id: any) {
+  discountAmount(id: number) {
     // this.router.navigate(['update-patient', id]);
-    const dialogRef = this.dialog.open(DiscountComponent, {
-      data: { id: id, _id: _id },
+    const dialogRef = this.dialog.open(BillComponent, {
+      height: '560px',
+      width: '1400px',
+      data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
