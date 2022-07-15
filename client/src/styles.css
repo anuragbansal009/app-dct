@@ -36,3 +36,13 @@ body {
 /* .mat-autocomplete-panel {
   transform: translate3d(0px, 315px, 0px)!important;
 } */
+
+
+#forceWhite>div>div>span {
+  color: white !important;
+}
+
+#forceWhite>div>div:nth-child(2)>div {
+  color: white !important;
+  margin-right: 10px !important
+}
