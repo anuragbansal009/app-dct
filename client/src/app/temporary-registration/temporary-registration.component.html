@@ -22,14 +22,14 @@
                             <mat-form-field appearance="outline" class="form-element">
                                 <mat-label>Mobile</mat-label>
                                 <input matInput type="number" placeholder="Mobile" formControlName="mobile"
-                                    (ngModelChange)="patientGet($event)" [matAutocomplete]="auto">
-                                <mat-autocomplete #auto="matAutocomplete">
+                                    (ngModelChange)="patientGet($event)">
+                                <!-- <mat-autocomplete #auto="matAutocomplete">
                                     <mat-option *ngFor="let row of list; let i=index" value="{{row.mobile}}"
                                         (click)="clickAC(i)">
                                         {{ row.name | titlecase}} - Age: {{ row.age }}
                                     </mat-option>
 
-                                </mat-autocomplete>
+                                </mat-autocomplete> -->
                                 <mat-icon matSuffix>call</mat-icon>
                                 <mat-error *ngIf="formGroup.controls['mobile'].touched">
                                     {{ titleAlert }}

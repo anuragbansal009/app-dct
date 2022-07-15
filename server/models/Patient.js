@@ -27,6 +27,10 @@ const PatientSchema = new Schema({
         type: String,
         required: true
     },
+    salutation: {
+        type: String,
+        required: true
+    },
     uid: {
         type: String,
         required: true

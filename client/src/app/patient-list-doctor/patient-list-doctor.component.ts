@@ -61,7 +61,7 @@ export class PatientListDoctorComponent implements OnInit {
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
 
-  displayedColumns: string[] = ['tokennumber','uid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'prescription', 'update', 'refund', 'discount', 'status', 'print'];
+  displayedColumns: string[] = ['tokennumber','uid', 'name', 'vitals', 'doctor_name', 'slotdate', 'time', 'followup', 'prescription', 'update', 'refund', 'discount', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
   fulldataSource!: MatTableDataSource<any>
 
@@ -77,6 +77,26 @@ export class PatientListDoctorComponent implements OnInit {
   ngOnInit() {
     // this.dataSource.paginator = this.paginator;
     this.getallpatients();
+    this.alldoctors();
+  }
+
+  doctors: any
+  doctorSelect: any
+
+  doctorChange(event: any) {
+    const filterValue = event.value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  alldoctors() {
+    this.http.get(environment.getAllDoctors).subscribe((res) => {
+      this.doctors = res
+      console.log(this.doctors)
+    })
   }
 
   getallpatients() {

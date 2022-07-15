@@ -143,6 +143,7 @@ export class PatientRegistrationComponent implements OnInit {
   salutation: any
   ageVal: any
   bgVal: any
+  salVal: any
   cityVal: any
   pinVal: any
 
@@ -154,6 +155,7 @@ export class PatientRegistrationComponent implements OnInit {
     this.bgVal = val.bloodgroup
     this.cityVal = val.city
     this.pinVal = val.pin
+    this.salVal = val.salutation
   }
 
   patientGet(event: any) {
@@ -171,7 +173,7 @@ export class PatientRegistrationComponent implements OnInit {
 
 
   onSubmit(post: any) {
-    post.name = this.salutation + " " + post.name
+    // post.name = this.salutation + " " + post.name
     console.log(post)
     this.showSuccess = false;
     this.showError = false;
