@@ -1,6 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, EventEmitter } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
@@ -32,6 +32,10 @@ export class BillComponent implements OnInit {
   selectedlabtest = [];
   dropdownSettings!: IDropdownSettings;
   dropdownTests!: IDropdownSettings;
+  public isEditing: number;
+  public pendingValue: string;
+  public value!: string;
+  public valueChangeEvents: EventEmitter<string>;
 
   color = 'primary';
   formGroup: any = FormGroup;
@@ -111,7 +115,30 @@ export class BillComponent implements OnInit {
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
     private router: Router,
-    public datepipe: DatePipe) { }
+    public datepipe: DatePipe) {
+    this.isEditing = -1;
+    this.pendingValue = "";
+    this.valueChangeEvents = new EventEmitter();
+  }
+
+  public cancel(): void {
+    this.isEditing = -1;
+  }
+
+  public edit(i: any): void {
+    this.pendingValue = this.value;
+    this.isEditing = i;
+  }
+
+  public processChanges(i: any): void {
+    if (this.pendingValue !== this.value) {
+      this.valueChangeEvents.emit(this.pendingValue);
+    }
+    this.prevDue = this.prevDue + this.serviceArr2[i].charges * (this.serviceArr2[i].discount - parseInt(this.pendingValue))/100
+    this.subtotal = this.subtotal + this.serviceArr2[i].charges * (this.serviceArr2[i].discount - parseInt(this.pendingValue))/100
+    this.serviceArr2[i].discount = parseInt(this.pendingValue)
+    this.isEditing = -1;
+  }
 
   ngOnInit() {
 
@@ -167,9 +194,9 @@ export class BillComponent implements OnInit {
       discount: [null],
     });
 
-    
+
     this.patientBills()
-    
+
   }
 
   onItemDeSelect(item: any) {
@@ -198,13 +225,13 @@ export class BillComponent implements OnInit {
   }
 
   patientVisits() {
-    
+
     this.http.post(environment.patientVisit, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       this.visits = res
       this.visits.forEach((element: any) => {
         element.slotdate = this.datepipe.transform(element.slotdate, 'dd-MM-yyyy');
       })
-      
+
     })
   }
 
@@ -214,7 +241,7 @@ export class BillComponent implements OnInit {
     })
   }
 
-  
+
 
   handleAdd(post: any) {
     if (post.service == null || post.service == '') {
@@ -446,7 +473,7 @@ export class BillComponent implements OnInit {
       refunds: this.refundList,
       reason: this.refundReason
     }
-    this.http.post(environment.refundBill, {allocateid: allocateid, service: service, charge: charge,discount: discount, reason: this.refundReason}).subscribe((res)=>{
+    this.http.post(environment.refundBill, { allocateid: allocateid, service: service, charge: charge, discount: discount, reason: this.refundReason }).subscribe((res) => {
     })
 
   }
@@ -465,7 +492,7 @@ export class BillComponent implements OnInit {
         this.selectedservice = this.bill.at(-1).labcharges
         this.selectedlabtest = this.bill.at(-1).labtests
         if (this.bill.at(-1).subtotal) {
-          this.subtotal = this.bill.at(-1).subtotal - this.bill.at(-1).payment 
+          this.subtotal = this.bill.at(-1).subtotal - this.bill.at(-1).payment
           if (this.bill.at(-1).totalDiscount) {
             this.subtotal = this.subtotal
           }
@@ -488,7 +515,7 @@ export class BillComponent implements OnInit {
         }
         if (this.bill.at(-1).discount) {
           this.sArr = this.bill.at(-1).discount
-          this.sArr.forEach((service:any) => {
+          this.sArr.forEach((service: any) => {
             this.serviceArr2.push(service)
           });
         }
@@ -594,9 +621,8 @@ export class BillComponent implements OnInit {
     this.serviceArr2.forEach((element: { charges: number; discount: number; }) => {
       this.previousTotal = this.previousTotal + element.charges - (element.charges * (element.discount / 100))
     });
-    
-    if(this.billdiscount)
-    {
+
+    if (this.billdiscount) {
       this.previousTotal = this.previousTotal - this.billdiscount
     }
 
@@ -606,7 +632,7 @@ export class BillComponent implements OnInit {
       post.payment = post.payment + this.inputpayment
     }
     post.payment = this.payment
-
+    console.log(post)
     this.http.post(environment.patientBill + this.id, post).subscribe((res) => {
       this.snackBar.open('Bill Made Successfully', 'Close', {
         duration: 3000,
