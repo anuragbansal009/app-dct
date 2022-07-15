@@ -294,7 +294,7 @@ export class PatientListDoctorComponent implements OnInit {
   handleBill(id: number) {
     // this.router.navigate(['bill', id]);
     const dialogRef = this.dialog.open(BillComponent, {
-      height: '560px',
+      height: '600px',
       width: '1400px',
       data: { id: id },
     });

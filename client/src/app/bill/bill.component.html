@@ -366,7 +366,7 @@
                                             <div class="col-md-3 col-sm-12">
                                                 <strong>Unit Price</strong>
                                             </div>
-                                            <div class="col-md-3 col-sm-12">
+                                            <div class="col-md-4 col-sm-12">
                                                 <strong>Discount</strong>
                                             </div>
                                         </div>
@@ -377,10 +377,32 @@
                                             <div class="col-md-3 col-sm-12">
                                                 {{ row.charges }}
                                             </div>
-                                            <div class="col-md-3 col-sm-12">
+                                            <!-- <div class="col-md-3 col-sm-12">
                                                 {{ row.discount }}
+                                            </div> -->
+                                            <div class="col-md-4 col-sm-12">
+                                                <div *ngIf="isEditing == i" class="editor">
+                                                    <mat-form-field appearance="outline">
+                                                        <mat-label>Discount</mat-label>
+                                                        <input matInput type="number" name="value" [(ngModel)]="pendingValue"
+                                                        (keydown.Enter)="processChanges(i)"
+                                                        (keydown.Meta.Enter)="processChanges(i)"
+                                                        (keydown.Escape)="cancel()"
+                                                        [ngModelOptions]="{standalone: true}" />
+                                                        <span matSuffix>%</span>
+                                                    </mat-form-field>
+                                                    <button mat-raised-button color="primary" (click)="processChanges(i)">
+                                                        Save
+                                                    </button>
+                                                    <button mat-raised-button color="warn" (click)="cancel()" (keydown.Enter)="cancel()" tabindex="0">
+                                                        Cancel
+                                                    </button>
+                                                </div>
+                                                <div *ngIf="isEditing != i" (click)="edit(i)">
+                                                    {{ row.discount }}
+                                                </div>
                                             </div>
-                                            <div class="col-md-3 col-sm-12">
+                                            <div class="col-md-2 col-sm-12">
                                                 <button mat-icon-button disabled type="button"
                                                     (click)="deleteService(i)" style="margin-top: -20px">
                                                     <mat-icon>delete_forever</mat-icon>
@@ -395,10 +417,10 @@
                                             <div class="col-md-3 col-sm-12">
                                                 {{ row.charges }}
                                             </div>
-                                            <div class="col-md-3 col-sm-12">
+                                            <div class="col-md-4 col-sm-12">
                                                 {{ row.discount }}
                                             </div>
-                                            <div class="col-md-3 col-sm-12">
+                                            <div class="col-md-2 col-sm-12">
                                                 <button mat-icon-button type="button" (click)="deleteService(i)"
                                                     style="margin-top: -20px">
                                                     <mat-icon class="redcolor">delete_forever</mat-icon>
@@ -431,7 +453,7 @@
                                                         value="{{selectedValue}}" formControlName="charges">
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-md-3 col-sm-12"
+                                            <div class="col-md-4 col-sm-12"
                                                 style="padding-left: 0.5rem; padding-right: 0.5rem;">
                                                 <mat-form-field appearance="fill" class="form-element">
                                                     <mat-label>Discount</mat-label>
@@ -441,7 +463,7 @@
                                                 </mat-form-field>
                                             </div>
 
-                                            <div class="col-md-3 col-sm-12"
+                                            <div class="col-md-2 col-sm-12"
                                                 style="padding-left: 0.5rem; padding-right: 0.5rem;">
                                                 <button mat-raised-button color="primary" type="button" class="button"
                                                     style="margin-top: 16px"
@@ -451,6 +473,7 @@
                                     </form>
                                 </div>
                                 <!-- <hr> -->
+                                <mat-divider></mat-divider>
                                 <!-- <mat-divider [vertical]="true"></mat-divider> -->
                                 <div class="row">
                                     <div class="col-6 text-center" style="border-left:1px solid #C8C8C8;"
