@@ -378,11 +378,11 @@
                                                 {{ row.charges }}
                                             </div>
                                             <div class="col-md-4 col-sm-12"
-                                                *ngIf="bill[0].subtotal - bill[0].payment == 0">
-                                                {{ bill[0].subtotal - bill[0].payment }}
+                                                *ngIf="bill[0].subtotal - bill[0].payment - bill[0].totalDiscount == 0">
+                                                {{ bill[0].subtotal - bill[0].payment }}%
                                             </div>
                                             <div class="col-md-4 col-sm-12"
-                                                *ngIf="bill[0].subtotal - bill[0].payment != 0">
+                                                *ngIf="bill[0].subtotal - bill[0].payment - bill[0].totalDiscount != 0">
                                                 <div *ngIf="isEditing == i" class="editor">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Discount</mat-label>
@@ -404,7 +404,7 @@
                                                     </button>
                                                 </div>
                                                 <div *ngIf="isEditing != i" (click)="edit(i)">
-                                                    {{ row.discount }}
+                                                    {{ row.discount }}%
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-sm-12">
@@ -423,7 +423,7 @@
                                                 {{ row.charges }}
                                             </div>
                                             <div class="col-md-4 col-sm-12">
-                                                {{ row.discount }}
+                                                {{ row.discount }}%
                                             </div>
                                             <div class="col-md-2 col-sm-12">
                                                 <button mat-icon-button type="button" (click)="deleteService(i)"
@@ -742,7 +742,7 @@
                     </div>
                 </div>
             </div> -->
-            <div class="row text-center mt-2 headingRow">
+            <div class="row text-center mt-2 headingRow" style="justify-content: center">
 
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Bill Number</strong>
@@ -763,8 +763,8 @@
                     <strong>Refund</strong>
                 </div> -->
             </div>
-            <div class="row text-center mt-2" *ngFor="let row of patientbills; let i = index;">
-                <div class="row text-center mt-2" *ngFor="let service of row.discount; let j = index;">
+            <div class="row text-center" *ngFor="let row of patientbills; let i = index;">
+                <div class="row text-center mt-2" *ngFor="let service of row.discount; let j = index;" style="justify-content: center; background-color: rgb(228, 235, 238); padding: 9px 0px;">
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
                         {{ row.allocateid }}
                     </div>
@@ -843,32 +843,32 @@
             </ng-template>
             <div class="row text-center mt-2 headingRow">
 
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Patient ID</strong>
                 </div>
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Patient Name</strong>
                 </div>
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Date</strong>
                 </div>
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-3 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Doctor</strong>
                 </div>
             </div>
             <div class=" row text-center mt-2" *ngFor="let row of visits; let i = index;">
-                <div style="background-color: rgb(228, 235, 238); padding: 9px;" class="row text-center mt-2">
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
+                <div style="background-color: rgb(228, 235, 238); padding: 9px 0px;" class="row text-center">
+                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 6px">
                         {{ row.uid }}
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
-                        {{ row.name | titlecase }}
+                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 6px">
+                        {{ row.salutation + " " + row.name | titlecase }}
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
+                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 6px">
                         {{ row.slotdate }}
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px; font-weight: bold">
-                        Dr.{{ row.doctor_name | titlecase}}
+                    <div class="col-md-3 col-sm-12 text-center" style="margin-top: 6px; font-weight: bold">
+                        Dr. {{ row.doctor_name | titlecase}}
                     </div>
                 </div>
             </div>
@@ -882,49 +882,51 @@
             <div class="row text-center mt-2 headingRow">
 
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                    <strong>Patient ID</strong>
+                    <strong>Bill No.</strong>
                 </div>
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Services</strong>
                 </div>
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                    <strong>Service Discount</strong>
+                    <strong>Discount</strong>
                 </div>
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                    <strong>Payment</strong>
+                    <strong>Paid</strong>
                 </div>
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Subtotal</strong>
                 </div>
-                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                    <strong>Total Refund</strong>
-                </div>
-                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                    <strong>Total Discount</strong>
+                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Refund</strong>
                 </div>
             </div>
-            <div class=" row text-center mt-2" *ngFor="let row of visits; let i = index;">
-                <div style="background-color: rgb(228, 235, 238); padding: 9px;" class="row text-center mt-2">
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
-
+            <div class=" row text-center mt-2" *ngFor="let row of billsummary; let i = index;">
+                <div style="background-color: rgb(228, 235, 238); padding: 9px 0px;" class="row text-center">
+                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        {{row.allocateid}}
                     </div>
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
-
+                        <div *ngFor="let item of row.discount; let j = index;">
+                            <div>
+                                {{item.service}}
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
-
+                        <div *ngFor="let item of row.discount; let j = index;">
+                            <div>
+                                {{item.discount}}%
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
-
+                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        {{row.payment}}
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
-
+                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        {{row.subtotal}}
                     </div>
-                    <div class="col-md-1 col-sm-12 text-center" style="margin-top: 6px">
-
-                    </div>
-                    <div class="col-md-1 col-sm-12 text-center" style="margin-top: 6px">
-
+                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        {{row.totalrefund}}
                     </div>
                 </div>
             </div>

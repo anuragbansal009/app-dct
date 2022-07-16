@@ -437,6 +437,7 @@ export class BillComponent implements OnInit {
 
       this.patientBills()
       this.patientVisits()
+      this.billSummary()
     })
   }
 
@@ -531,6 +532,16 @@ export class BillComponent implements OnInit {
     })
   }
 
+  billsummary: any
+  billsummaryServicelist: any
+  
+  billSummary() {
+    this.http.post(environment.patientBillSummary, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
+      this.billsummary = res
+      this.billsummaryServicelist = this.billsummary.discount
+      console.log('hello',this.billsummary)
+    })
+  }
 
   //---------- indivisual discount ----------------//
 

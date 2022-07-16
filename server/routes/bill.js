@@ -236,9 +236,9 @@ router.post('/bill/getid', async (req, res) => {
     }
 })
 
-router.get('/patient/billsummary', async (req, res) => {
+router.post('/patient/billsummary', async (req, res) => {
     try {
-        const bills = await Bill.find()
+        const bills = await Bill.find({mobile: req.body.mobile, name: req.body.name})
 
         res.json(bills)
 
@@ -274,8 +274,7 @@ router.post('/patient/refund', async (req, res) => {
 
         charge = req.body.charge - (req.body.charge * (req.body.discount / 100))
 
-        if(bill[0].payment > req.body.charge) 
-        {
+        if (bill[0].payment > req.body.charge) {
             if (req.body.reason) {
                 if (bill) {
                     bill = await Bill.findOneAndUpdate(
@@ -292,7 +291,7 @@ router.post('/patient/refund', async (req, res) => {
                         }
                     )
                 }
-    
+
                 bill = await Bill.findOneAndUpdate(
                     {
                         allocateid: req.body.allocateid
@@ -306,7 +305,7 @@ router.post('/patient/refund', async (req, res) => {
                         new: true,
                     }
                 );
-    
+
                 if (bill.payment == 0) {
                     findpatient = await Patient.findOneAndUpdate(
                         {
@@ -317,7 +316,7 @@ router.post('/patient/refund', async (req, res) => {
                         }
                     )
                 }
-    
+
                 let patient = await Patient.findOneAndUpdate(
                     {
                         allocateid: req.body.allocateid
@@ -337,8 +336,7 @@ router.post('/patient/refund', async (req, res) => {
                 return res.status(401).send("Reason Box is Empty")
             }
         }
-        else
-        {
+        else {
             if (req.body.reason) {
                 if (bill[0].subtotal - charge < 0) {
                     bill = await Bill.findOneAndUpdate(
@@ -370,7 +368,7 @@ router.post('/patient/refund', async (req, res) => {
                         }
                     )
                 }
-    
+
                 bill = await Bill.findOneAndUpdate(
                     {
                         allocateid: req.body.allocateid
@@ -384,7 +382,7 @@ router.post('/patient/refund', async (req, res) => {
                         new: true,
                     }
                 );
-    
+
                 if (bill.payment == 0) {
                     findpatient = await Patient.findOneAndUpdate(
                         {
@@ -395,7 +393,7 @@ router.post('/patient/refund', async (req, res) => {
                         }
                     )
                 }
-    
+
                 let patient = await Patient.findOneAndUpdate(
                     {
                         allocateid: req.body.allocateid
@@ -417,7 +415,7 @@ router.post('/patient/refund', async (req, res) => {
 
         }
 
-        
+
 
 
 
@@ -563,8 +561,6 @@ router.post('/bill/discount', async (req, res) => {
             else {
                 return res.status(401).send("Discount should be less than Paid amount")
             }
-
-
         }
         else {
             return res.status(401).send("Reason Box is Empty")
@@ -574,6 +570,145 @@ router.post('/bill/discount', async (req, res) => {
         console.log(error.message)
     }
 })
+
+// router.post('/bill/service/discount', async (req, res) => {
+
+//     let bill = await Bill.find({ _id: req.body.id })
+
+//     if (bill.length !== 0) {
+//         if (bill[0].payment == bill[0].subtotal) {
+//             newsubtotal = bill[0].subtotal - req.body.charge * (req.body.discount / 100)
+//             let newbill = await Bill.findOneAndUpdate(
+//                 {
+//                     _id: req.body.id, "discount.service": req.body.service
+//                 },
+//                 {
+//                     $set: {
+//                         "discount.$.discount": req.body.discount,
+//                         payment: bill[0].payment - req.body.charge * (req.body.discount / 100),
+//                         subtotal: bill[0].subtotal - req.body.charge * (req.body.discount / 100)
+//                     },
+//                 },
+//                 {
+//                     new: true,
+//                 }
+
+//             )
+//             res.json(newbill)
+//         }
+//         if (bill[0].payment < bill[0].subtotal) {
+//             newsubtotal = bill[0].subtotal - req.body.charge * (req.body.discount / 100)
+//             if (newsubtotal <= bill[0].payment) {
+//                 if (newsubtotal < 0) {
+//                     newbill = await Bill.findOneAndUpdate(
+//                         {
+//                             _id: req.body.id, "discount.service": req.body.service
+//                         },
+//                         {
+//                             $set: {
+//                                 "discount.$.discount": req.body.discount,
+//                                 payment: -newsubtotal,
+//                                 subtotal: -newsubtotal
+//                             },
+//                         },
+//                         {
+//                             new: true,
+//                         }
+
+//                     )
+
+//                 }
+//                 else {
+//                     newbill = await Bill.findOneAndUpdate(
+//                         {
+//                             _id: req.body.id, "discount.service": req.body.service
+//                         },
+//                         {
+//                             $set: {
+//                                 "discount.$.discount": req.body.discount,
+//                                 payment: newsubtotal,
+//                                 subtotal: newsubtotal
+//                             },
+//                         },
+//                         {
+//                             new: true,
+//                         }
+
+//                     )
+
+//                 }
+
+
+//                 findpatient = await Patient.findOneAndUpdate(
+//                     {
+//                         _id: req.body.id
+//                     },
+//                     {
+//                         status: "Paid",
+//                     }
+//                 )
+//                 res.json(newbill)
+
+//             }
+
+//             if (newsubtotal > bill[0].payment) {
+//                 let newbill = await Bill.findOneAndUpdate(
+//                     {
+//                         _id: req.body.id, "discount.service": req.body.service
+//                     },
+//                     {
+//                         $set: {
+//                             "discount.$.discount": req.body.discount,
+//                             subtotal: newsubtotal
+//                         },
+//                     },
+//                     {
+//                         new: true,
+//                     }
+
+//                 )
+
+//                 res.json(newbill)
+
+//             }
+
+//         }
+//     }
+//     else {
+//         return res.status(401).send("Create a bill first")
+//     }
+
+// })
+
+router.post('/bill/service/discount', async (req, res) => {
+
+    let bill = await Bill.find({ _id: req.body.id })
+
+    if (bill.length !== 0) {
+
+        let newbill = await Bill.findOneAndUpdate(
+            {
+                _id: req.body.id, "discount.service": req.body.service
+            },
+            {
+                $set: {
+                    "discount.$.discount": req.body.discount,
+                },
+            },
+            {
+                new: true,
+            }
+
+        )
+        res.json(newbill)
+
+    }
+    else {
+        return res.status(401).send("Create a bill first")
+    }
+
+})
+
 
 
 

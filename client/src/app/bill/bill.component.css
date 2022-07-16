@@ -71,10 +71,17 @@
   margin-right: 0;
 }
 
-.row>* {
+.row > * {
   padding-left: 0;
   padding-right: 0;
 }
-.services{
+.services {
   border: 2px solid black;
+}
+
+.vCenter {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
 }

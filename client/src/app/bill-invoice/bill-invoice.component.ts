@@ -93,9 +93,10 @@ export class BillInvoiceComponent implements OnInit {
   getData() {
     this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
       this.list = res
+      console.log(this.list)
       this.patientName = this.list.at(-1).name;
       this.patientMobileNumber = '+91-' + this.list.at(-1).mobile;
-      this.patientId = this.list.at(-1).allocateid;
+      this.patientId = this.list.at(-1).uid;
       this.referredBy = 'Dr. ' + this.list.at(-1).doctor_name;
       this.billDate = Math.floor(Date.now() / this.interval) * this.interval
       this.billNumber = this.list.at(-1).allocateid;
