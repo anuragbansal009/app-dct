@@ -377,24 +377,29 @@
                                             <div class="col-md-3 col-sm-12">
                                                 {{ row.charges }}
                                             </div>
-                                            <!-- <div class="col-md-3 col-sm-12">
-                                                {{ row.discount }}
-                                            </div> -->
-                                            <div class="col-md-4 col-sm-12">
+                                            <div class="col-md-4 col-sm-12"
+                                                *ngIf="bill[0].subtotal - bill[0].payment == 0">
+                                                {{ bill[0].subtotal - bill[0].payment }}
+                                            </div>
+                                            <div class="col-md-4 col-sm-12"
+                                                *ngIf="bill[0].subtotal - bill[0].payment != 0">
                                                 <div *ngIf="isEditing == i" class="editor">
                                                     <mat-form-field appearance="outline">
                                                         <mat-label>Discount</mat-label>
-                                                        <input matInput type="number" name="value" [(ngModel)]="pendingValue"
-                                                        (keydown.Enter)="processChanges(i)"
-                                                        (keydown.Meta.Enter)="processChanges(i)"
-                                                        (keydown.Escape)="cancel()"
-                                                        [ngModelOptions]="{standalone: true}" />
+                                                        <input matInput type="number" name="value"
+                                                            [(ngModel)]="pendingValue"
+                                                            (keydown.Enter)="processChanges(i)"
+                                                            (keydown.Meta.Enter)="processChanges(i)"
+                                                            (keydown.Escape)="cancel()"
+                                                            [ngModelOptions]="{standalone: true}" />
                                                         <span matSuffix>%</span>
                                                     </mat-form-field>
-                                                    <button mat-raised-button color="primary" (click)="processChanges(i)">
+                                                    <button mat-raised-button color="primary"
+                                                        (click)="processChanges(i)">
                                                         Save
                                                     </button>
-                                                    <button mat-raised-button color="warn" (click)="cancel()" (keydown.Enter)="cancel()" tabindex="0">
+                                                    <button mat-raised-button color="warn" (click)="cancel()"
+                                                        (keydown.Enter)="cancel()" tabindex="0">
                                                         Cancel
                                                     </button>
                                                 </div>
@@ -481,8 +486,8 @@
                                         <!-- <div class="col-lg-4 col-md-12 col-sm-12 text-center"
                                         style="border-left:1px solid #C8C8C8;" style="overflow: hidden"> -->
                                         <table class="table table-borderless" style="text-align: left">
-                                            
-                                            
+
+
                                             <tr>
                                                 <td scope="row" valign=middle>
                                                     <strong>Follow Up</strong>
@@ -496,8 +501,8 @@
                                                     </mat-icon>
                                                 </td>
                                             </tr>
-                                            
-                                            <tbody>                   
+
+                                            <tbody>
                                                 <tr>
                                                     <td scope="row" valign=middle>
                                                         <strong>Service Charge</strong>
@@ -754,6 +759,9 @@
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Refund Amount</strong>
                 </div>
+                <!-- <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Refund</strong>
+                </div> -->
             </div>
             <div class="row text-center mt-2" *ngFor="let row of patientbills; let i = index;">
                 <div class="row text-center mt-2" *ngFor="let service of row.discount; let j = index;">
@@ -769,20 +777,27 @@
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
                         {{ service.charges - service.charges * service.discount / 100}}
                     </div>
+                    <!-- <div class="col-md-2 col-sm-12 text-center">
+                        <mat-form-field appearance="outline" style="width: 90%">
+                            <mat-label>Payment</mat-label>
+                            <input matInput type="number" placeholder="Payment" formControlName="payment"
+                                [(ngModel)]="payment">
+                        </mat-form-field>
+                    </div> -->
                     <div class="col-md-2 col-sm-12 text-center mb-2">
                         <mat-dialog-actions style="display: block">
 
-                            <button *ngIf="row.status == 'Paid' && row.age" type="submit"
+                            <button mat-icon-button *ngIf="row.status == 'Paid' && row.age" type="submit"
                                 (click)="refundFunc(row.allocateid, service.service, service.charges, service.discount)"
                                 mat-raised-button>
                                 <mat-icon [mat-dialog-close] mat-raised-button color="primary">delete_forever</mat-icon>
                             </button>
-                            <button *ngIf="row.status == 'Pending' && row.age" type="submit"
+                            <button mat-icon-button *ngIf="row.status == 'Pending' && row.age" type="submit"
                                 (click)="refundFunc(row.allocateid, service.service, service.charges,service.discount)"
                                 mat-raised-button>
                                 <mat-icon [mat-dialog-close] mat-raised-button color="primary">delete_forever</mat-icon>
                             </button>
-                            <button *ngIf="row.status == 'Unpaid' && row.age" type="submit"
+                            <button mat-icon-button *ngIf="row.status == 'Unpaid' && row.age" type="submit"
                                 (click)="refundFunc(row.allocateid, service.service, service.charges, service.discount)"
                                 disabled mat-raised-button>
                                 <mat-icon mat-raised-button color="primary">delete_forever</mat-icon>

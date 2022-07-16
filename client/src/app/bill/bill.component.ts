@@ -241,6 +241,7 @@ export class BillComponent implements OnInit {
   patientBills() {
     this.http.post(environment.patientBills, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       this.patientbills = res
+      console.log(this.patientbills)
     })
   }
 
@@ -488,6 +489,7 @@ export class BillComponent implements OnInit {
     this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
 
       this.bill = res
+      console.log(this.bill)
       if (this.bill.length !== 0) {
 
         this.billdiscount = this.bill[0].billDiscount
