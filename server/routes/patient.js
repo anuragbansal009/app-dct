@@ -63,8 +63,7 @@ router.post('/patient/create', [
             followup,
         } = req.body;
 
-        tokenpatient = await Patient.find({slotdate: req.body.slotdate})
-
+        tokenpatient = await Patient.find({slotdate: req.body.slotdate, doctor_name: req.body.doctor_name})
         token = tokenpatient.length + 10
 
         if (len !== 0) {
