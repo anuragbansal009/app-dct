@@ -11,7 +11,7 @@
     <div class="col-md-3 col-sm-12 text-start wrapper">
       <div class="search_box">
         <input matInput [matDatepicker]="picker" placeholder="Slot Date" id="filterdate"
-          (dateChange)="filterallpatients($event)" [defaultValue]="todayDate | date: 'dd/MM/yyyy'" class="input_search">
+          (dateChange)="filterallpatients($event)" [defaultValue]="todayDate | date: 'dd/MM/yyyy'" class="input_search" [(ngModel)]="dateVal">
         <div class="search_btn" style="margin-left: 15px;">
           <mat-datepicker-toggle matSuffix [for]="picker" style="color: white !important"></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>

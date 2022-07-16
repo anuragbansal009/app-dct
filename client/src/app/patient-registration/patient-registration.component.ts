@@ -186,6 +186,8 @@ export class PatientRegistrationComponent implements OnInit {
         // this.router.navigate([`bill/${this.patientid}`]);
 
         const dialogRef = this.dialog.open(BillComponent, {
+          height: '600px',
+          width: '1400px',
           data: { id: this.patientid },
         });
         dialogRef.afterClosed().subscribe(result => {
@@ -194,9 +196,9 @@ export class PatientRegistrationComponent implements OnInit {
           if (result == true) {
             let element: HTMLElement = document.getElementsByClassName('closebutton')[0] as HTMLElement;
             element.click();
-            
+
           }
-          
+
         });
         // this.router.navigate(['doctordashboard']);
         this.snackBar.open('Patient Registered Successfully', 'Close', {

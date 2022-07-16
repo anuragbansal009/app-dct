@@ -60,6 +60,7 @@ export class PatientListDoctorComponent implements OnInit {
   interval: any = 1000 * 60 * 60 * 24;
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
+  dateVal: any = new Date(this.todayDate)
 
   displayedColumns: string[] = ['tokennumber','uid', 'name', 'vitals', 'doctor_name', 'slotdate', 'time', 'followup', 'prescription', 'update', 'refund', 'discount', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
@@ -188,11 +189,13 @@ export class PatientListDoctorComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
+    this.dateVal = 0
     const filterValue = (event.target as HTMLInputElement).value;
     if (filterValue == '') {
       const tempDate = {
         value: new Date().setHours(0,0,0,0)
       }
+      this.dateVal = new Date(tempDate.value)
       this.filterallpatients(tempDate)
     }
     else {
@@ -250,7 +253,7 @@ export class PatientListDoctorComponent implements OnInit {
     const dialogRef = this.dialog.open(BillComponent, {
       height: '600px',
       width: '1400px',
-      data: { id: id },
+      data: { id: id, selectedIndex: 1 },
     });
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

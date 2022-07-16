@@ -36,6 +36,8 @@ export class BillComponent implements OnInit {
   public pendingValue: string;
   public value!: string;
   public valueChangeEvents: EventEmitter<string>;
+  selectedIndex: any = 0;
+
 
   color = 'primary';
   formGroup: any = FormGroup;
@@ -108,7 +110,7 @@ export class BillComponent implements OnInit {
   visitdate: any;
 
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { id: any },
+    @Inject(MAT_DIALOG_DATA) public data: { id: any, selectedIndex: any },
     private http: HttpClient,
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
@@ -116,9 +118,10 @@ export class BillComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     public datepipe: DatePipe) {
-    this.isEditing = -1;
-    this.pendingValue = "";
-    this.valueChangeEvents = new EventEmitter();
+      this.selectedIndex = this.data.selectedIndex
+      this.isEditing = -1;
+      this.pendingValue = "";
+      this.valueChangeEvents = new EventEmitter();
   }
 
   public cancel(): void {
