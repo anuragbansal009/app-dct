@@ -11,7 +11,7 @@ const PatientSchema = new Schema({
         type: String,
     },
     age: {
-        type: Number,
+        type: String,
     },
     mobile: {
         type: Number,

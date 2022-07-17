@@ -158,6 +158,12 @@ export class PatientRegistrationComponent implements OnInit {
     this.salVal = val.salutation
   }
 
+  clickAge(event: any) {
+    const val = this.ageList[event]
+    console.log(val)
+    this.ageVal = val.age
+  }
+
   patientGet(event: any) {
     this.http.post(environment.patientsGet + 'Mobile', { "mobile": event }).subscribe({
       next: res => {
@@ -170,6 +176,30 @@ export class PatientRegistrationComponent implements OnInit {
     });
   }
 
+  ageList: any
+
+  ageGet(event: any) {
+    event = parseInt(event)
+    if (isNaN(event)) {
+      this.ageList = []
+    }
+    else {
+      this.ageList = [
+        {
+          age: event + " Years"
+        },
+        {
+          age: event + " Months"
+        },
+        {
+          age: event + " Weeks"
+        },
+        {
+          age: event + " Days"
+        }
+      ]
+    }
+  }
 
 
   onSubmit(post: any) {
