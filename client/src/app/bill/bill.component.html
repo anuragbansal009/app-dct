@@ -928,11 +928,14 @@
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Discount</strong>
                 </div>
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Paid</strong>
                 </div>
                 <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Subtotal</strong>
+                </div>
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Refunded Service</strong>
                 </div>
                 <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Refund</strong>
@@ -970,14 +973,25 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.payment}}
                     </div>
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.subtotal}}
                     </div>
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
-                        {{row.totalrefund}}
+                        <div *ngFor="let item of row.refundarr; let j = index;">
+                            <div>
+                                {{item.service}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        <div *ngFor="let item of row.refundarr; let j = index;">
+                            <div>
+                                {{item.refund}}
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px; align-items: center;">
                         <button class="print" mat-icon-button class="greencolor" (click)="handlePrint(row._id)">

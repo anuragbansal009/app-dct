@@ -57,6 +57,9 @@ const BillSchema = new Schema({
     patientid: {
         type: String,
     },
+    refundarr: {
+        type: Array,
+    },
     date: {
         type: String,
         default: Date.now,

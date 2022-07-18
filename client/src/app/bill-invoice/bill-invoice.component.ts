@@ -87,7 +87,6 @@ export class BillInvoiceComponent implements OnInit {
     this.status = this.data.status;
 
     this.values = JSON.parse(this.values).doctor
-    console.log(this.values)
     this.hospitalName = this.values.hospital_name
     this.hospitalAddress = this.values.location
 
@@ -97,10 +96,14 @@ export class BillInvoiceComponent implements OnInit {
 
   temp3: any
 
+  refundServices: any
+  totalrefund: any
+
   getData() {
     this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
       this.list = res
-      console.log(this.list)
+      this.refundServices = this.list[0].refundarr
+      this.totalrefund = this.list[0].totalrefund
       this.patientName = this.list.at(-1).name;
       this.patientMobileNumber = '+91-' + this.list.at(-1).mobile;
       this.patientId = this.list.at(-1).uid;
@@ -109,7 +112,6 @@ export class BillInvoiceComponent implements OnInit {
       this.billNumber = this.list.at(-1).allocateid;
       this.billStatus = this.status;
 
-      console.log(this.services)
       this.list.at(-1).discount.forEach((element: { service: any; charges: any; gst: any; discount: any }) => {
         this.temp3 = 0
         this.tempS = {
@@ -132,7 +134,6 @@ export class BillInvoiceComponent implements OnInit {
       this.paymentMode = this.list.at(-1).paymentmode
       this.amountInWords = this.inWords(this.finalAmount)
     })
-    console.log(this.services)
   }
 
 }

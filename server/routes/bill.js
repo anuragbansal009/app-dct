@@ -300,6 +300,9 @@ router.post('/patient/refund', async (req, res) => {
                         $pull: {
                             discount: { service: req.body.service }
                         },
+                        $push: {
+                            refundarr: { service: req.body.service, refund: charge }
+                        },
                     },
                     {
                         new: true,
@@ -376,6 +379,9 @@ router.post('/patient/refund', async (req, res) => {
                     {
                         $pull: {
                             discount: { service: req.body.service }
+                        },
+                        $push: {
+                            refundarr: { service: req.body.service, refund: charge }
                         },
                     },
                     {

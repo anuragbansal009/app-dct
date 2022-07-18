@@ -184,6 +184,26 @@
           </table>
         </div>
       </div>
+      <div class="row border-2 border-bottom border-dark mb-2">
+        <div class="col-md-12 mx-auto">
+          <table class="table table-borderless">
+            <thead class="table-dark">
+              <tr>
+                <th style="width: 5%"> </th>
+                <th style="width: 50%">Refund</th>
+                <th class="text-end" style="width: 100%">Amount</th>
+              </tr>
+            </thead>
+            <tbody class="table-group-divider">
+              <tr *ngFor="let service of refundServices; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ service.service }}</td>
+                <td class="text-end">{{ service.refund | number: '1.2-2'}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12 mx-auto">
           <table class="mx-auto" style="width: 90%">
@@ -273,6 +293,18 @@
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           : {{ balanceAmount }}
+                        </h4>
+                      </td>
+                      <td style="padding-left: 50px;">
+                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                          <strong>
+                            Total Refund
+                          </strong>
+                        </h4>
+                      </td>
+                      <td>
+                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                          : {{ totalrefund }}
                         </h4>
                       </td>
                     </tr>
