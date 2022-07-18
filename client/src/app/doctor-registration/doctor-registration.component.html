@@ -78,8 +78,8 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" class="form-element">
-                <mat-label>Location</mat-label>
-                <input matInput placeholder="Location" formControlName="location">
+                <mat-label>Address</mat-label>
+                <input matInput placeholder="Address" formControlName="location">
                 <mat-error *ngIf="formGroup.controls['location'].touched">
                     {{ titleAlert }}
                 </mat-error>
@@ -105,6 +105,14 @@
                 <mat-label>Follow Up Days</mat-label>
                 <input matInput placeholder="Follow Up Days" formControlName="followup">
                 <mat-error *ngIf="formGroup.controls['followup'].touched">
+                    {{ titleAlert }}
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" class="form-element">
+                <mat-label>Logo Link</mat-label>
+                <input matInput placeholder="Logo Link" formControlName="logolink">
+                <mat-error *ngIf="formGroup.controls['logolink'].touched">
                     {{ titleAlert }}
                 </mat-error>
             </mat-form-field>

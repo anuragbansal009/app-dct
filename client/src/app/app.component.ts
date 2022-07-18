@@ -233,7 +233,6 @@ export class AppComponent implements OnInit, AfterViewChecked {
   }
 
   logoUrl: string = environment.logoUrl
-
   isPatientRegistrationShowing = false;
   isPatientListShowing = false;
   patientCount: number = 100;
@@ -329,6 +328,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     else {
       this.values = JSON.parse(this.values).doctor
       this.hospitalName = this.values.hospital_name
+      this.logoUrl = this.values.logolink
       this.authorized = true
       this.http.get(environment.patientsGet).subscribe((res) => {
         this.lists = res;

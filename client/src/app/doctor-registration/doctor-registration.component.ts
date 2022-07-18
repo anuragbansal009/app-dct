@@ -43,6 +43,7 @@ export class DoctorRegistrationComponent implements OnInit {
       allocateid: [null, Validators.required],
       specialization: [null, Validators.required],
       followup: [null, Validators.required],
+      logolink: [null, Validators.required]
     });
   }
 

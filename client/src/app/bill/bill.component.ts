@@ -16,7 +16,7 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { LabdiscountComponent } from '../labdiscount/labdiscount.component';
 import { ServicediscountComponent } from '../servicediscount/servicediscount.component';
 import { DatePipe } from '@angular/common';
-
+import { BillInvoiceComponent } from '../bill-invoice/bill-invoice.component';
 
 @Component({
   selector: 'app-bill',
@@ -26,7 +26,7 @@ import { DatePipe } from '@angular/common';
 })
 export class BillComponent implements OnInit {
 
-  logoUrl: string = environment.logoUrl
+  logoUrl: any
   hospitalName: any;
   values: any = localStorage.getItem("currentDoctor");
 
@@ -112,6 +112,7 @@ export class BillComponent implements OnInit {
   sArr: any = []
   visits: any = []
   visitdate: any;
+  status: any
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public data: { id: any, selectedIndex: any },
@@ -122,10 +123,10 @@ export class BillComponent implements OnInit {
     private snackBar: MatSnackBar,
     private router: Router,
     public datepipe: DatePipe) {
-      this.selectedIndex = this.data.selectedIndex
-      this.isEditing = -1;
-      this.pendingValue = "";
-      this.valueChangeEvents = new EventEmitter();
+    this.selectedIndex = this.data.selectedIndex
+    this.isEditing = -1;
+    this.pendingValue = "";
+    this.valueChangeEvents = new EventEmitter();
   }
 
   public cancel(): void {
@@ -141,8 +142,8 @@ export class BillComponent implements OnInit {
     if (this.pendingValue !== this.value) {
       this.valueChangeEvents.emit(this.pendingValue);
     }
-    this.prevDue = this.prevDue + this.serviceArr2[i].charges * (this.serviceArr2[i].discount - parseInt(this.pendingValue))/100
-    this.subtotal = this.subtotal + this.serviceArr2[i].charges * (this.serviceArr2[i].discount - parseInt(this.pendingValue))/100
+    this.prevDue = this.prevDue + this.serviceArr2[i].charges * (this.serviceArr2[i].discount - parseInt(this.pendingValue)) / 100
+    this.subtotal = this.subtotal + this.serviceArr2[i].charges * (this.serviceArr2[i].discount - parseInt(this.pendingValue)) / 100
     this.serviceArr2[i].discount = parseInt(this.pendingValue)
     this.isEditing = -1;
   }
@@ -151,8 +152,8 @@ export class BillComponent implements OnInit {
 
     this.values = JSON.parse(this.values).doctor
     this.hospitalName = this.values.hospital_name
-
-    console.log('hello',this.hospitalName)
+    this.logoUrl = this.values.logolink
+    console.log('hello', this.hospitalName)
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -257,26 +258,45 @@ export class BillComponent implements OnInit {
 
 
   handleAdd(post: any) {
-    if (post.service == null || post.service == '') {
-      this.snackBar.open('Please Select a Service', 'Close', {
+
+    var same: boolean = false
+
+    this.serviceArr2.forEach((element: { service: any; }) => {
+      if (element.service == post.service) {
+        same = true
+      }
+    });
+
+    if (same) {
+      this.snackBar.open('Service Already Present', 'Close', {
         duration: 3000,
       });
+      this.tempValue = ''
+      this.selectedValue = null
+      this.discountValue = null
     }
     else {
-      if (post.discount == null) {
-        post.discount = 0
+      if (post.service == null || post.service == '') {
+        this.snackBar.open('Please Select a Service', 'Close', {
+          duration: 3000,
+        });
       }
-      if (post.charges == null) {
-        post.charges = this.selectedValue
+      else {
+        if (post.discount == null) {
+          post.discount = 0
+        }
+        if (post.charges == null) {
+          post.charges = this.selectedValue
+        }
+        this.serviceArr.push(post)
+        this.serviceArr2.push(post)
       }
-      this.serviceArr.push(post)
-      this.serviceArr2.push(post)
-    }
-    this.tempValue = ''
-    this.selectedValue = null
-    this.discountValue = null
+      this.tempValue = ''
+      this.selectedValue = null
+      this.discountValue = null
 
-    this.priceCalculate()
+      this.priceCalculate()
+    }
   }
 
   servicesArray: any = []
@@ -362,6 +382,7 @@ export class BillComponent implements OnInit {
 
   deleteService(i: any) {
     this.serviceArr.splice(i, 1)
+    this.serviceArr2.splice(i + this.sArr.length, 1)
     this.priceCalculate()
   }
 
@@ -443,7 +464,7 @@ export class BillComponent implements OnInit {
       this.inputdoctor = this.patient[0].doctor_name
       this.allocateid = this.patient[0].allocateid
       this.followup = this.patient[0].followup
-
+      this.status = this.patient[0].status
       this.patientBills()
       this.patientVisits()
       this.billSummary()
@@ -543,7 +564,7 @@ export class BillComponent implements OnInit {
 
   billsummary: any
   billsummaryServicelist: any
-  
+
   billSummary() {
     this.http.post(environment.patientBillSummary, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       this.billsummary = res
@@ -592,6 +613,15 @@ export class BillComponent implements OnInit {
         });
       })
     }
+  }
+
+  handlePrint(id: any) {
+    const dialogRef = this.dialog.open(BillInvoiceComponent, {
+      data: { id: id, status: this.status },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 
   serviceDiscount() {

@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   title: 'App-DCT | Local',
   apiURL: 'http://localhost:5000/api',
-  logoUrl: 'https://www.freepnglogos.com/uploads/real-madrid-logo-png/real-madrid-logo-real-madrid-centenario-logo-png-transparent-svg-vector-bie-supply-16.png',
+  logoUrl: 'https://www.logolynx.com/images/logolynx/2a/2ad00c896e94f1f42c33c5a71090ad5e.png',
   adminRegistrationAPI: 'http://localhost:5000/api/admin',
   doctorRegistrationAPI: 'http://localhost:5000/api/doctor',
   getAllDoctors: 'http://localhost:5000/api/getdoctor',

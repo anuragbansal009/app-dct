@@ -38,6 +38,9 @@ const DoctorSchema = new Schema({
     followup:{
         type: Number,
     },
+    logolink: {
+        type: String,
+    }
 
 
 })

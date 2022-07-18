@@ -102,16 +102,20 @@
 
 <div>
     <mat-dialog-actions style=" margin-top: -20px">
-
-        <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
+        <div style="margin-top: 5px">
+            <img src="{{logoUrl}}" width="36px" height="36px">
+            <span>
+                <a class="mx-2 my-4" style="font-size: 20px; text-decoration: none; color:#3F51B5; font-weight:bold">{{ hospitalName | titlecase }}
+                </a>
+            </span>
+        </div>
+        <span style="display:flex; justify-content:flex-end; width:100%; padding:0; margin-top: -50px">
             <button mat-icon-button mat-dialog-close>
                 <mat-icon>close</mat-icon>
             </button>
         </span>
     </mat-dialog-actions>
-    <img src="{{logoUrl}}" width="36px" height="36px">
-    <span><a class="mx-2 my-4" style="font-size: 20px; text-decoration: none; color:#3F51B5; font-weight:bold">{{
-            hospitalName | titlecase }}</a></span>
+
     <hr>
 
     <mat-tab-group dynamicHeight [selectedIndex]="selectedIndex">
@@ -945,21 +949,21 @@
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.date}}
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
+                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         <div *ngFor="let item of row.discount; let j = index;">
                             <div>
                                 {{item.service}}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1 col-sm-12 text-center" style="margin-top: 6px">
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         <div *ngFor="let item of row.discount; let j = index;">
                             <div>
                                 {{item.charges}}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
+                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         <div *ngFor="let item of row.discount; let j = index;">
                             <div>
                                 {{item.discount}}%
@@ -975,12 +979,12 @@
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.totalrefund}}
                     </div>
-                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
-                        <button class="print" mat-icon-button class="greencolor">
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px; align-items: center;">
+                        <button class="print" mat-icon-button class="greencolor" (click)="handlePrint(row._id)">
                             <mat-icon>print</mat-icon>
                         </button>
                     </div>
-                    
+
                 </div>
             </div>
         </mat-tab>

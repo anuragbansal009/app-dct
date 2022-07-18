@@ -12,9 +12,9 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./bill-invoice.component.css']
 })
 export class BillInvoiceComponent implements OnInit {
-  hospitalName: string = 'Frozen Hospital & Research';
-  hospitalSubtext: string = 'Advanced Treatment Center with 24/7 availability';
-  hospitalAddress: string = '21st Street, New York City, New York, NY, 100001';
+  hospitalName: any
+  hospitalSubtext: string = 'Subtext';
+  hospitalAddress: any
   patientName: any;
   patientMobileNumber: any;
   patientId: any;
@@ -78,11 +78,18 @@ export class BillInvoiceComponent implements OnInit {
     this.printerService.printDiv('pdfTable');
     this.printerService.printOpenWindow = true;
   }
+  
+  values: any = localStorage.getItem("currentDoctor");
 
   ngOnInit(): void {
 
     this.id = this.data.id;
     this.status = this.data.status;
+
+    this.values = JSON.parse(this.values).doctor
+    console.log(this.values)
+    this.hospitalName = this.values.hospital_name
+    this.hospitalAddress = this.values.location
 
     this.getData();
 
