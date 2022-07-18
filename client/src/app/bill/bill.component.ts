@@ -26,6 +26,10 @@ import { DatePipe } from '@angular/common';
 })
 export class BillComponent implements OnInit {
 
+  logoUrl: string = environment.logoUrl
+  hospitalName: any;
+  values: any = localStorage.getItem("currentDoctor");
+
   dropdownList: any = [];
   dropdowntestlist: any = [];
   selectedservice = [];
@@ -144,6 +148,11 @@ export class BillComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.values = JSON.parse(this.values).doctor
+    this.hospitalName = this.values.hospital_name
+
+    console.log('hello',this.hospitalName)
 
     this.dropdownSettings = {
       singleSelection: false,
@@ -539,7 +548,9 @@ export class BillComponent implements OnInit {
     this.http.post(environment.patientBillSummary, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       this.billsummary = res
       this.billsummaryServicelist = this.billsummary.discount
-      console.log('hello',this.billsummary)
+      this.billsummary.forEach((element: any) => {
+        element.date = this.datepipe.transform(element.date, 'dd-MM-yyyy');
+      })
     })
   }
 

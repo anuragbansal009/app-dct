@@ -106,12 +106,47 @@ export class AddServicesComponent implements OnInit {
     this.showError = false;
     console.log(post);
     if (post.gst !== 0) {
-      post.charges = post.charges * (post.gst / 100);
+      post.charges =post.charges - post.charges * (post.gst / 100);
     }
     else {
       post.charges = post.charges
     }
     this.http.post(environment.servicesAdd, post).subscribe({
+      next: res => {
+        console.log('Service Added')
+        //this.handleService()
+        this.showSuccess = true;
+      },
+      error: error => {
+        if (error.status === 400) {
+          this.showError = true;
+          this.errorString = 'Service Already Exists';
+        }
+        else if (error.status === 500) {
+          this.showError = true;
+          this.errorString = 'Error';
+        }
+        else {
+          this.showError = true;
+          this.errorString = 'Error! Please Try Again';
+        }
+        console.error('There was an error!', error);
+      }
+
+    })
+  }
+
+  otherSubmit(post: any) {
+    this.showSuccess = false;
+    this.showError = false;
+    console.log(post);
+    if (post.gst !== 0) {
+      post.charges =post.charges - post.charges * (post.gst / 100);
+    }
+    else {
+      post.charges = post.charges
+    }
+    this.http.post(environment.otherservicesAdd, post).subscribe({
       next: res => {
         console.log('Service Added')
         //this.handleService()

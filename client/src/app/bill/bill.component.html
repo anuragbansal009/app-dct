@@ -102,14 +102,18 @@
 
 <div>
     <mat-dialog-actions style=" margin-top: -20px">
+
         <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
             <button mat-icon-button mat-dialog-close>
                 <mat-icon>close</mat-icon>
             </button>
         </span>
     </mat-dialog-actions>
-
+    <img src="{{logoUrl}}" width="36px" height="36px">
+    <span><a class="mx-2 my-4" style="font-size: 20px; text-decoration: none; color:#3F51B5; font-weight:bold">{{
+            hospitalName | titlecase }}</a></span>
     <hr>
+
     <mat-tab-group dynamicHeight [selectedIndex]="selectedIndex">
         <!-- <mat-tab>
             <ng-template mat-tab-label>
@@ -904,11 +908,18 @@
             </ng-template>
             <div class="row text-center mt-2 headingRow">
 
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Bill No.</strong>
                 </div>
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Date</strong>
+                </div>
+
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Services</strong>
+                </div>
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Service Charge</strong>
                 </div>
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Discount</strong>
@@ -916,22 +927,35 @@
                 <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Paid</strong>
                 </div>
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Subtotal</strong>
                 </div>
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Refund</strong>
+                </div>
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Print</strong>
                 </div>
             </div>
             <div class=" row text-center mt-2" *ngFor="let row of billsummary; let i = index;">
                 <div style="background-color: rgb(228, 235, 238); padding: 9px 0px;" class="row text-center">
-                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.allocateid}}
+                    </div>
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        {{row.date}}
                     </div>
                     <div class="col-md-2 col-sm-12 text-center" style="margin-top: 6px">
                         <div *ngFor="let item of row.discount; let j = index;">
                             <div>
                                 {{item.service}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-1 col-sm-12 text-center" style="margin-top: 6px">
+                        <div *ngFor="let item of row.discount; let j = index;">
+                            <div>
+                                {{item.charges}}
                             </div>
                         </div>
                     </div>
@@ -945,12 +969,18 @@
                     <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.payment}}
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.subtotal}}
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         {{row.totalrefund}}
                     </div>
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        <button class="print" mat-icon-button class="greencolor">
+                            <mat-icon>print</mat-icon>
+                        </button>
+                    </div>
+                    
                 </div>
             </div>
         </mat-tab>

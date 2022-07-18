@@ -162,7 +162,7 @@
           <button *ngIf="row.status == 'Unpaid' && row.age" (click)="discountAmount(row._id)" disabled mat-raised-button
             class="refund">
             Discount
-          </button> -->
+          </button>
           <button *ngIf="!row.age" (click)="handleBill(row._id)" mat-raised-button disabled class="refund">
             Discount
           </button>
