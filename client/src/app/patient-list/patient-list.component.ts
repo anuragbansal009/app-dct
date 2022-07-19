@@ -58,9 +58,11 @@ export class PatientListComponent implements OnInit {
   interval: any = 1000 * 60 * 60 * 24;
   todayDate: any = Math.floor(Date.now() / this.interval) * this.interval
   now: any = Date.now();
+  dateVal: any = new Date(this.todayDate)
 
-  displayedColumns: string[] = ['allocateid', 'name', 'vitals', 'doctor', 'slotdate', 'slottime', 'followup', 'update','refund', 'status', 'print'];
+  displayedColumns: string[] = ['tokennumber','uid', 'name', 'vitals', 'doctor_name', 'slotdate', 'time', 'followup', 'update', 'refund', 'discount', 'status', 'print'];
   dataSource!: MatTableDataSource<any>;
+  fulldataSource!: MatTableDataSource<any>
 
   constructor(private http: HttpClient, private router: Router, public dialog: MatDialog, public datepipe: DatePipe, private dateAdapter: DateAdapter<Date>) {
     this.dateAdapter.setLocale('en-GB'); //dd/MM/yyyy
@@ -74,6 +76,26 @@ export class PatientListComponent implements OnInit {
   ngOnInit() {
     // this.dataSource.paginator = this.paginator;
     this.getallpatients();
+    this.alldoctors();
+  }
+
+  doctors: any
+  doctorSelect: any
+
+  doctorChange(event: any) {
+    const filterValue = event.value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  alldoctors() {
+    this.http.get(environment.getAllDoctors).subscribe((res) => {
+      this.doctors = res
+      console.log(this.doctors)
+    })
   }
 
   getallpatients() {
@@ -114,7 +136,6 @@ export class PatientListComponent implements OnInit {
 
 
   filterallpatients(event: any) {
-
     this.date = new Date(event.value).valueOf();
     this.date = this.date + 19800000;
     this.now = this.date;
@@ -166,11 +187,13 @@ export class PatientListComponent implements OnInit {
   }
 
   applyFilter(event: Event) {
+    this.dateVal = 0
     const filterValue = (event.target as HTMLInputElement).value;
     if (filterValue == '') {
       const tempDate = {
-        value: new Date
+        value: new Date().setHours(0,0,0,0)
       }
+      this.dateVal = new Date(tempDate.value)
       this.filterallpatients(tempDate)
     }
     else {
@@ -225,7 +248,22 @@ export class PatientListComponent implements OnInit {
 
   refundAmount(id: number) {
     // this.router.navigate(['update-patient', id]);
-    const dialogRef = this.dialog.open(RefundComponent, {
+    const dialogRef = this.dialog.open(BillComponent, {
+      height: '600px',
+      width: '1400px',
+      data: { id: id, selectedIndex: 1 },
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+      this.getallpatients();
+    });
+  }
+
+  discountAmount(id: number) {
+    // this.router.navigate(['update-patient', id]);
+    const dialogRef = this.dialog.open(BillComponent, {
+      height: '600px',
+      width: '1400px',
       data: { id: id },
     });
     dialogRef.afterClosed().subscribe(result => {
@@ -233,6 +271,16 @@ export class PatientListComponent implements OnInit {
       this.getallpatients();
     });
   }
+
+  // handlePrescription(id: number) {
+  //   const dialogRef = this.dialog.open(PrescriptionComponent, {
+  //     data: { id: id }
+  //   });
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     console.log(`Dialog result: ${result}`);
+  //     this.getallpatients();
+  //   });
+  // }
 
   handlevitals(id: number) {
     const dialogRef = this.dialog.open(VitalsComponent, {
@@ -247,7 +295,7 @@ export class PatientListComponent implements OnInit {
   handleBill(id: number) {
     // this.router.navigate(['bill', id]);
     const dialogRef = this.dialog.open(BillComponent, {
-      height: '560px',
+      height: '600px',
       width: '1400px',
       data: { id: id },
     });

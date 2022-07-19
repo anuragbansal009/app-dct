@@ -15,25 +15,25 @@
     <span><a onclick="location.href='/doctordashboard'">{{ hospitalName | titlecase }}</a></span>
     <span class="example-spacer"></span>
     <div fxShow="true" fxHide.lt-md="true">
-      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Patient Registration"
+      <button *ngIf="nav.calIcon" mat-button aria-label="Patient Registration"
         (click)="openPatientRegistration()" matTooltip="Patient Registration" matTooltipClass="h6"
-        class="toolbarButton">
+        class="toolbarButton example-icon">
         <mat-icon class="toolbarIcon">how_to_reg</mat-icon>
       </button>
-      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Add Services"
-        (click)="openAddServices()" matTooltip="Add Services" matTooltipClass="h6" class="toolbarButton">
+      <button *ngIf="nav.calIcon" mat-button aria-label="Add Services"
+        (click)="openAddServices()" matTooltip="Add Services" matTooltipClass="h6" class="toolbarButton example-icon">
         <mat-icon class="toolbarIcon">medical_services</mat-icon>
       </button>
-      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Add Labtests"
-        (click)="openAddLabtest()" matTooltip="Add Labtests" matTooltipClass="h6" class="toolbarButton">
+      <button *ngIf="nav.calIcon" mat-button aria-label="Add Labtests"
+        (click)="openAddLabtest()" matTooltip="Add Labtests" matTooltipClass="h6" class="toolbarButton example-icon">
         <mat-icon class="toolbarIcon">science</mat-icon>
       </button>
-      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Calendar" (click)="openDialog()"
-        matTooltip="Calendar" matTooltipClass="h6" class="toolbarButton">
+      <button *ngIf="nav.calIcon" mat-button aria-label="Calendar" (click)="openDialog()"
+        matTooltip="Calendar" matTooltipClass="h6" class="toolbarButton example-icon">
         <mat-icon class="toolbarIcon">calendar_month</mat-icon>
       </button>
-      <button *ngIf="nav.calIcon" mat-button class="example-icon" aria-label="Logout" (click)="logout()"
-        matTooltip="Logout" matTooltipClass="h6" class="toolbarButton">
+      <button *ngIf="nav.calIcon" mat-button aria-label="Logout" (click)="logout()"
+        matTooltip="Logout" matTooltipClass="h6" class="toolbarButton example-icon">
         <mat-icon class="toolbarIcon">logout</mat-icon>
       </button>
     </div>

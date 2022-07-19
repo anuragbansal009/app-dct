@@ -510,7 +510,15 @@ export class BillComponent implements OnInit {
     }
     this.http.post(environment.refundBill, { allocateid: allocateid, service: service, charge: charge, discount: discount, reason: this.refundReason }).subscribe((res) => {
     })
+  }
 
+  openReason: boolean = false
+  reasonIndex: any
+
+  refundExtra(i: any) {
+    console.log(i)
+    this.openReason = !this.openReason
+    this.reasonIndex = i
   }
 
   prevDue: any;

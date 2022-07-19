@@ -98,25 +98,32 @@ export class BillInvoiceComponent implements OnInit {
 
   refundServices: any
   totalrefund: any
+  refundSection: boolean = false
 
   getData() {
     this.http.post(environment.billGetId, { _id: this.id }).subscribe((res) => {
       this.list = res
-      this.refundServices = this.list[0].refundarr
-      this.totalrefund = this.list[0].totalrefund
+      this.refundServices = this.list.at(-1).refundarr
+      this.totalrefund = this.list.at(-1).totalrefund
       this.patientName = this.list.at(-1).name;
       this.patientMobileNumber = '+91-' + this.list.at(-1).mobile;
       this.patientId = this.list.at(-1).uid;
       this.referredBy = 'Dr. ' + this.list.at(-1).doctor_name;
-      this.billDate = Math.floor(Date.now() / this.interval) * this.interval
+      this.billDate = Math.floor(this.list.at(-1).date / this.interval) * this.interval
       this.billNumber = this.list.at(-1).allocateid;
       this.billStatus = this.status;
-
+      if(this.refundServices.length == 0) {
+        this.refundSection = false
+      }
+      else {
+        this.refundSection = true
+      }
       this.list.at(-1).discount.forEach((element: { service: any; charges: any; gst: any; discount: any }) => {
         this.temp3 = 0
         this.tempS = {
           serviceName: element.service,
           servicePrice: element.charges,
+          serviceDiscountPct: element.discount,
           serviceDiscount: element.charges * (element.discount / 100),
           serviceNetPrice: element.charges - (element.charges * (element.discount / 100)),
         }
@@ -134,6 +141,7 @@ export class BillInvoiceComponent implements OnInit {
       this.paymentMode = this.list.at(-1).paymentmode
       this.amountInWords = this.inWords(this.finalAmount)
     })
-  }
 
+  }
+  
 }

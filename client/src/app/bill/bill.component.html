@@ -105,7 +105,8 @@
         <div style="margin-top: 5px">
             <img src="{{logoUrl}}" width="36px" height="36px">
             <span>
-                <a class="mx-2 my-4" style="font-size: 20px; text-decoration: none; color:#3F51B5; font-weight:bold">{{ hospitalName | titlecase }}
+                <a class="mx-2 my-4" style="font-size: 20px; text-decoration: none; color:#3F51B5; font-weight:bold">{{
+                    hospitalName | titlecase }}
                 </a>
             </span>
         </div>
@@ -384,11 +385,11 @@
                                                     {{ row.service }}
                                                 </div>
                                                 <div class="col-md-3 col-sm-12">
-                                                    {{ row.charges }}
+                                                    ₹ {{ row.charges }}
                                                 </div>
                                                 <div class="col-md-4 col-sm-12"
                                                     *ngIf="bill[0].subtotal - bill[0].payment - bill[0].totalDiscount == 0">
-                                                    {{ bill[0].subtotal - bill[0].payment }}%
+                                                    {{ row.discount }}%
                                                 </div>
                                                 <div class="col-md-4 col-sm-12"
                                                     *ngIf="bill[0].subtotal - bill[0].payment - bill[0].totalDiscount != 0">
@@ -429,7 +430,7 @@
                                                     {{ row.service }}
                                                 </div>
                                                 <div class="col-md-3 col-sm-12">
-                                                    {{ row.charges }}
+                                                    ₹ {{ row.charges }}
                                                 </div>
                                                 <div class="col-md-4 col-sm-12">
                                                     {{ row.discount }}%
@@ -525,7 +526,7 @@
                                                         <mat-icon class="redcolor" *ngIf="serviceSubtotal == 0">print
                                                         </mat-icon>
                                                     </button> -->
-                                                        {{ serviceSubtotal }}
+                                                        ₹ {{ serviceSubtotal }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -540,7 +541,7 @@
                                                         <mat-icon class="redcolor" *ngIf="labtestSubtotal == 0">print
                                                         </mat-icon>
                                                     </button> -->
-                                                        {{ labtestSubtotal }}
+                                                        ₹ {{ labtestSubtotal }}
                                                     </td>
                                                 </tr>
                                                 <tr>
@@ -549,10 +550,10 @@
                                                     </td>
                                                     <td *ngIf="prevDue">
                                                         :
-                                                        {{ prevDue }}
+                                                        ₹ {{ prevDue }}
                                                     </td>
                                                     <td *ngIf="!prevDue">
-                                                        : 0
+                                                        : ₹ 0
                                                     </td>
                                                 </tr>
                                                 <!-- <tr>
@@ -754,7 +755,8 @@
                 </div>
             </div> -->
             <div class="row">
-                <div class="row col-md-8 col-sm-12 text-center mt-2 headingRow" style="justify-content: center">
+                <div class="row col-lg-12 col-md-12 col-sm-12 text-center mt-2 headingRow"
+                    style="justify-content: center">
 
                     <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                         <strong>Bill Number</strong>
@@ -762,41 +764,44 @@
                     <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                         <strong>Service Name</strong>
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                         <strong>Unit Price</strong>
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                         <strong>Total Amount</strong>
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                        <strong>Refund Amount</strong>
+                    <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                        <strong>Refund</strong>
                     </div>
-                    <!-- <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                    <strong>Refund</strong>
-                </div> -->
+                    <div class="col-md-4 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                        <strong></strong>
+                    </div>
+                    <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                        <strong></strong>
+                    </div>
                 </div>
-                <div class="row col-md-4 col-sm-12 text-center mt-2 headingRow" style="justify-content: center">
+                <!-- <div class="row col-md-4 col-sm-12 text-center mt-2 headingRow" style="justify-content: center">
                     <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
                         <strong>Reason</strong>
                     </div>
-                </div>
+                </div> -->
             </div>
             <div class="row">
-                <div class="col-lg-8 col-md-8 col-sm-12">
+                <div class="col-lg-12 col-md-12 col-sm-12">
                     <div class="row text-center" *ngFor="let row of patientbills; let i = index;">
                         <div class="row text-center mt-2" *ngFor="let service of row.discount; let j = index;"
                             style="justify-content: center; background-color: rgb(228, 235, 238); padding: 9px 0px;">
-                            <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
+                            <div class="col-md-2 col-sm-12 text-center vCenter">
                                 {{ row.allocateid }}
                             </div>
-                            <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
+                            <div class="col-md-2 col-sm-12 text-center vCenter">
                                 {{ service.service }}
                             </div>
-                            <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
-                                {{ service.charges }}
+                            <div class="col-md-1 col-sm-12 text-center vCenter">
+                                ₹{{ service.charges }}
                             </div>
-                            <div class="col-md-2 col-sm-12 text-center" style="margin-top: 16px">
-                                {{ service.charges - service.charges * service.discount / 100}}
+                            <div class="col-md-1 col-sm-12 text-center vCenter">
+                                ₹{{ service.charges - service.charges * service.discount / 100}}
                             </div>
                             <!-- <div class="col-md-2 col-sm-12 text-center">
                                 <mat-form-field appearance="outline" style="width: 90%">
@@ -805,42 +810,58 @@
                                         [(ngModel)]="payment">
                                 </mat-form-field>
                             </div> -->
-                            <div class="col-md-2 col-sm-12 text-center mb-2">
-                                <mat-dialog-actions style="display: block">
+                            <div class="col-md-1 col-sm-12 text-center mb-2 vCenter text-center"
+                                style="align-items: center;">
+                                <button mat-icon-button *ngIf="row.status == 'Paid' && row.age" type="button"
+                                    (click)="refundExtra(j)" mat-raised-button>
+                                    <mat-icon mat-raised-button color="primary">delete_forever
+                                    </mat-icon>
+                                </button>
+                                <button mat-icon-button *ngIf="row.status == 'Pending' && row.age" type="button"
+                                    (click)="refundExtra(j)" mat-raised-button>
+                                    <mat-icon mat-raised-button color="primary">delete_forever
+                                    </mat-icon>
+                                </button>
+                                <button mat-icon-button *ngIf="row.status == 'Unpaid' && row.age" type="button"
+                                    (click)="refundExtra(j)" disabled mat-raised-button>
+                                    <mat-icon mat-raised-button color="primary">delete_forever</mat-icon>
+                                </button>
+                            </div>
 
-                                    <button mat-icon-button *ngIf="row.status == 'Paid' && row.age" type="submit"
-                                        (click)="refundFunc(row.allocateid, service.service, service.charges, service.discount)"
-                                        mat-raised-button>
-                                        <mat-icon [mat-dialog-close] mat-raised-button color="primary">delete_forever
-                                        </mat-icon>
-                                    </button>
-                                    <button mat-icon-button *ngIf="row.status == 'Pending' && row.age" type="submit"
-                                        (click)="refundFunc(row.allocateid, service.service, service.charges,service.discount)"
-                                        mat-raised-button>
-                                        <mat-icon [mat-dialog-close] mat-raised-button color="primary">delete_forever
-                                        </mat-icon>
-                                    </button>
-                                    <button mat-icon-button *ngIf="row.status == 'Unpaid' && row.age" type="submit"
-                                        (click)="refundFunc(row.allocateid, service.service, service.charges, service.discount)"
-                                        disabled mat-raised-button>
-                                        <mat-icon mat-raised-button color="primary">delete_forever</mat-icon>
-                                    </button>
+                            <div class="col-lg-4 col-md-4 col-sm-12 vCenter">
+                                <div *ngIf="j == reasonIndex">
+                                    <mat-form-field appearance="outline" style="margin-top: 20px; width: 100%;"
+                                        *ngIf="openReason">
+                                        <mat-label>Reason for Refund</mat-label>
+                                        <textarea matInput matTextareaAutosize matAutosizeMinRows="3"
+                                            matAutosizeMaxRows="4" [(ngModel)]="refundReason"
+                                            style="height: 15px"></textarea>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="row text-center m-2" *ngIf="refundError">
+                                    <div class="alert alert-danger" role="alert">
+                                        Refund Amount should be less than total amount
+                                    </div>
+                                </div> -->
+                            </div>
 
-                                    <!-- <mat-icon *ngIf="row.status == 'Paid' && row.age" mat-raised-button color="primary" 
-                                    type="submit" (click)="refundFunc(row.allocateid, service.service, service.charges)">delete</mat-icon>
-        
-                                    <mat-icon *ngIf="row.status == 'Pending' && row.age" disabled mat-raised-button color="primary" 
-                                    type="submit" (click)="refundFunc(row.allocateid, service.service, service.charges)">delete</mat-icon>
-        
-                                    <mat-icon *ngIf="row.status == 'Unpaid' && row.age" disabled mat-raised-button color="primary" 
-                                    type="submit" (click)="refundFunc(row.allocateid, service.service, service.charges)">delete</mat-icon> -->
-
-                                </mat-dialog-actions>
+                            <div class="col-lg-1 col-md-1 col-sm-12 vCenter text-center" style="align-items: center;">
+                                <div *ngIf="j == reasonIndex">
+                                    <mat-dialog-actions style="margin-bottom: 0px !important">
+                                        <button mat-mini-fab type="submit"
+                                            (click)="refundFunc(row.allocateid, service.service, service.charges, service.discount)"
+                                            color="primary">
+                                            <mat-icon [mat-dialog-close]>
+                                                check_circle
+                                            </mat-icon>
+                                        </button>
+                                    </mat-dialog-actions>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-lg-4 col-md-4 col-sm-12"
+                <!-- <div class="col-lg-4 col-md-4 col-sm-12"
                     style="align-items: center; justify-content: center;display: flex;">
                     <div class="row text-center m-2" style="width: 100%">
                         <mat-form-field appearance="outline" class="form-element">
@@ -854,7 +875,7 @@
                             Refund Amount should be less than total amount
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
 
 
@@ -925,14 +946,17 @@
                 <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Service Charge</strong>
                 </div>
-                <div class="col-md-2 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Discount</strong>
                 </div>
                 <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
-                    <strong>Paid</strong>
+                    <strong>Price</strong>
                 </div>
                 <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Subtotal</strong>
+                </div>
+                <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
+                    <strong>Paid</strong>
                 </div>
                 <div class="col-md-1 col-sm-12 text-center" style="--bs-gutter-x: 0">
                     <strong>Refunded Service</strong>
@@ -962,22 +986,29 @@
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         <div *ngFor="let item of row.discount; let j = index;">
                             <div>
-                                {{item.charges}}
+                                ₹{{item.charges}}
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-2 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         <div *ngFor="let item of row.discount; let j = index;">
                             <div>
-                                {{item.discount}}%
+                                {{ item.discount }}% (₹{{ item.charges * (item.discount/100) }})
                             </div>
                         </div>
                     </div>
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
-                        {{row.payment}}
+                        <div *ngFor="let item of row.discount; let j = index;">
+                            <div>
+                                ₹{{ item.charges * ((100 - item.discount)/100) }}
+                            </div>
+                        </div>
                     </div>
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
-                        {{row.subtotal}}
+                        ₹{{row.subtotal}}
+                    </div>
+                    <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
+                        ₹{{row.payment}}
                     </div>
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         <div *ngFor="let item of row.refundarr; let j = index;">
@@ -989,7 +1020,7 @@
                     <div class="col-md-1 col-sm-12 text-center vCenter" style="margin-top: 6px">
                         <div *ngFor="let item of row.refundarr; let j = index;">
                             <div>
-                                {{item.refund}}
+                                ₹{{item.refund}}
                             </div>
                         </div>
                     </div>

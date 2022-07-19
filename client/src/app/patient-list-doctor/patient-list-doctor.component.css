@@ -3,6 +3,17 @@ table {
   margin-top: 20px;
 }
 
+/* .form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+}
+
+.form-element {
+    padding: 5px 0px 25px 2px;
+    width: 100%;
+} */
+
 .button {
   width: 100%;
 }
@@ -12,6 +23,16 @@ table {
   font-weight: 300;
   line-height: 1.2;
 }
+
+/* .mat-form-field {
+    font-size: 14px;
+    width: 50%;
+    text-align: center;
+  }
+  
+  .form-field{
+    width: 20%;
+  } */
 
 .success {
   background-color: #146c43;
@@ -41,15 +62,17 @@ table {
 th {
   font-size: 1.1em;
   background-color: #3f51b5;
+  /* font-weight: bold; */
   color: white;
 }
 
 @media screen and (max-width: 576px) {
   .mat-elevation-z8 {
-    width: 100%;
+    width: 100%; 
     overflow-x: auto;
   }
 }
+  
 
 .redcolor {
   color: red;
@@ -59,33 +82,34 @@ th {
   color: green;
 }
 
-.search_box {
-  background: #3f51b5;
-  position: relative;
-  padding: 15px;
-  border-radius: 50px;
-  display: flex;
+.search_box{
+	background: #3F51B5;
+	position: relative;
+	padding: 15px;
+	border-radius: 50px;
+	display: flex;
 }
 
-.search_box .search_btn {
-  width: 50px;
-  border-radius: 50%;
-  background: #5261b9;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
-  cursor: pointer;
+.search_box .search_btn{
+	width: 50px;
+	border-radius: 50%;
+	background: #5261b9;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	cursor: pointer;
 }
 
-.search_box .input_search {
-  outline: none;
-  border: 0;
-  background: #5261b9;
-  border-radius: 50px;
-  padding: 15px 20px;
-  width: 200px;
-  color: #fff;
+.search_box .input_search{
+	outline: none;
+	border: 0;
+	background: #5261b9;
+	border-radius: 50px;
+	padding: 15px 20px;
+	width: 200px; 
+	/* height: 50px; */
+	color: #fff;
   caret-color: #fff !important;
 }
 
@@ -101,17 +125,16 @@ th {
   color: #fff;
 }
 
-.wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.wrapper{
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
-.allocateid:hover {
+.allocateid:hover{
   background-color: darkgray;
   cursor: pointer;
 }
-.refund {
+.refund{
   background-color: lightblue;
 }
-

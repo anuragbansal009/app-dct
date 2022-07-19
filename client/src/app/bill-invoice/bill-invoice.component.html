@@ -1,15 +1,15 @@
 <mat-dialog-actions style=" margin-top: -20px">
   <span style="display:flex; justify-content:flex-end; width:100%; padding:0;">
-      <button mat-icon-button mat-dialog-close>
-          <mat-icon>close</mat-icon>
-      </button>
+    <button mat-icon-button mat-dialog-close>
+      <mat-icon>close</mat-icon>
+    </button>
   </span>
 </mat-dialog-actions>
 <div class="text-center m-3"> <button mat-flat-button color="primary" (click)="printDiv()">Print</button></div>
 
 <div id="pdfTable" #pdfTable>
   <div class="container-fluid my-2">
-    <mat-dialog-content>  
+    <mat-dialog-content>
       <div class="border border-5 rounded-3 p-2 mb-2 mx-auto border-dark" style="width: 99%">
         <div class="row">
           <div class="col-md-12">
@@ -160,14 +160,14 @@
           </table>
         </div>
       </div>
-      <div class="row border-2 border-bottom border-top border-dark mb-2">
+      <div class="row border-2 border-top border-dark mb-2">
         <div class="col-md-12 mx-auto">
           <table class="table table-borderless">
             <thead class="table-dark">
               <tr>
                 <th style="width: 5%"> </th>
                 <th style="width: 50%">Service Particulars</th>
-                <th class="text-end" style="width: 15%">Price</th>
+                <th class="text-end" style="width: 15%">Unit Price</th>
                 <th class="text-end" style="width: 15%">Discount</th>
                 <th class="text-end" style="width: 15%">Total Price</th>
               </tr>
@@ -176,29 +176,29 @@
               <tr *ngFor="let service of services; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ service.serviceName }}</td>
-                <td class="text-end">{{ service.servicePrice | number: '1.2-2'}}</td>
-                <td class="text-end">{{ service.serviceDiscount | number: '1.2-2'}}</td>
-                <td class="text-end">{{ service.serviceNetPrice | number: '1.2-2'}}</td>
+                <td class="text-end">₹ {{ service.servicePrice | number: '1.2-2'}}</td>
+                <td class="text-end">₹ {{ service.serviceDiscount | number: '1.2-2'}} ({{ service.serviceDiscountPct }}%) </td>
+                <td class="text-end">₹ {{ service.serviceNetPrice | number: '1.2-2'}}</td>
               </tr>
             </tbody>
           </table>
         </div>
       </div>
       <div class="row border-2 border-bottom border-dark mb-2">
-        <div class="col-md-12 mx-auto">
+        <div class="col-md-12 mx-auto" *ngIf="refundSection">
           <table class="table table-borderless">
             <thead class="table-dark">
               <tr>
                 <th style="width: 5%"> </th>
                 <th style="width: 50%">Refund</th>
-                <th class="text-end" style="width: 100%">Amount</th>
+                <th class="text-end" style="width: 100%">Refund Price</th>
               </tr>
             </thead>
             <tbody class="table-group-divider">
               <tr *ngFor="let service of refundServices; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ service.service }}</td>
-                <td class="text-end">{{ service.refund | number: '1.2-2'}}</td>
+                <td class="text-end">₹ {{ service.refund | number: '1.2-2'}}</td>
               </tr>
             </tbody>
           </table>
@@ -209,7 +209,7 @@
           <table class="mx-auto" style="width: 90%">
             <tbody>
               <tr>
-                <td style="width: 40%">
+                <td style="width: 80%">
                   <table>
                     <tr>
                       <td>
@@ -242,33 +242,23 @@
                       </td>
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          : {{ billedAmount }}
+                          : ₹ {{ billedAmount + totalrefund }}
                         </h4>
                       </td>
-                      <td style="padding-left: 50px;">
+                    </tr>
+                    <tr>
+                      <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
-                            Recieved Amount
+                            Total Refund
                           </strong>
                         </h4>
                       </td>
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          : {{ recievedAmount }}
+                          : ₹ {{ totalrefund }}
                         </h4>
                       </td>
-                      <!-- <td style="padding-left: 50px;">
-                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          <strong>
-                            Bill Discount
-                          </strong>
-                        </h4>
-                      </td>
-                      <td>
-                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          : {{ discountedAmount }}
-                        </h4>
-                      </td> -->
                     </tr>
                     <tr>
                       <td>
@@ -280,10 +270,39 @@
                       </td>
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          : {{ finalAmount }}
+                          : ₹ {{ finalAmount }}
                         </h4>
                       </td>
-                      <td style="padding-left: 50px;">
+                    </tr>
+                    <tr>
+                      <td>
+                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                          <strong>
+                            Recieved Amount
+                          </strong>
+                        </h4>
+                      </td>
+                      <td>
+                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                          : ₹ {{ recievedAmount }}
+                        </h4>
+                      </td>
+                    </tr>
+                    <!-- <td style="padding-left: 50px;">
+                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                          <strong>
+                            Bill Discount
+                          </strong>
+                        </h4>
+                      </td>
+                      <td>
+                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
+                          : {{ discountedAmount }}
+                        </h4>
+                      </td> -->
+                    <!-- <td style="padding-left: 50px;"> -->
+                    <tr>
+                      <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
                           <strong>
                             Balance Amount
@@ -292,19 +311,7 @@
                       </td>
                       <td>
                         <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          : {{ balanceAmount }}
-                        </h4>
-                      </td>
-                      <td style="padding-left: 50px;">
-                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          <strong>
-                            Total Refund
-                          </strong>
-                        </h4>
-                      </td>
-                      <td>
-                        <h4 class="display-5 align-middle" style="margin-bottom: 0px">
-                          : {{ totalrefund }}
+                          : ₹ {{ balanceAmount }}
                         </h4>
                       </td>
                     </tr>
