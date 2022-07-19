@@ -451,12 +451,14 @@ export class BillComponent implements OnInit {
 
   }
 
+  inputuid: any;
+
   patientdetails() {
 
     this.http.post(environment.patientGetid, { _id: this.id }).subscribe((res) => {
       this.patient = res
 
-
+      this.inputuid = this.patient[0].uid
       this.inputname = this.patient[0].name
       this.inputmobile = this.patient[0].mobile
       this.inputgender = this.patient[0].gender
@@ -572,13 +574,19 @@ export class BillComponent implements OnInit {
 
   billsummary: any
   billsummaryServicelist: any
+  totalprice: any
 
   billSummary() {
     this.http.post(environment.patientBillSummary, { name: this.inputname, mobile: this.inputmobile }).subscribe((res) => {
       this.billsummary = res
-      this.billsummaryServicelist = this.billsummary.discount
+      this.billsummaryServicelist = this.billsummary[0].discount
       this.billsummary.forEach((element: any) => {
         element.date = this.datepipe.transform(element.date, 'dd-MM-yyyy');
+      })
+      this.totalprice = 0
+      console.log('hello',this.billsummaryServicelist)
+      this.billsummaryServicelist.forEach((element: any) => {
+        this.totalprice = this.totalprice + (element.charges - element.charges* (element.discount / 100))
       })
     })
   }
