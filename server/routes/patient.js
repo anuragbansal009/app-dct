@@ -5,7 +5,7 @@ const Patient = require('../models/Patient');
 const Doctor = require('../models/Doctor');
 const MongoClient = require('mongodb').MongoClient;
 const Bill = require('../models/Bill');
-const mongoURI = "mongodb://localhost:27017/hospital?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
+const mongoURI = process.env.MONGOURI
 var database
 
 

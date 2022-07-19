@@ -4,7 +4,6 @@ const bcrypt = require('bcrypt');
 const { body, validationResult } = require('express-validator');
 const Doctor = require('../models/Doctor');
 const jwt = require('jsonwebtoken');
-const nodemailer = require("nodemailer");
 require('dotenv').config()
 
 
