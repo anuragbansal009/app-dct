@@ -159,6 +159,10 @@ The different libraries used in the backend node server are given in the `reposi
     * `repositoryPath\server\db\db.js`
         * Line 3 (const mongoURI): `Mongo DB URI`
 
+* Set secret key in
+    * `repositoryPath\server\.env`
+        * JWT_SECRET: secretkey
+
 * Create a database in MongoDB with the name of `hospital`
 
 ## Steps for Usage
