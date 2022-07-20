@@ -161,7 +161,7 @@ The different libraries used in the backend node server are given in the `reposi
 
 * Set secret key in
     * `repositoryPath\server\.env`
-        * JWT_SECRET: secretkey
+        * JWT_SECRET: `secretkey`
 
 * Create a database in MongoDB with the name of `hospital`
 
