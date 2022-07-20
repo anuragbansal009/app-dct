@@ -86,17 +86,17 @@ git push -u origin master
 ## Updating Repository with collaborators
 
 ```bash
-git checkout -b develop
+git checkout -b development_branch_name
 
 # Do Editing
 
 git add .
 git commit -m "Edited"
 git pull origin master
-git rebase master develop
+git rebase master development_branch_name
 git checkout master
-git merge develop
-git branch -d develop
+git merge development_branch_name
+git branch -d development_branch_name
 git push origin master
 ```
 
@@ -105,12 +105,12 @@ The frontend components can be viewed by going to the following path `repository
 
 Angular Material Library along with CoreUI Library and Bootstrap are used in the web app, which are imported in the `repositoryPath\client\src\styles.css` file. Several other libraries are also used and imported which can be seen using the `repositoryPath\client\package.json` file.
 
-Angular Material packages are all imported and exported in the `repositoryPath\client\src\material.module.ts` file, which can be imported in an module file using the command 
+Angular Material packages are all imported and exported in the `repositoryPath\client\src\material.module.ts` file, which can be imported in an module file using the command:
 ```bash
 import { MaterialModule } from '-Relative Path-';
 ```
 
-CoreUI packages are all imported and exported in the `repositoryPath\client\src\coreui.module.ts` file, which can be imported in an module file using the command 
+CoreUI packages are all imported and exported in the `repositoryPath\client\src\coreui.module.ts` file, which can be imported in an module file using the command:
 ```bash
 import { CoreUIModule } from '-Relative Path-';
 ```
@@ -121,11 +121,11 @@ The frontdesk homepage will be `doctor-dashboard` component.
 
 The HTML code inside the component.html file can be read easily, if one knows the basic bootstrap classes and the functions for those HTML code(if any) can be found in the component.ts file for the component. If using any outside reference in the HTML, it should be imported into the component.module file. Any component scoped CSS should be definied in the component.css file.
 
-Backend models can be found in the file `repositoryPath\server\models`
+Backend models can be found in the file `repositoryPath\server\models`.
 
-Backend middleware can be found in the file `repositoryPath\server\middleware`
+Backend middleware can be found in the file `repositoryPath\server\middleware`.
 
-Backend routing can be found in the file `repositoryPath\server\routes`
+Backend routing can be found in the file `repositoryPath\server\routes`.
 
 Backend routes are of 7 different types which can be used to view all the API present in the node server. The collections present are:
 * Admin
