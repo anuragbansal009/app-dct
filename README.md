@@ -148,6 +148,10 @@ The different libraries used in the backend node server are given in the `reposi
     * `repositoryPath\client\environment\environment.ts`
     * `repositoryPath\client\environment\environment.dev.ts`
 
+* Set the default logo URL in 
+    * `repositoryPath\client\environment\environment.ts`
+    * `repositoryPath\client\environment\environment.dev.ts`
+
 * Set the account email-id and password to send the confirmation emails in 
     * `repositoryPath\server\.env`
         * USER: `email-id`
@@ -166,3 +170,32 @@ The different libraries used in the backend node server are given in the `reposi
 * Create a database in MongoDB with the name of `hospital`
 
 ## Steps for Usage
+
+1. Create an admin by filling these details and click on register button at the bottom of the page.
+2. Login with admin with username and password, if admin forgot the password then click on forgot password to reset the password.
+3. After clicking on the login button, admin can create a new doctor with the following details.
+4. By clicking on login button the page will redirect to doctor login page.
+5. Fill username and password to login or click on forgot password if you don’t remember your password.
+6. This page will show when we click on forgot password button and if we click on login button then it will go back Doctor login page.
+7. After we logged in with the doctor it will show this dashboard.
+8. If we click on the services button in the Navbar then this modal will show up where we can add any service for any particular doctor.
+9. The view tab contains all the services of that doctor and we can also delete or edit any particular service.
+10. If we want to add other services like 'tea', 'coffee' etc. for any doctor then we can add it form here.
+11. If we click on the icon that represents the labtest then this modal will show up in which we can add any labtest under any particular doctor.
+12. The view tab contains all the Labtest of that doctor and we can also delete or edit any particular labtest.
+13. For patient registration click on the first icon in the navbar, fill the following details and click on submit button.
+14. After clicking on submit button, billing section will show up in which we can add service or a labtest with discount under that patient and click on the payment button to pay the amount.
+15. If the patient paid less amount than the subtotal then it will show Pending status for the bill.
+16. When we click on 'Pending', billing section will show up where we can see the previous due amount and if we pay the full due amount then the status will changed to 'Paid'.
+17. Now the status is 'Paid' because the patient paid the whole amount.
+18. If we click on the patient id on the dashboard then we can see all the details for that patient.
+19. By clicking on patient vitals icon we can add vitals for that patient and if we hover on that icon after filling then it will show up like this.
+20. We can also see past, present and future appointments by selecting the date from the calendar. We can also search any particular patient, doctor, pending, unpaid, paid appointments form the search box.
+21. By clicking on 'refund' button on the dashboard this Refund section will show up where we can refund any service for that patient but only after filling the reason box.
+22. The appointments section will show all the appointments for that patient.
+23. Bill Summary will show all the details of bill for that particular patient and we can aslo print the bill by clicking on that print icon.
+24. After clicking on print icon this section will show up in which we can print the bill by clicking on that print button.
+25. We can also book temporary Appointments for any patient from the calendar which is present in the navbar. Click on the temporary patient button or click on the day or week view of the calendar and select the date and time to book an appointment.
+26. Temporary appointment for the patient will look like this.
+27. If we click on update icon and fill all the details for temporary patient then its state will change and then we can start billing for that patient.
+28. This is what it will look like after filling the all the details for temporary patient which was 'Mr. Sanjay' and if we click on 'Unpaid' then we can create bill similarly we created for other patient.

@@ -317,6 +317,8 @@ export class AppComponent implements OnInit, AfterViewChecked {
     // this.router.navigate(['doctorlogin']);
   }
 
+  docList: any = []
+
   ngOnInit() {
     if (!this.values) {
       this.authorized = false
@@ -329,25 +331,31 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.hospitalName = this.values.hospital_name
       this.logoUrl = this.values.logolink
       this.authorized = true
+      this.http.get(environment.getAllDoctors).subscribe((res) => {
+        this.docList = res
+      });
       this.http.get(environment.patientsGet).subscribe((res) => {
         this.lists = res;
         console.log(this.lists)
+        console.log(this.docList)
         this.lists.forEach((element: { slotdate: any; time: any; name: any; doctor_name: any; }) => {
           element.slotdate = this.datepipe.transform(element.slotdate, 'yyyy-MM-dd');
           element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');
           this.enddate = new Date(element.slotdate + " " + element.time);
-          if (element.doctor_name == "gulshan") {
+
+          if(this.docList.indexOf(element.doctor_name) % 3 == 0) {
             this.colorSet = colors.green
           }
-          else if (element.doctor_name == "dhirendra") {
+          else if(this.docList.indexOf(element.doctor_name) % 3 == 1) {
             this.colorSet = colors.red
           }
-          else if (element.doctor_name == "doctor") {
+          else if(this.docList.indexOf(element.doctor_name) % 3 == 2) {
             this.colorSet = colors.blue
           }
           else {
             this.colorSet = colors.yellow
           }
+
           this.temp = {
             start: new Date(element.slotdate + " " + element.time),
             end: new Date(this.enddate.getTime() + (60 * 60 * 1000)),
