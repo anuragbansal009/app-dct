@@ -1,10 +1,11 @@
-import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild, Inject } from '@angular/core';
 import { animate, style, transition, trigger } from '@angular/animations';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarService } from '../navbar.service';
-
+import { DOCUMENT } from '@angular/common';
+import { environment } from 'src/environments/environment';
 import {
   startOfDay,
   endOfDay,
@@ -103,10 +104,16 @@ export class ModalComponent {
 
 export class DoctorDashboardComponent implements OnInit {
 
-  constructor(public dialog: MatDialog, public nav: NavbarService) { }
+  constructor(@Inject(DOCUMENT) private document: Document, public dialog: MatDialog, public nav: NavbarService) { }
   @ViewChild('modalContent', { static: true }) modalContent!: TemplateRef<any>;
 
+  values: any = localStorage.getItem("currentDoctor");
+
   ngOnInit(): void {
+    if (!this.values) {
+      // this.router.navigate(['doctorlogin']);
+      this.document.location.href = environment.doctorLogin;
+    }
     this.nav.showCalIcon();
   }
   isPatientRegistrationShowing = false;

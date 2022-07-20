@@ -17,7 +17,7 @@
 ## Quick Start
 
 - [Download the latest release](https://github.com/anuragbansal009/app-dct)
-- Clone the repo: `git clone https://github.com/anuragbansal009/app-dct.git`
+- Clone the private repo: `git clone https://github.com/anuragbansal009/app-dct.git`
 
 #### <i>Prerequisites</i>
 Before you begin, make sure your development environment includes `Node.js®` and an `npm` package manager.
@@ -47,8 +47,7 @@ $ npm install -g @angular/cli
 ```
 
 ### Importing Data
-Import the data to MongoDB database named `graph` and create a collection called `realdata`.
-Import the dataset given in `backend/MongoDB Data/Dataset.json`
+Import the data(if any) to MongoDB database named `hospital`.
 
 ### Instalation
 To install the modules, run the following command in a terminal/console window:
@@ -57,8 +56,7 @@ To install the modules, run the following command in a terminal/console window:
 ```
 
 ### Basic usage
-
-
+To start using the web app on local computer:
 ```bash
 > repositoryPath: $ npm start
 # local NodeJS Server with hot reload at port 5000
@@ -87,12 +85,11 @@ git push -u origin master
 
 ## Updating Repository with collaborators
 
-```
+```bash
 git checkout -b develop
-```
-Do Editing
 
-```
+# Do Editing
+
 git add .
 git commit -m "Edited"
 git pull origin master
@@ -102,3 +99,66 @@ git merge develop
 git branch -d develop
 git push origin master
 ```
+
+## Description
+The frontend components can be viewed by going to the following path `repositoryPath\client\src\app`. Each component has a different folder which are linked to the `repositoryPath\client\src\appapp.module.ts` file. Routing is enabled in the web app, which can be changed using the `repositoryPath\client\src\appapp-routing.module.ts`.
+
+Angular Material Library along with CoreUI Library and Bootstrap are used in the web app, which are imported in the `repositoryPath\client\src\styles.css` file. Several other libraries are also used and imported which can be seen using the `repositoryPath\client\package.json` file.
+
+Angular Material packages are all imported and exported in the `repositoryPath\client\src\material.module.ts` file, which can be imported in an module file using the command 
+```bash
+import { MaterialModule } from '-Relative Path-';
+```
+
+CoreUI packages are all imported and exported in the `repositoryPath\client\src\coreui.module.ts` file, which can be imported in an module file using the command 
+```bash
+import { CoreUIModule } from '-Relative Path-';
+```
+
+Bootstrap for CSS is imported inside the `repositoryPath\client\src\styles.css` file, which then helps in using different bootstrap classes for better CSS usage.
+
+The frontdesk homepage will be `doctor-dashboard` component. 
+
+The HTML code inside the component.html file can be read easily, if one knows the basic bootstrap classes and the functions for those HTML code(if any) can be found in the component.ts file for the component. If using any outside reference in the HTML, it should be imported into the component.module file. Any component scoped CSS should be definied in the component.css file.
+
+Backend models can be found in the file `repositoryPath\server\models`
+
+Backend middleware can be found in the file `repositoryPath\server\middleware`
+
+Backend routing can be found in the file `repositoryPath\server\routes`
+
+Backend routes are of 7 different types which can be used to view all the API present in the node server. The collections present are:
+* Admin
+* Bill
+* Doctor
+* Labtest
+* OtherServices
+* Patient
+* Services
+
+The different libraries used in the backend node server are given in the `repositoryPath\server\package.json` file.
+
+## Setup
+* Install the Pre-Requisites and complete the installation using 
+    ```bash
+    > repositoryPath: $ npm install
+    ```
+
+* Set the recaptcha sitekey key in 
+    * `repositoryPath\client\environment\environment.ts`
+    * `repositoryPath\client\environment\environment.dev.ts`
+
+* Set the account email-id and password to send the confirmation emails in 
+    * `repositoryPath\server\.env`
+        * USER: `email-id`
+        * PASSWORD: `password`
+        
+* Set the MongoURI to the required one in
+    * `repositoryPath\server\.env`
+        * MONGOURI: `Mongo DB URI`
+    * `repositoryPath\server\db\db.js`
+        * Line 3 (const mongoURI): `Mongo DB URI`
+
+* Create a database in MongoDB with the name of `hospital`
+
+## Steps for Usage
