@@ -26,14 +26,14 @@
       <ng-container matColumnDef="tokennumber">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Token No.</th>
         <td mat-cell *matCellDef="let row">
-          <span *ngIf="row.age">{{row.tokennumber}}</span>
+          <span>{{row.tokennumber}}</span>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="uid">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Patient ID </th>
         <td class="allocateid" mat-cell *matCellDef="let row" (click)="handledetails(row.allocateid)">
-          <span>{{row.uid}}</span>
+          <span *ngIf="row.age">{{row.uid}}</span>
         </td>
       </ng-container>
 

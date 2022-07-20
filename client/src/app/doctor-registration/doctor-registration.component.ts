@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-doctor-registration',
@@ -26,7 +27,7 @@ export class DoctorRegistrationComponent implements OnInit {
   doctorList: any = [];
   apiLoaded: boolean = false;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient,private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -78,6 +79,11 @@ export class DoctorRegistrationComponent implements OnInit {
       : this.formGroup.get('password').hasError('requirements')
         ? 'Password needs to be at least eight characters, one uppercase letter and one number'
         : '';
+  }
+
+  handlelogin()
+  {
+    this.router.navigate(['doctorlogin']);
   }
 
   onSubmit(post: any) {

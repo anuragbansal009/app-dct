@@ -263,7 +263,7 @@ router.post('/patient/updatepatient/:id', async (req, res) => {
             newPatient.time = time;
         }
         if (bloodgroup) {
-            newPatient.time = time;
+            newPatient.bloodgroup = bloodgroup;
         }
 
         if (city) {

@@ -14,8 +14,6 @@ router.post('/patient/bill/:id', async (req, res) => {
             gender,
             age,
             doctor_name,
-            labcharges,
-            labtests,
             discount,
             payment,
             paymentmode,
@@ -43,12 +41,6 @@ router.post('/patient/bill/:id', async (req, res) => {
             }
             if (doctor_name) {
                 newBill.doctor_name = doctor_name;
-            }
-            if (labcharges) {
-                newBill.labcharges = labcharges;
-            }
-            if (labtests) {
-                newBill.labtests = labtests;
             }
             if (discount.length !== 0) {
                 newBill.discount = discount;
@@ -138,8 +130,6 @@ router.post('/patient/bill/:id', async (req, res) => {
                         doctor_name: patient.doctor_name,
                         mobile: patient.mobile,
                         allocateid: patient.allocateid,
-                        labcharges: labcharges,
-                        labtests: labtests,
                         discount: discount,
                         billDiscount: 0,
                         totalDiscount: 0,

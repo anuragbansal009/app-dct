@@ -20,9 +20,6 @@ const BillSchema = new Schema({
         type: Number,
         required: true
     },
-    labcharges: {
-        type: Array,
-    },
     discount: {
         type: Array,
     },
@@ -46,9 +43,6 @@ const BillSchema = new Schema({
     },
     subtotal: {
         type: Number,
-    },
-    labtests: {
-        type: Array,
     },
     allocateid: {
         type: String,

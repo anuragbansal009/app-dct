@@ -55,14 +55,6 @@ const PatientSchema = new Schema({
     vitals: {
         type: Array,
     },
-    labtests: {
-        type: Array,
-        default: "Empty"
-    },
-    services: {
-        type: Array,
-        default: "Empty"
-    },
     doctor_name: {
         type: String,
         required: true

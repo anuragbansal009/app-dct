@@ -39,14 +39,6 @@ const AdminSchema = new Schema({
         type: String,
         required: true
     },
-    pid: {
-        type: String,
-        required: true
-    }, 
-    did: {
-        type: String,
-        required: true
-    }
 
 })
 

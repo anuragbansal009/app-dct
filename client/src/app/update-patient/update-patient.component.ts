@@ -173,7 +173,7 @@ export class UpdatePatientComponent implements OnInit {
   onSubmit(post: any) {
     this.showSuccess = false;
     this.showError = false;
-    console.log(post);
+    console.log('hello',post);
     this.http.post(environment.updatePatient + this.id, post).subscribe({
       next: res => {
         console.log('Patient Updated')

@@ -3,7 +3,7 @@ import { NavbarService } from './navbar.service';
 import { Subject } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { HttpClient } from '@angular/common/http';
-import { DatePipe, DOCUMENT  } from '@angular/common';
+import { DatePipe, DOCUMENT } from '@angular/common';
 import {
   startOfDay,
   endOfDay,
@@ -119,9 +119,8 @@ export class CalendarComponent {
   run() {
     // console.log(this.clickedDate)
     const todayDate = new Date()
-    if (this.clickedDate.getTime() - todayDate.getTime() >= 0)
-    {
-    this.openAddTempPatient()
+    if (this.clickedDate.getTime() - todayDate.getTime() >= 0) {
+      this.openAddTempPatient()
     }
     else {
       console.log("Choose New Date")
@@ -322,7 +321,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
     if (!this.values) {
       this.authorized = false
       this.hospitalName = 'Front Desk App - DCT'
-      this.router.navigate(['doctorlogin']);
+      // this.router.navigate(['doctorlogin']);
       // this.document.location.href = environment.doctorLogin;
     }
     else {
@@ -332,6 +331,7 @@ export class AppComponent implements OnInit, AfterViewChecked {
       this.authorized = true
       this.http.get(environment.patientsGet).subscribe((res) => {
         this.lists = res;
+        console.log(this.lists)
         this.lists.forEach((element: { slotdate: any; time: any; name: any; doctor_name: any; }) => {
           element.slotdate = this.datepipe.transform(element.slotdate, 'yyyy-MM-dd');
           element.time = this.datepipe.transform("01/01/1970 " + element.time, 'shortTime');

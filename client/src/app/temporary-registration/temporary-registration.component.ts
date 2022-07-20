@@ -164,8 +164,7 @@ export class TemporaryRegistrationComponent implements OnInit {
 
 
   onSubmit(post: any) {
-    post.name = this.salutation + " " + post.name
-    console.log(post)
+
     this.showSuccess = false;
     this.showError = false;
     this.http.post(this.patientRegistrationAPI, post).subscribe({

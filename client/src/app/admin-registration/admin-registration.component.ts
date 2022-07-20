@@ -8,6 +8,7 @@ import {
 import { Observable } from 'rxjs-compat/Observable';
 import { HttpClient } from '@angular/common/http';
 import { environment } from './../../environments/environment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-registration',
@@ -26,7 +27,7 @@ export class AdminRegistrationComponent implements OnInit {
 
   hide = true;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient, private router: Router) { }
 
   ngOnInit() {
     this.createForm();
@@ -48,8 +49,6 @@ export class AdminRegistrationComponent implements OnInit {
       status: [null, Validators.required],
       account_type: [null, Validators.required],
       credits: [null, Validators.required],
-      did: [null, Validators.required],
-      pid: [null, Validators.required],
     });
   }
 
@@ -105,6 +104,7 @@ export class AdminRegistrationComponent implements OnInit {
           localStorage.setItem('token', this.token);
           console.log('User Created')
           this.showSuccess = true;
+          this.router.navigate(['adminlogin']);
       },
       error: error => {
         if (error.status === 400) {

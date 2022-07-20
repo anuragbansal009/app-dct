@@ -62,10 +62,16 @@ export class AddServicesComponent implements OnInit {
   doctors: any;
   selectedDoctor: any
   servicesPreview: any
+  otherservicesPreview: any
 
   changePreview() {
     console.log(this.selectedDoctor)
     this.getServices()
+  }
+
+  otherchangePreview() {
+    console.log(this.selectedDoctor)
+    this.getotherServices()
   }
 
   editService(service: any, doctor: any) {
@@ -89,11 +95,35 @@ export class AddServicesComponent implements OnInit {
     })
   }
 
+
+  deleteotherService(service: any, doctor: any) {
+    this.http.post(environment.deleteotherService, { service: service,doctor_name: doctor }).subscribe({
+      next: res => {
+        console.log(res)
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
+  }
+
   getServices() {
     this.http.post(environment.getServicesDoc, { doctor_name: this.selectedDoctor }).subscribe({
       next: res => {
         console.log(res)
         this.servicesPreview = res
+      },
+      error: error => {
+        console.log(error)
+      }
+    })
+  }
+
+  getotherServices() {
+    this.http.post(environment.getotherServicesDoc, { doctor_name: this.selectedDoctor }).subscribe({
+      next: res => {
+        console.log(res)
+        this.otherservicesPreview = res
       },
       error: error => {
         console.log(error)

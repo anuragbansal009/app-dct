@@ -52,8 +52,6 @@ router.post('/admin', [
             status,
             account_type,
             credits,
-            pid,
-            did
         } = req.body;
 
         const salt = await bcrypt.genSalt(10)
@@ -69,8 +67,6 @@ router.post('/admin', [
             status: status,
             account_type: account_type,
             credits: credits,
-            pid: pid,
-            did: did
 
         })
 
